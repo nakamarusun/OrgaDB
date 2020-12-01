@@ -1,1 +1,0 @@
-/usr/share/l.v.e-manager/utils/set_env_vars.py
