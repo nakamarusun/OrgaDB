@@ -1,5 +1,5 @@
 from flask import Flask
-from EMS import db, controllers
+from EMS import db, controllers, cache
 from os import makedirs
 
 # App factory
@@ -23,5 +23,8 @@ def create_app(conf:dict=None):
 
     # Registers all the routes
     controllers.register_all_routes(app)
+
+    # Initialize uncache
+    cache.reg_static_uncache(app)
 
     return app
