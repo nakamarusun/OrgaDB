@@ -15,6 +15,7 @@ def get_db():
 def init_db_connection(app):
     global mydb
 
+    app.cli.add_command(init_db)
     # Establishes a connection to the sql server from the configuration.
     mydb = sql.connect(
         host=app.config.get('DATABASE_HOST'),
@@ -30,7 +31,7 @@ def init_db():
     # Initializes the database from schema.sql from the terminal.
     init_db(current_app)
 
-    # TODO: Create tables from schema.sql here.
+    # TODO @nico/bently: Create tables from schema.sql here.
     ###########################################
     ###
     ###
