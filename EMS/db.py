@@ -30,10 +30,6 @@ def init_db():
 
     # Initializes the database from schema.sql from the terminal.
 
-    # TODO @nico/bently: Create tables from schema.sql here.
-    ###########################################
-    ###
-
     #same as cursor = mysql.connect, but instead calling the function and called as cursor
     with get_db().cursor() as cursor:
         # Creates the table here
@@ -44,7 +40,5 @@ def init_db():
 
                 string = line.strip().replace("\n", " ")
                 cursor.execute(string)    
-    ###
-    ###########################################
 
     click.echo("Done reinitializing the database!")

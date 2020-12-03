@@ -1,8 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint,render_template
 
 bp = Blueprint("index", __name__, url_prefix="/")
 
 @bp.route("/")
 def index():
     # TODO @aric: Create index.html here and use render_template
-    return "bruh"
+    return render_template("index.html")

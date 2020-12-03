@@ -21,11 +21,11 @@ pip install -r requirements.txt
 4. Make environment variable for flask app
 Windows:
 ```bash
-set FLASK_APP=ColonD
+set FLASK_APP=EMS
 ```
 Linux / Mac:
 ```bash
-export FLASK_APP=ColonD
+export FLASK_APP=EMS
 ```
 
 5. Copy and rename EMS/db_config.py_template to db_config.py and configure it by yourself
