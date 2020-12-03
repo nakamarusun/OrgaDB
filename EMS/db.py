@@ -26,20 +26,19 @@ def init_db_connection(app):
 
 @click.command("init-db", help="Reinitialize the database table from schema.sql")
 @with_appcontext
-def init_db(app):
+def init_db():
 
     # Initializes the database from schema.sql from the terminal.
-    init_db(current_app)
 
     # TODO @nico/bently: Create tables from schema.sql here.
     ###########################################
     ###
+
     #same as cursor = mysql.connect, but instead calling the function and called as cursor
     with get_db().cursor() as cursor:
         # Creates the table here
         # use datase name 
-        cursor.execute("USE " + app.config['orgadb'])
-        with app.open_resource("schema.sql", "rt") as file:
+        with current_app.open_resource("schema.sql", "rt") as file:
             #loop and run, after ";"
             for line in file.read().split(";"):
 
