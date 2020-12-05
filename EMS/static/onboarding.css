@@ -1,0 +1,15 @@
+.onboard_title{
+    font-family: 'calendas_plusregular';
+    color:#205566;
+}
+.onboard_form{
+    color:#205566;
+}
+
+.logo{
+    background-color:#205566;
+    -webkit-mask: url(asset/administration.svg) no-repeat center;
+    mask: url(asset/administration.svg) no-repeat center;
+}
+
+

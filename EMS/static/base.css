@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'calendas_plusregular';
+    src: url('font/Calendas/calendas_plus-webfont.eot');
+    src: url('font/Calendas/calendas_plus-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Calendas/calendas_plus-webfont.woff2') format('woff2'),
+         url('font/Calendas/calendas_plus-webfont.woff') format('woff'),
+         url('font/Calendas/calendas_plus-webfont.ttf') format('truetype'),
+         url('font/Calendas/calendas_plus-webfont.svg#calendas_plusregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
