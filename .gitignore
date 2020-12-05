@@ -232,3 +232,4 @@ instance/
 
 db_config.py
 activate.ps1
+/activate.bat

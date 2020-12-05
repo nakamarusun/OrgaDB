@@ -22,10 +22,12 @@ pip install -r requirements.txt
 Windows:
 ```bash
 set FLASK_APP=EMS
+set FLASK_ENV=development
 ```
 Linux / Mac:
 ```bash
 export FLASK_APP=EMS
+export FLASK_ENV=development
 ```
 
 5. Copy and rename EMS/db_config.py_template to db_config.py and configure it by yourself
