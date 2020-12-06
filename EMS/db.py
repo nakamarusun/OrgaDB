@@ -1,9 +1,15 @@
 from flask.cli import with_appcontext
 import click
 from flask import current_app
+from flask import Flask, render_template, request, redirect, url_for, session
+from flask_mysqldb import MySQL
+import MySQLdb.cursors
 import mysql.connector as sql
 
+app = Flask(__name__)
+
 mydb = None
+mysql = MySQL(app)
 
 def get_db():
     # Gets the mysql db object, reconnecting if its disconnected.
@@ -24,6 +30,16 @@ def init_db_connection(app):
         database=app.config.get('DATABASE_NAME')
     )
 
+@app.route('/login', methods =['GET', 'POST']) 
+def login(): 
+    # indicate the desired action to be performed for a given resource.
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form: 
+        username = request.form['username'] 
+        password = request.form['pwd'] 
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+        cursor.execute('SELECT * FROM users WHERE username = % s AND password = % s', (username, password, )) 
+        #method returns a single record or None if no more rows are available.
+        users = cursor.fetchone() 
 @click.command("init-db", help="Reinitialize the database table from schema.sql")
 @with_appcontext
 def init_db():
