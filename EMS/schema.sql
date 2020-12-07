@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS Inventory;
 DROP TABLE IF EXISTS Sponsor;
 DROP TABLE IF EXISTS Members;
 DROP TABLE IF EXISTS Events;
+DROP TABLE IF EXISTS Login_cred;
 
 
 CREATE TABLE Events(
@@ -89,4 +90,10 @@ CREATE TABLE Income(
     Event_id INT(50) NOT NULL,
     FOREIGN KEY (Event_id) REFERENCES Events(id),
     FOREIGN KEY (Sponsor_id) REFERENCES Sponsor(id)
+);
+
+CREATE TABLE Login_cred(
+    Id VARCHAR(50) NOT NULL
+    pass VARCHAR(50) NOT NULL
+    Email VARCHAR(50) NOT NULL
 );
