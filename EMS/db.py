@@ -32,14 +32,35 @@ def init_db_connection(app):
 
 @app.route('/login', methods =['GET', 'POST']) 
 def login(): 
+    msg = '' 
     # indicate the desired action to be performed for a given resource.
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form: 
-        username = request.form['username'] 
+    if request.method == 'POST' and 'email' in request.form and 'password' in request.form: 
+        email = request.form['mail']
         password = request.form['pwd'] 
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
-        cursor.execute('SELECT * FROM users WHERE username = % s AND password = % s', (username, password, )) 
+        cursor.execute('SELECT * FROM Login_cred WHERE email = % s AND password = % s', (email, password, )) 
         #method returns a single record or None if no more rows are available.
-        users = cursor.fetchone() 
+        Login_cred = cursor.fetchone() 
+        if Login_cred: 
+            session['loggedin'] = True
+            session['id'] = Login_cred['id'] 
+            session['email'] = Login_cred['mail'] 
+            msg = 'Logged in successfully !'
+            return render_template('home.html', msg = msg) 
+        else: 
+            msg = 'Wrong email / password'
+    return render_template('base.html', msg = msg) 
+  
+@app.route('/logout') 
+def logout(): 
+    session.pop('loggedin', None) 
+    session.pop('id', None) 
+    session.pop('email', None) 
+    return redirect(url_for('login')) 
+
+
+
+
 @click.command("init-db", help="Reinitialize the database table from schema.sql")
 @with_appcontext
 def init_db():
