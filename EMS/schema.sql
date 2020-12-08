@@ -19,9 +19,9 @@ CREATE TABLE Events(
 );
 
 CREATE TABLE Members(
+    Id INT(30) PRIMARY KEY NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
-    Position VARCHAR(50) NOT NULL,
-    Id INT(30) PRIMARY KEY NOT NULL
+    Position VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Clearance(
@@ -43,7 +43,6 @@ CREATE TABLE Event_Committee(
 );
 
 CREATE TABLE Feedback(
-    Full_Name VARCHAR(50) NOT NULL,
     Rating INT(10) NOT NULL,
     Comments VARCHAR(255) NOT NULL,
     Event_id INT(255) NOT NULL,
@@ -60,23 +59,27 @@ CREATE TABLE Guests(
 );
 
 CREATE TABLE Expenses(
-    Expense_Type VARCHAR(50) NOT NULL,
+    Expense_Type ENUM("1", "2", "3", "4", "5", "6") NOT NULL,
+    Other_expense VARCHAR(50),
     Amount INT(255) NOT NULL,
     Event_id INT(255) NOT NULL,
     FOREIGN KEY (Event_id) REFERENCES Events(id)
 );
 
 CREATE TABLE Sponsor(
-    Full_Name VARCHAR(50) NOT NULL,
-    Sponsor_Type VARCHAR(10) NOT NULL,
     Id INT(50) PRIMARY KEY NOT NULL,
+    Full_Name VARCHAR(50) NOT NULL,
+    Sponsor_Address VARCHAR(50) NOT NULL,
+    Phone_Number VARCHAR(50) NOT NULL,
+    Sponsor_Type VARCHAR(10) NOT NULL,
     Event_id INT(255) NOT NULL,
     FOREIGN KEY (Event_id) REFERENCES Events(id)
 );
 
 CREATE TABLE Inventory(
+    Inventory_id INT(50) PRIMARY KEY NOT NULL,
     Item_Name VARCHAR(255) NOT NULL,
-    Item_Amount INT(50) NOT NULL,
+    Item_Quantity INT(50) NOT NULL,
     Sponsor_id INT(50),
     Event_id INT(255) NOT NULL,
     FOREIGN KEY (Event_id) REFERENCES Events(id),
@@ -84,7 +87,8 @@ CREATE TABLE Inventory(
 );
 
 CREATE TABLE Income(
-    Income_Type VARCHAR(50) NOT NULL,
+    Income_Type ENUM("1", "2", "3", "4") NOT NULL,
+    Other_income VARCHAR(50),
     Amount INT(100) NOT NULL,
     Sponsor_id INT(50),
     Event_id INT(50) NOT NULL,
@@ -93,7 +97,7 @@ CREATE TABLE Income(
 );
 
 CREATE TABLE Login_cred(
-    Id VARCHAR(50) NOT NULL
-    pass VARCHAR(50) NOT NULL
+    Id VARCHAR(50) NOT NULL,
+    pass VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL
 );
