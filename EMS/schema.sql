@@ -96,7 +96,7 @@ CREATE TABLE Income(
     FOREIGN KEY (Sponsor_Id) REFERENCES Sponsor(Id)
 );
 
-CREATE TABLE Login_cred(
+CREATE TABLE Login_Cred(
     Id VARCHAR(50) NOT NULL,
     Pass VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL
