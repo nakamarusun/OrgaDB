@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{url_for('static', filename='skeleton.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='home_template.css')}}">
 {% endblock %}
 
 {% block title %}
@@ -9,26 +9,26 @@
 
 {% block body %}
     <div class="container flex flex-col h-screen items-stretch">
-        <div class=" container h-24 bg-green-400 border-b-2 border-gray-300 flex items-center justify-between">
+        <div class=" container h-24 bg-green-200 border-b-4 flex items-center justify-between">
             <div class = "text-xl text-black ml-6">Epic Management System</div>
             <div class = "flex flex-row mr-6">
-                {% if session.get("user_name" , None) == None %}
+                {% if session.get("user_name") == None %}
                 <a class = "m-3" href="{{url_for('user.login')}}">
-                    <div class="w-16 bg-white border-b-2 border-black rounded-md p-1 text-center hover:bg-gray-400 hover:text-white">Login</div>
+                    <div class="transition w-16 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Login</div>
                 </a>
                 <a class = "m-3" href="{{url_for('user.register')}}">
-                    <div class="w-20 bg-white border-b-2 border-black rounded-md p-1 text-center hover:bg-gray-400 hover:text-white">Register</div>
+                    <div class="transition w-20 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Register</div>
                 </a>
                 {% else %}
                 <div class="w-auto bg-white m-3 p-1">{{session["user_name"]}}</div>
                 {% endif %}
             </div>
         </div>
-        <div class="container flex flex-1 flex-row h-16 bg-gray-800 items-stretch">
-            <div class="w-96 h-full border-r-2 border-gray-300 bg-green-100">
+        <div class="container flex flex-1 flex-row h-14 bg-gray-800 items-stretch">
+            <div class="w-96 h-full flex flex-col border-r-4 bg-green-100">
                 {% block left_cont %}{% endblock %}
             </div>
-            <div class="flex-1 h-full bg-white">
+            <div class="flex-1 h-full bg-black bg-opacity-50">
                 {% block right_cont %}{% endblock %}
             </div>
         </div>

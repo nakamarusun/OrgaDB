@@ -1,0 +1,19 @@
+{% extends 'home_template.html' %}
+
+{% block left_cont %}
+<div class="container bg-gray-200 flex flex-row justify-center items-center">
+    <!-- Profile container here -->
+    <div class="m-3 w-24 h-24 rounded-full bg-black bg-opacity-50">
+        <img src="{{url_for('static',filename='asset/profile.svg')}}" alt="" class="object-cover">
+    </div>
+    <span class="text-xl flex items-start">ALLEYMEN69</span>
+</div>
+<div class="container flex flex-col justify-center items-center">
+    <div class="w-2/5 flex flex-col justify-center">
+        <span>Contact</span>
+        <span>Email</span>
+        <span>Location</span>
+        <span>Short Description</span>
+    </div>
+</div>
+{% endblock %}
