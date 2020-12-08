@@ -59,7 +59,7 @@ CREATE TABLE Guests(
 );
 
 CREATE TABLE Expenses(
-    Expense_Type ENUM("1", "2", "3", "4", "5", "6") NOT NULL,
+    Expense_Type ENUM("Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other") NOT NULL,
     Other_expense VARCHAR(50),
     Amount INT(255) NOT NULL,
     Event_id INT(255) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE Inventory(
 );
 
 CREATE TABLE Income(
-    Income_Type ENUM("1", "2", "3", "4") NOT NULL,
+    Income_Type ENUM("Sponsor", "Ticket Sales", "Merchandise", "Other") NOT NULL,
     Other_income VARCHAR(50),
     Amount INT(100) NOT NULL,
     Sponsor_id INT(50),
