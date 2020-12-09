@@ -9,9 +9,9 @@
 
 {% block body %}
     <div class="container flex flex-col h-screen items-stretch">
-        <div class=" container h-24 bg-green-200 border-b-4 flex items-center justify-between">
+        <header class="container h-24 bg-green-200 border-b-4 flex flex-shrink-0 items-center justify-between">
             <div class = "text-xl text-black ml-6">Epic Management System</div>
-            <div class = "flex flex-row mr-6">
+            <nav class = "flex flex-row mr-6">
                 {% if session.get("user_name") == None %}
                 <a class = "m-3" href="{{url_for('user.login')}}">
                     <div class="transition w-16 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Login</div>
@@ -22,13 +22,13 @@
                 {% else %}
                 <div class="w-auto bg-white m-3 p-1">{{session["user_name"]}}</div>
                 {% endif %}
-            </div>
-        </div>
-        <div class="container flex flex-1 flex-row h-14 bg-gray-800 items-stretch">
+            </nav>
+        </header>
+        <div class="container flex flex-grow flex-row items-stretch">
             <div class="w-96 h-full flex flex-col border-r-4 bg-green-100">
                 {% block left_cont %}{% endblock %}
             </div>
-            <div class="flex-1 h-full bg-black bg-opacity-50">
+            <div class="flex-1 h-full">
                 {% block right_cont %}{% endblock %}
             </div>
         </div>
