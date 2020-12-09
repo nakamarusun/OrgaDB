@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask import Flask, render_template, request, redirect, url_for, session 
-from flask_mysqldb import MySQL 
 from EMS import db
 import re 
 
@@ -56,7 +55,7 @@ def register():
         msg = 'Please fill out the form !'
     return render_template('register.html', msg = msg) 
 
-@app.route('/logout') 
+@bp.route('/logout') 
 def logout(): 
     session.pop('loggedin', None) 
     session.pop('id', None) 
