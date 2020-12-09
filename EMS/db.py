@@ -2,14 +2,10 @@ from flask.cli import with_appcontext
 import click
 from flask import current_app
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
 import mysql.connector as sql
 
-app = Flask(__name__)
 
 mydb = None
-mysql = MySQL(app)
 
 def get_db():
     # Gets the mysql db object, reconnecting if its disconnected.
@@ -29,34 +25,6 @@ def init_db_connection(app):
         password=app.config.get('DATABASE_PASS'),
         database=app.config.get('DATABASE_NAME')
     )
-
-@app.route('/login', methods =['GET', 'POST']) 
-def login(): 
-    msg = '' 
-    # indicate the desired action to be performed for a given resource.
-    if request.method == 'POST' and 'mail' in request.form and 'pwd' in request.form: 
-        email = request.form['mail']
-        password = request.form['pwd'] 
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
-        cursor.execute('SELECT * FROM Login_cred WHERE Email = % s AND Pass = % s', (email, password, )) 
-        #method returns a single record or None if no more rows are available.
-        Login_cred = cursor.fetchone() 
-        if Login_cred: 
-            session['loggedin'] = True
-            session['id'] = Login_cred['id'] 
-            session['email'] = Login_cred['mail'] 
-            msg = 'Logged in successfully !'
-            return render_template('base.html', msg = msg) 
-        else: 
-            msg = 'Wrong email / password'
-    return render_template('login.html', msg = msg) 
-  
-@app.route('/logout') 
-def logout(): 
-    session.pop('loggedin', None) 
-    session.pop('id', None) 
-    session.pop('email', None) 
-    return redirect(url_for('user.register')) 
 
 @click.command("init-db", help="Reinitialize the database table from schema.sql")
 @with_appcontext
