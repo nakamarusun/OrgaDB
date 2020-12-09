@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session 
 from flask_mysqldb import MySQL 
-from ColonD import db
+from EMS import db
 import re 
 
 @app.route('/', methods =['GET', 'POST']) 
