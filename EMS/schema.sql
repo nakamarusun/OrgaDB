@@ -15,7 +15,8 @@ CREATE TABLE Events(
     Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Event_Name VARCHAR(40) NOT NULL,
     Venue VARCHAR(40) NOT NULL,
-    Budget INT NOT NULL
+    Budget INT NOT NULL,
+    Event_Desc TEXT NOT NULL
 );
 
 CREATE TABLE Members(
@@ -43,6 +44,7 @@ CREATE TABLE Event_Committee(
 );
 
 CREATE TABLE Feedback(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Rating TINYINT NOT NULL,
     Comments TEXT NOT NULL,
     Event_Id SMALLINT NOT NULL,
@@ -50,6 +52,7 @@ CREATE TABLE Feedback(
 );
 
 CREATE TABLE Guests(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     Phone_Number VARCHAR(30) NOT NULL,
@@ -59,6 +62,7 @@ CREATE TABLE Guests(
 );
 
 CREATE TABLE Expenses(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Expense_Type ENUM("Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other") NOT NULL,
     Other_Expense VARCHAR(50),
     Amount SMALLINT NOT NULL,
@@ -87,6 +91,7 @@ CREATE TABLE Inventory(
 );
 
 CREATE TABLE Income(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Income_Type ENUM("Sponsor", "Ticket Sales", "Merchandise", "Other") NOT NULL,
     Other_Income VARCHAR(50),
     Amount INT NOT NULL,
