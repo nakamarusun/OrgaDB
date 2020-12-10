@@ -6,3 +6,4 @@ DATABASE_NAME = "ems_db"
 
 # Integration with Google App Scripts on Google Forms
 G_FORM_SECRET = "<CHANGETHIS>"
+G_FORM_PREFIX = "dbe"
