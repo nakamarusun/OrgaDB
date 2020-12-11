@@ -8,27 +8,25 @@ bp = Blueprint("user", __name__, url_prefix="/user")
 
 @bp.route("/login", methods =['GET', 'POST'])
 def login():
-    # TODO @bently: Create login
     msg = '' 
     # indicate the desired action to be performed for a given resource.
-    print("bruh")
     if request.method == 'POST': 
-        email = request.form['mail']
-        print(email)
+        email = request.form['mail'] 
         password = request.form['pwd'] 
-        print(password)
         cursor = db.get_db().cursor()
-        cursor.execute('SELECT * FROM login_cred WHERE Email = %s AND Pass = %s', (email, password,)) 
+        cursor.execute('SELECT * FROM login_cred WHERE Email = %s AND Pass = %s', (email, password, )) 
         #method returns a single record or None if no more rows are available.
-        Login_cred = cursor.fetchone() 
-        if Login_cred: 
-            session['id'] = Login_cred[1] 
-            session['email'] = Login_cred[2] 
+        users = cursor.fetchone() 
+        if users: 
+            session['loggedin'] = True
+            session['id'] = users[0]
+            session['email'] = users[2]
             msg = 'Logged in successfully !'
-            return render_template('skeleton.html', msg = msg) 
+            return render_template('register.html', msg = msg) 
         else: 
             msg = 'Wrong email / password'
-    return render_template('login.html', msg = msg) 
+    else:
+        return render_template('login.html', msg = msg) 
 
 @bp.route("/register", methods =['GET', 'POST'])
 def register(): 
