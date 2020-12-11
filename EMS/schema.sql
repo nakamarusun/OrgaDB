@@ -12,22 +12,23 @@ DROP TABLE IF EXISTS Login_cred;
 
 
 CREATE TABLE Events(
-    Id INT(255) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Event_Name VARCHAR(40) NOT NULL,
     Venue VARCHAR(40) NOT NULL,
-    Budget INT(255) NOT NULL
+    Budget INT NOT NULL,
+    Event_Desc TEXT NOT NULL
 );
 
 CREATE TABLE Members(
-    Id INT(30) PRIMARY KEY NOT NULL,
+    Id SMALLINT PRIMARY KEY NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
     Position VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Clearance(
-    Member_Id INT(30) NOT NULL,
+    Member_Id SMALLINT NOT NULL,
     Clearance_Level ENUM("1", "2", "3", "4", "5") NOT NULL,
-    Event_Id INT(255) NOT NULL,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Member_id) REFERENCES Members(Id),
     FOREIGN KEY (Event_id) REFERENCES Events(Id)
 );
@@ -35,63 +36,67 @@ CREATE TABLE Clearance(
 
 
 CREATE TABLE Event_Committee(
-    Event_Id INT(255) NOT NULL,
-    Member_Id INT(255) NOT NULL,
+    Event_Id SMALLINT NOT NULL,
+    Member_Id SMALLINT NOT NULL,
     Member_Role VARCHAR(50) NOT NULL,
     FOREIGN KEY (Member_Id) REFERENCES Members(Id),
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
 CREATE TABLE Feedback(
-    Rating INT(10) NOT NULL,
-    Comments VARCHAR(255) NOT NULL,
-    Event_Id INT(255) NOT NULL,
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    Rating TINYINT NOT NULL,
+    Comments TEXT NOT NULL,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
 CREATE TABLE Guests(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
     Email VARCHAR(50) NOT NULL,
-    Phone_Number INT(25) NOT NULL,
+    Phone_Number VARCHAR(30) NOT NULL,
     Category VARCHAR(50) NOT NULL,
-    Event_Id INT(255) NOT NULL,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
 CREATE TABLE Expenses(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Expense_Type ENUM("Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other") NOT NULL,
     Other_Expense VARCHAR(50),
-    Amount INT(255) NOT NULL,
-    Event_Id INT(255) NOT NULL,
+    Amount SMALLINT NOT NULL,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
 CREATE TABLE Sponsor(
-    Id INT(50) PRIMARY KEY NOT NULL,
+    Id SMALLINT PRIMARY KEY NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
     Sponsor_Address VARCHAR(50) NOT NULL,
     Phone_Number VARCHAR(50) NOT NULL,
     Sponsor_Type VARCHAR(10) NOT NULL,
-    Event_Id INT(255) NOT NULL,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
 CREATE TABLE Inventory(
-    Inventory_Id INT(50) PRIMARY KEY NOT NULL,
+    Inventory_Id SMALLINT PRIMARY KEY NOT NULL,
     Item_Name VARCHAR(255) NOT NULL,
-    Item_Quantity INT(50) NOT NULL,
-    Sponsor_Id INT(50),
-    Event_Id INT(255) NOT NULL,
+    Item_Quantity SMALLINT NOT NULL,
+    Sponsor_Id SMALLINT,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id),
     FOREIGN KEY (Sponsor_Id) REFERENCES Sponsor(Id)
 );
 
 CREATE TABLE Income(
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Income_Type ENUM("Sponsor", "Ticket Sales", "Merchandise", "Other") NOT NULL,
     Other_Income VARCHAR(50),
-    Amount INT(100) NOT NULL,
-    Sponsor_Id INT(50),
-    Event_Id INT(50) NOT NULL,
+    Amount INT NOT NULL,
+    Sponsor_Id SMALLINT,
+    Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id),
     FOREIGN KEY (Sponsor_Id) REFERENCES Sponsor(Id)
 );

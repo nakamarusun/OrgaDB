@@ -5,7 +5,7 @@ from os import makedirs
 # App factory
 def create_app(conf:dict=None):
     app = Flask(__name__)
-    
+    app.secret_key = "EMSisThePog"
     # Load the configuration file if it is passed ^_^
     if conf: app.config.from_mapping(conf)
 
