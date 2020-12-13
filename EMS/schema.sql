@@ -67,6 +67,7 @@ CREATE TABLE Expenses(
     Other_Expense VARCHAR(50),
     Amount SMALLINT NOT NULL,
     Event_Id SMALLINT NOT NULL,
+    Expense_Date DATE NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
@@ -97,6 +98,7 @@ CREATE TABLE Income(
     Amount INT NOT NULL,
     Sponsor_Id SMALLINT,
     Event_Id SMALLINT NOT NULL,
+    Income_Date DATE NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id),
     FOREIGN KEY (Sponsor_Id) REFERENCES Sponsor(Id)
 );
