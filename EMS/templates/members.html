@@ -1,0 +1,25 @@
+{% extends 'event_template.html' %}
+<!-- Todo : Create committee, members, guests section -->
+
+{% block right_cont %}
+<div class="container flex flex-col px-12">
+    <h1>MEMBERS</h1>
+    <div class="container flex h-18">
+        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg active"><b>Committee</b></div>
+        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Volunteer</b></div>
+        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Guest</b></div>
+    </div>
+    <table class="container border-2 table-auto">
+        <tr>
+            <th class="border-2 h-10">ID</th>
+            <th class="border-2 h-10">Name</th>
+            <th class="border-2 h-10">Position</th>
+        </tr>
+        <tr>
+            <td class="border-2 h-10">12</td>
+            <td class="border-2 h-10">Chaika</td>
+            <td class="border-2 h-10">Admin</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

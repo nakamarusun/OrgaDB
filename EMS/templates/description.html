@@ -1,0 +1,17 @@
+{% extends 'home_template.html' %}
+
+<!-- TODO: Create event description page -->
+{% block right_cont %}
+    <div class="container h-full p-5 flex flex-col items-center">
+        <div class="m-3 w-48 h-48 flex-shrink-0">
+            <img src="https://via.placeholder.com/192" alt="" class="object-cover">
+        </div>
+        <h1 class="text-3xl">NusaPonyCon</h1>
+        <div class="black_fade_line container h-px flex flex-shrink-0 my-3"></div>
+        <div class="container mt-3 p-3 bg-gray-100 rounded-md h-full text-xl text-justify">
+        This is sketch, in the future, should be able to show paragraph and stuff, but because html i sweird. can't for now. TODO:Make paragraph be able</div>
+        <div class="w-full flex flex-row justify-end h-6 mt-2 cursor-pointer">
+            <img src="{{url_for('static',filename='asset/pencil.svg')}}" alt="object-cover">
+        </div>
+    </div>
+{% endblock %}

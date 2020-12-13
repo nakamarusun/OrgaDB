@@ -19,11 +19,7 @@
         </div>
     </div>
     <span class="text-white text-sm m-2">
-    {% if login_text %}
-        Don't have an account yet? <a class = "hover:underline" href="{{url_for('user.register')}}">Sign up</a>
-    {% else %}
-        Already have an account? <a class = "hover:underline" href="{{url_for('user.login')}}"> Log in</a>
-    {% endif %}
+    {% block login_text %}{% endblock %}
     </span>
 </div>
 {% endblock %}

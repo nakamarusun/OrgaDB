@@ -8,8 +8,12 @@
         <link rel="stylesheet" href="{{url_for('static',filename='base.css')}}">
         {% block head %}{% endblock %}
         <title>{% block title %}{% endblock %} Event Management System</title>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </head>
     <body class = "no-scroll m-0 p-0 bg-white">
         {% block body %}{% endblock %}
     </body>
+    {% block scripts %}{% endblock %}
+    
 </html>

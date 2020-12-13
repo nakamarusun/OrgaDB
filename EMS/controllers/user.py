@@ -5,11 +5,13 @@ bp = Blueprint("user", __name__, url_prefix="/user")
 @bp.route("/login")
 def login():
     # TODO @bently: Create login
-    login_text = True
-    return render_template('login.html',login_text =login_text)
+    return render_template('login.html')
 
 @bp.route("/register")
 def register():
     # TODO @bently: Create register
-    login_text = False
-    return render_template('register.html', login_text=login_text)
+    return render_template('register.html')
+
+@bp.route("/profile")
+def profile():
+    return render_template('profile.html')

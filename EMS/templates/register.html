@@ -16,3 +16,7 @@ REGISTER
     <input class = "transition p-2 h-10 w-32 border-b-4 m-3 cursor-pointer hover:bg-green-300 hover:text-white hover:border-green-400" type = "submit" value = "Sign up">
 </form>
 {% endblock %}
+
+{% block login_text %}
+Already have an account? <a class = "hover:underline" href="{{url_for('user.login')}}"> Log in</a>
+{% endblock %}
