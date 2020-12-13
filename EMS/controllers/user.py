@@ -62,3 +62,9 @@ def logout():
     session.pop('id', None) 
     session.pop('email', None) 
     return redirect(url_for('login')) 
+
+@bp.route("/<string:id>/profile")
+def profile_page(id):
+
+    # TODO: Add /user/<id>/profile
+    return " User profile: " + id
