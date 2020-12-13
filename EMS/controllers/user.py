@@ -14,10 +14,14 @@ def login():
         email = request.form['mail'] 
         password = request.form['pwd'] 
         cursor = db.get_db().cursor()
+
+        # Gets the email and password pair from the database.
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s AND Pass = %s', (email, password, )) 
+
         #method returns a single record or None if no more rows are available.
         users = cursor.fetchone() 
-        if users: 
+        if users:
+            # Sets the internal session variables
             session['loggedin'] = True
             session['id'] = users[0]
             session['email'] = users[2]
@@ -31,15 +35,16 @@ def login():
 @bp.route("/register", methods =['GET', 'POST'])
 def register(): 
     msg = '' 
-    #when inputting the data, to check if it is exist or not 
+    # when inputting the data, to check if it is exist or not 
     if request.method == 'POST': 
-        #obtaining values
+        # obtaining values
         email = request.form['mail']
         password = request.form['pwd'] 
         cursor = db.get_db().cursor()
+
+        # Checks whether the email already exists in the database.
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s', (email,)) 
         users = cursor.fetchone() 
-        print(users)
         if users: 
             msg = 'users already exists !'
         # most basic checks for email 
@@ -52,12 +57,13 @@ def register():
             cursor.execute('INSERT INTO login_cred (Id, Pass, Email) VALUES (%s, %s, %s)', (id, password, email,)) 
             db.get_db().commit() 
             msg = 'You have successfully registered !'
-    elif request.method == 'POST': 
-        msg = 'Please fill out the form !'
+
     return render_template('register.html', msg = msg) 
 
 @bp.route('/logout') 
 def logout(): 
+    # Logs out the user from the session
+    # By popping from the variables
     session.pop('loggedin', None) 
     session.pop('id', None) 
     session.pop('email', None) 
