@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'calendas_plusregular';
+    src: url('font/Calendas/calendas_plus-webfont.eot');
+    src: url('font/Calendas/calendas_plus-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Calendas/calendas_plus-webfont.woff2') format('woff2'),
+         url('font/Calendas/calendas_plus-webfont.woff') format('woff'),
+         url('font/Calendas/calendas_plus-webfont.ttf') format('truetype'),
+         url('font/Calendas/calendas_plus-webfont.svg#calendas_plusregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    color: #205566;
+}
+
+h1{
+    font-family: 'calendas_plusregular';
+}
+
+.fade_line{ 
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(left,  rgb(209, 250, 229) 0%, grey 25%, grey 75%, rgb(209, 250, 229) 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(left,  rgb(209, 250, 229) 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgb(209, 250, 229) 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgb(209, 250, 229) 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* IE10+ */
+    background: linear-gradient(left,  rgb(209, 250, 229) 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* W3C */
+}
+.black_fade_line{ 
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(left,  white 0%, black 25%, black 75%, white 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(left,  white 0%,black 25%,black 75%,white 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  white 0%,black 25%,black 75%,white 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  white 0%,black 25%,black 75%,white 100%); /* IE10+ */
+    background: linear-gradient(left,  white 0%,black 25%,black 75%,white 100%); /* W3C */
+}
+.left_fade_line{
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(left,  black 0%, grey 25%, grey 75%, rgb(209, 250, 229) 100%); /* FF3.6+ */
+    background: -webkit-linear-gradient(left,  black 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  black 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  black 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* IE10+ */
+    background: linear-gradient(left,  black 0%,grey 25%,grey 75%,rgb(209, 250, 229) 100%); /* W3C */
+}
+.no-scroll {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.no-scroll::-webkit-scrollbar{
+    display: none;
+}

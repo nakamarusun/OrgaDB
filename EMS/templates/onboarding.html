@@ -1,18 +1,25 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static',filename='onboarding.css')}}">
+{% endblock %}
+
 {% block title %}
 {% endblock %}
 
 {% block body %}
 <img src="{{url_for('static', filename='asset/onboarding_bg.webp')}}" alt="Man on reception" class="container h-screen object-cover">
-<div class="container absolute left-0 top-0 bg-black h-screen bg-opacity-50 flex justify-center items-center">
-    <div class="w-1/4 h-3/5 flex flex-col bg-black border-4 border-gray-400 rounded-md bg-green-200 items-stretch min-h-min" style = "min-height: 380px; min-width: 300;">
-        <div class="w-full flex h-1/6 bg-green-300 text-center text-3xl text-black justify-center items-center">
+<div class="container absolute left-0 top-0 bg-black h-screen bg-opacity-50 flex flex-col justify-center items-center">
+    <div class="w-1/4 h-2/5 flex flex-col bg-black bg-green-200 bg-opacity-90 rounded-md items-stretch min-h-min" style = "min-height: 380px; min-width: 300px;">
+        <h1 class="w-full flex h-1/6 text-center text-3xl justify-center items-center bg-green-200 bg-opacity-50 rounded-md">
             {% block onboarding_type %}{% endblock %}
-        </div>
-        <div class="w-full flex-1">
+        </h1>
+        <div class="onboard_form w-full flex-grow">
             {% block onboarding_form %}{% endblock %}
         </div>
     </div>
+    <span class="text-white text-sm m-2">
+    {% block login_text %}{% endblock %}
+    </span>
 </div>
 {% endblock %}

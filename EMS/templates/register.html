@@ -5,10 +5,11 @@ Register -
 {% endblock %}
 
 {% block onboarding_type %}
-Register
+REGISTER
 {% endblock %}
 
 {% block onboarding_form %}
+<<<<<<< HEAD
 <form method = "POST" id = "form" class="flex flex-col h-full items-center justify-evenly">
     <input class = "m-3 w-4/5 p-3 border-2 rounded-md" type = "email" name = "mail" id = "mail" value = "" required placeholder="E-Mail">
     <input class = "m-3 w-4/5 p-3 border-2 rounded-md" type = "text" name = "name" id = "name" value = "" required placeholder="Username">
@@ -17,5 +18,16 @@ Register
         <input class = "p-2 w-32 border-2 rounded-md cursor-pointer" type = "submit" value = "Sign up">
         <a class = "text-xs" href="{{url_for('user.login')}}">or log in</a>
     </div>
+=======
+<form action = "/register" method = "POST" id = "form" class="flex flex-col h-full items-center justify-evenly">
+    <input class = "m-3 w-4/5 p-3 border-b-4" type = "email" name = "mail" id = "mail" value = "" required placeholder="E-Mail">
+    <input class = "m-3 w-4/5 p-3 border-b-4" type = "text" name = "name" id = "name" value = "" required placeholder="Username">
+    <input class = "m-3 w-4/5 p-3 border-b-4" type = "password" name = "pwd" id = "pwd" value = "" required placeholder="Password">
+    <input class = "transition p-2 h-10 w-32 border-b-4 m-3 cursor-pointer hover:bg-green-300 hover:text-white hover:border-green-400" type = "submit" value = "Sign up">
+>>>>>>> html_testing_ground
 </form>
+{% endblock %}
+
+{% block login_text %}
+Already have an account? <a class = "hover:underline" href="{{url_for('user.login')}}"> Log in</a>
 {% endblock %}

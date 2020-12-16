@@ -1,13 +1,18 @@
+<<<<<<< HEAD
 from flask import Blueprint
 from flask import Flask, render_template, request, redirect, url_for, session 
 from EMS import db
 import random
 import re 
+=======
+from flask import Blueprint,render_template
+>>>>>>> html_testing_ground
 
 bp = Blueprint("user", __name__, url_prefix="/user")
 
 @bp.route("/login", methods =['GET', 'POST'])
 def login():
+<<<<<<< HEAD
     msg = '' 
     # indicate the desired action to be performed for a given resource.
     if request.method == 'POST': 
@@ -74,3 +79,16 @@ def profile_page(id):
 
     # TODO: Add /user/<id>/profile
     return " User profile: " + id
+=======
+    # TODO @bently: Create login
+    return render_template('login.html')
+
+@bp.route("/register")
+def register():
+    # TODO @bently: Create register
+    return render_template('register.html')
+
+@bp.route("/profile")
+def profile():
+    return render_template('profile.html')
+>>>>>>> html_testing_ground
