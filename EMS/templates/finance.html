@@ -4,9 +4,9 @@
 {% block right_cont %}
 <div class="container flex flex-col px-12">
     <h1>Finance</h1>
-    <div class="tabs container flex h-18">
-        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg active"><b>Income</b></div>
-        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Expense</b></div>
+    <div class="tab_container container flex h-18">
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Income</b></div>
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Expense</b></div>
     </div>
     <table class="content container border-2 table-fixed">
         <tr>
@@ -28,7 +28,7 @@
         </tr>
         <tr>
             <td class="border-2 h-10">12-11-2020</td>
-            <td class="border-2 h-10">Fursuit</td>
+            <td class="border-2 h-10">Gay</td>
             <td class="border-2 h-10">Rp.2.000.000</td>
         </tr>
     </table>
@@ -36,9 +36,17 @@
 {% endblock %}
 
 {% block scripts %}
-    <!-- <script>
+    <script>
         $(document).ready(function(){
-            $('')
+            $('.content:first').show();
+            $('.tabs:first').addClass('active');
+            $('.tabs').click(function(event){
+                index = $(this).index();
+                $('.tabs').removeClass('active');
+                $(this).addClass('active');
+                $('.content').hide()
+                $('.content').eq(index).show()
+            })
         })
-    </script> -->
-{% endblock %}
+    </script>
+{% endblock %} 
