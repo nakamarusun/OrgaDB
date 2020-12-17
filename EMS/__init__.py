@@ -26,5 +26,5 @@ def create_app(conf:dict=None):
 
     # Initialize uncache
     cache.reg_static_uncache(app)
-
+    
     return app

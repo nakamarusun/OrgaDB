@@ -1,0 +1,29 @@
+{% extends 'home_template.html' %}
+
+{% block left_cont %}
+<aside class="container flex flex-col my-3 px-5">
+    <div class="flex justify-between items-center">
+        <span class="text-lg">Events</span>
+        <span class="bg-green-300 text-sm h-full py-px px-1 rounded-sm">New+</span>
+    </div>
+    <div class="left_fade_line h-px my-2"></div>
+    <div class="text-md flex flex-col truncate overflow-hidden">
+        <!-- For i in someone's event list,  -->
+        <a class="text-blue-600 hover:underline" href="">Username/Nama Event</a>
+        <a class="text-blue-600 hover:underline" href="">Username/Nama Event</a>
+    </div>
+</aside>
+{% endblock %}
+
+{% block right_cont %}
+<div class="container h-full flex items-center justify-center text-center">
+    <div class="w-1/4 h-2/5 border-4 bg-gray-100 rounded-md">
+        <h1 class="text-lg">Create Event</h1>
+        <form action="/new" method="post">
+            <input type="text" class="w-full h-8  my-2 px-4 rounded-sm border-4 bg-gray-100" required placeholder="Event name">
+            <input type="text" class="w-full h-16 mt-2 px-4 rounded-sm border-4 bg-gray-100" required placeholder="Description">
+            <input type="submit" class="w-full h-16 my-2 px-2" required placeholder="Submit">
+        </form>
+    </div>
+</div>
+{% endblock %}
