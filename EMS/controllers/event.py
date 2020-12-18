@@ -58,4 +58,4 @@ def add_new():
 
     # TODO: add /event/new
     # Add new event
-    return """ Adding new """
+    return render_template('new.html')
