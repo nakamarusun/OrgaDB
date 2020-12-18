@@ -3,23 +3,67 @@
 
 {% block right_cont %}
 <div class="container flex flex-col px-12">
-    <h1>MEMBERS</h1>
-    <div class="container flex h-18">
-        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg active"><b>Committee</b></div>
-        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Volunteer</b></div>
-        <div class="bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Guest</b></div>
+    <h1 class="text-center text-2xl pt-6 pb-4">Members</h1>
+    <div class="tab_container container flex h-18">
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Committee</b></div>
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Volunteer</b></div>
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Guests</b></div>
     </div>
-    <table class="container border-2 table-auto">
+    <!-- This page will output 3 tables, based on  -->
+    <!-- For i in category, for j in record -->
+    <table class="content container border-2 table-fixed">
         <tr>
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
         </tr>
         <tr>
-            <td class="border-2 h-10">12</td>
+            <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Chaika</td>
-            <td class="border-2 h-10">Admin</td>
+            <td class="border-2 h-10">A</td>
         </tr>
     </table>
+    <table class="content container border-2 table-fixed">
+        <tr>
+            <th class="border-2 h-10">ID</th>
+            <th class="border-2 h-10">Name</th>
+            <th class="border-2 h-10">Position</th>
+        </tr>
+        <tr>
+            <td class="border-2 h-10">2</td>
+            <td class="border-2 h-10">Gay</td>
+            <td class="border-2 h-10">Bouncer</td>
+        </tr>
+    </table>
+    <table class="content container border-2 table-fixed">
+        <tr>
+            <th class="border-2 h-10">ID</th>
+            <th class="border-2 h-10">Name</th>
+            <th class="border-2 h-10">Position</th>
+        </tr>
+        <tr>
+            <td class="border-2 h-10">2</td>
+            <td class="border-2 h-10">Gay</td>
+            <td class="border-2 h-10">Bouncer</td>
+        </tr>
+    </table>
+    
 </div>
 {% endblock %}
+
+
+{% block scripts %}
+    <script>
+        $(document).ready(function(){
+            $('.content:first').show();
+            $('.tabs:first').addClass('active');
+            $('.tabs').click(function(event){
+                index = $(this).index();
+                $('.tabs').removeClass('active');
+                $(this).addClass('active');
+                $('.content').hide()
+                $('.content').eq(index).show()
+            })
+        })
+    </script>
+{% endblock %} 
