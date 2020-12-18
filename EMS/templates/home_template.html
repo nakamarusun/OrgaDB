@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container flex flex-col h-screen items-stretch">
-        <header class="container h-24 bg-green-200 border-b-4 flex flex-shrink-0 items-center justify-between">
+    <div class="flex flex-col h-screen items-stretch w-screen">
+        <header class="w-screen h-24 bg-green-200 border-b-4 flex flex-shrink-0 items-center justify-between">
             <div class = "text-xl text-black ml-6">
                 <a href="{{url_for('index.index')}}">
                 Epic Management System</a></div>
@@ -23,11 +23,11 @@
                 {% endif %}
             </nav>
         </header>
-        <div class="container flex flex-grow flex-row items-stretch">
-            <div class="w-96 h-full border-r-4 bg-green-100">
+        <div class="w-screen flex flex-grow flex-row items-stretch">
+            <div class="md:w-72 lg:w-96 h-full border-r-4 bg-green-100 hidden md:flex">
                 {% block left_cont %}{% endblock %}
             </div>
-            <div class="flex-1 h-full border-r-4">
+            <div class="flex-1 h-full border-r-4 w-full">
                 {% block right_cont %}{% endblock %}
             </div>
         </div>
