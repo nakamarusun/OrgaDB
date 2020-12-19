@@ -26,7 +26,7 @@ def login():
             session['id'] = users[0]
             session['email'] = users[2]
             msg = 'Logged in successfully !'
-            return render_template('register.html', msg = msg) 
+            return render_template('index.html', msg = msg) 
         else: 
             msg = 'Wrong email / password'
     else:
@@ -57,6 +57,7 @@ def register():
             cursor.execute('INSERT INTO login_cred (Id, Pass, Email) VALUES (%s, %s, %s)', (id, password, email,)) 
             db.get_db().commit() 
             msg = 'You have successfully registered !'
+            return render_template('login.html')
 
     return render_template('register.html', msg = msg) 
 
