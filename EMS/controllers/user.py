@@ -28,11 +28,11 @@ def login():
             session['user_name'] = users[3]
             msg = 'Logged in successfully !'
             # TODO: Jangan pake render template, pake redirect
-            return render_template('index.html', msg = msg) 
+            return redirect(url_for('index.index'))
         else: 
             msg = 'Wrong email / password'
     else:
-        return render_template('login.html', msg = msg) 
+        return render_template('login.html')
 
 @bp.route("/register", methods =['GET', 'POST'])
 def register(): 
@@ -62,9 +62,9 @@ def register():
             db.get_db().commit() 
             msg = 'You have successfully registered !'
             # TODO: Jangan pake render template bent. Pake redirect.
-            return render_template('login.html')
+            return redirect(url_for('user.login'))
 
-    return render_template('register.html', msg = msg) 
+    return render_template('register.html')
 
 @bp.route('/logout') 
 def logout(): 
