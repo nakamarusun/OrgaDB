@@ -25,6 +25,7 @@ def login():
             session['loggedin'] = True
             session['id'] = users[0]
             session['email'] = users[2]
+            session['user_name'] = users[3]
             msg = 'Logged in successfully !'
             # TODO: Jangan pake render template, pake redirect
             return render_template('index.html', msg = msg) 
@@ -40,7 +41,8 @@ def register():
     if request.method == 'POST': 
         # obtaining values
         email = request.form['mail']
-        password = request.form['pwd'] 
+        password = request.form['pwd']
+        username = request.form['name']
         cursor = db.get_db().cursor()
 
         # Checks whether the email already exists in the database.
@@ -51,12 +53,12 @@ def register():
         # most basic checks for email 
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email): 
             msg = 'Invalid email address !'
-        elif not email or not password : 
+        elif not email or not password or not username: 
             msg = 'Please fill out the form !'
         else: 
             # TODO: Random, kalau dapet angka yang sama gimana dong :(
             id = random.randint(0,9999)
-            cursor.execute('INSERT INTO login_cred (Id, Pass, Email) VALUES (%s, %s, %s)', (id, password, email,)) 
+            cursor.execute('INSERT INTO login_cred (Id, Pass, Email, Username) VALUES (%s, %s, %s, %s)', (id, password, email, username,)) 
             db.get_db().commit() 
             msg = 'You have successfully registered !'
             # TODO: Jangan pake render template bent. Pake redirect.
@@ -71,7 +73,7 @@ def logout():
     session.pop('loggedin', None) 
     session.pop('id', None) 
     session.pop('email', None) 
-    return redirect(url_for('login')) 
+    return redirect(url_for('user.login')) 
 
 @bp.route("/<string:id>/profile")
 def profile_page(id):
