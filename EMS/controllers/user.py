@@ -26,6 +26,7 @@ def login():
             session['id'] = users[0]
             session['email'] = users[2]
             msg = 'Logged in successfully !'
+            # TODO: Jangan pake render template, pake redirect
             return render_template('index.html', msg = msg) 
         else: 
             msg = 'Wrong email / password'
@@ -53,10 +54,12 @@ def register():
         elif not email or not password : 
             msg = 'Please fill out the form !'
         else: 
+            # TODO: Random, kalau dapet angka yang sama gimana dong :(
             id = random.randint(0,9999)
             cursor.execute('INSERT INTO login_cred (Id, Pass, Email) VALUES (%s, %s, %s)', (id, password, email,)) 
             db.get_db().commit() 
             msg = 'You have successfully registered !'
+            # TODO: Jangan pake render template bent. Pake redirect.
             return render_template('login.html')
 
     return render_template('register.html', msg = msg) 
