@@ -71,6 +71,7 @@ def logout():
     # Logs out the user from the session
     # By popping from the variables
     session.pop('loggedin', None) 
+    session.pop('user_name', None)
     session.pop('id', None) 
     session.pop('email', None) 
     return redirect(url_for('user.login')) 
