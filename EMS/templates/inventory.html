@@ -1,2 +1,63 @@
-{% extends 'event_template.html'%}
-<!-- Todo : Create inventory section, with a certain icon marking sponsorship -->
+{% extends 'event_template.html' %}
+<!-- TODO: Create income section and expense section, a certain icon will be used to mark a sponsored income record -->
+
+{% block right_cont %}
+<div class="container flex flex-col px-12">
+    <h1 class="text-center text-2xl pt-6 pb-4">Finance</h1>
+    <div class="tab_container container flex h-18">
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Inventory</b></div>
+    </div>
+    <table class="content container border-2 table-auto">        
+        <tr>
+            <th class="border-2 h-10">Name</th>
+            <th class="border-2 h-10">Amount</th>
+            <th class="border-2 h-10">Sponsor</th>
+        </tr>
+
+        <!-- Commented out jinja template -->
+        {# 
+        {% for dict_item in inventory_list %}
+            <tr>
+                <td class="border-2 h-10">{{dict_item['name']}}</td>
+                <td class="border-2 h-10">{{dict_item['amount']}}</td>
+                <td class="border-2 h-10">{{dict_item['sponsor']}}</td>    
+            </tr>
+        {% else %}
+            <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
+        {% endfor %}
+        #}
+
+        <!-- Placeholder values -->
+        <tr>
+            <td class="border-2 h-10">12-11-2020</td>
+            <td class="border-2 h-10">Fursuit</td>
+            <td class="border-2 h-10">The Furry Community</td>
+        </tr>
+    </table>
+    
+    <table class="content container border-2 table-auto">
+        <tr>
+            <th class="border-2 h-10">Date</th>
+            <th class="border-2 h-10">Name</th>
+            <th class="border-2 h-10">Amount</th>
+            <th class="border-2 h-10">Type</th>
+        </tr>
+    </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(document).ready(function(){
+            $('.content:first').show();
+            $('.tabs:first').addClass('active');
+            $('.tabs').click(function(event){
+                index = $(this).index();
+                $('.tabs').removeClass('active');
+                $(this).addClass('active');
+                $('.content').hide()
+                $('.content').eq(index).show()
+            })
+        })
+    </script>
+{% endblock %} 
