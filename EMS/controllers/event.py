@@ -1,5 +1,6 @@
 from flask import Blueprint
-from flask import Flask, render_template, request, redirect, url_for, session 
+from flask import Flask, render_template, request, redirect, url_for, session
+import EMS.db as db
 
 bp = Blueprint("event", __name__, url_prefix="/event")
 
@@ -30,7 +31,43 @@ def finance(id):
 
     # TODO: add /event/<id>/description
     # Displays the event's financy uh
-    return "finance: " + id
+
+    # Queries the database for necessary data to pass
+    cursor = db.get_db().cursor()
+
+    # First, we get the income
+    fetch = cursor.execute(
+        "SELECT e.Id, e.Name, Expense_Type, Amount, Expense_Date FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
+        (id,)
+    )
+
+    # List of income
+    income_list = []
+    for data in fetch.fetchall():
+        income_list.append({
+            "date": data[4],
+            "name": data[1],
+            "amount": data[3],
+            "type": data[2]
+        })
+    
+    # Get the expense
+    fetch = cursor.execute(
+        "SELECT i.Id, i.Name, Income_Type, Amount, Income_Date FROM Income i JOIN Events ev ON ev.Id=I.Event_Id WHERE Event_Id=%s;",
+        (id,)
+    )
+
+    # And put to expense list
+    expense_list = []
+    for data in fetch.fetchall():
+        expense_list.append({
+            "date": data[4],
+            "name": data[1],
+            "amount": data[3],
+            "type": data[2]
+        })
+
+    return render_template("finance.html", income_list=income_list, expense_list=expense_list)
 
 @bp.route("/<string:id>/inventory")
 def inventory(id):
