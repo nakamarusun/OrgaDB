@@ -81,7 +81,53 @@ def members(id):
 
     # TODO: add /event/<id>/description
     # Show the memberrs associated with an event
-    return "members: " + id
+
+    # Queries the database for necessary data to pass
+    cursor = db.get_db().cursor()
+
+    # First, we get the income
+    fetch = cursor.execute(
+        "SELECT ec.Member_Id, m.Full_Name, ec.Member_Role FROM Event_Committee ec JOIN Members m ON ec.Member_Id=m.Id WHERE Event_Id=%s;",
+        (id,)
+    )
+
+    committee_list = []
+    for data in fetch.fetchall():
+        committee_list.append({
+            "id": data[0],
+            "name": data[1],
+            "position": data[2]
+        })
+
+    # Get the volunteers
+    # fetch = cursor.execute(
+    #     "SELECT ec.Member_Id, m.Full_Name, ec.Member_Role FROM Event_Committee ec JOIN Members m ON ec.Member_Id=m.Id WHERE Event_Id=%s;",
+    #     (id,)
+    # )
+
+    volunteer_list = []
+    # for data in fetch.fetchall():
+    #     volunteer_list.append({
+    #         "id": data[0],
+    #         "name": data[1],
+    #         "position": data[2]
+    #     })
+
+    # Get the guests
+    fetch = cursor.execute(
+        "SELECT Id, Full_Name FROM Guests WHERE Event_Id=%s;",
+        (id,)
+    )
+
+    guest_list = []
+    for data in fetch.fetchall():
+        guest_list.append({
+            "id": data[0],
+            "name": data[1],
+        })
+
+
+    return render_template("members.html", committee_list=committee_list, volunteer_list=volunteer_list, guest_list=guest_list)
 
 @bp.route("/<string:id>/feedback")
 def feedback(id):
