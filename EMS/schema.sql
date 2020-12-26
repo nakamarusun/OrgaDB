@@ -20,7 +20,7 @@ CREATE TABLE Events(
 );
 
 CREATE TABLE Members(
-    Id SMALLINT PRIMARY KEY NOT NULL,
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
     Position VARCHAR(50) NOT NULL
 );
@@ -32,8 +32,6 @@ CREATE TABLE Clearance(
     FOREIGN KEY (Member_id) REFERENCES Members(Id),
     FOREIGN KEY (Event_id) REFERENCES Events(Id)
 );
-
-
 
 CREATE TABLE Event_Committee(
     Event_Id SMALLINT NOT NULL,
@@ -73,17 +71,17 @@ CREATE TABLE Expenses(
 );
 
 CREATE TABLE Sponsor(
-    Id SMALLINT PRIMARY KEY NOT NULL,
+    Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
     Sponsor_Address VARCHAR(50) NOT NULL,
     Phone_Number VARCHAR(50) NOT NULL,
-    Sponsor_Type VARCHAR(10) NOT NULL,
+    Sponsor_Type ENUM("Money", "Equipment") NOT NULL,
     Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
 
 CREATE TABLE Inventory(
-    Inventory_Id SMALLINT PRIMARY KEY NOT NULL,
+    Inventory_Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Item_Name VARCHAR(255) NOT NULL,
     Item_Quantity SMALLINT NOT NULL,
     Sponsor_Id SMALLINT,
