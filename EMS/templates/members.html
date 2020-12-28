@@ -1,5 +1,9 @@
-{% extends 'event_template.html' %}
+{% extends 'general_template.html' %}
 <!-- Todo : Create committee, members, guests section -->
+
+{% block left_cont %}
+{{ m.event_nav() }}
+{% endblock %}
 
 {% block right_cont %}
 <div class="container flex flex-col px-12">

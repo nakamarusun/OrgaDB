@@ -1,5 +1,13 @@
-{% extends 'event_template.html' %}
+{% extends 'general_template.html' %}
 <!-- TODO: Create income section and expense section, a certain icon will be used to mark a sponsored income record -->
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='event_template.css')}}">
+{% endblock %}
+
+{% block left_cont %}
+{{ m.event_nav() }}
+{% endblock %}
 
 {% block right_cont %}
 <div class="container flex flex-col px-12">
@@ -26,7 +34,8 @@
             <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
         {% endfor %}
         #}
-
+            
+        
         <!-- Placeholder values -->
         <tr>
             <td class="border-2 h-10">12-11-2020</td>

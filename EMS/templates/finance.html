@@ -1,5 +1,12 @@
-{% extends 'event_template.html' %}
+{% extends 'general_template.html' %}
 <!-- TODO: Create income section and expense section, a certain icon will be used to mark a sponsored income record -->
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='event_template.css')}}">
+{% endblock %}
+
+{% block left_cont %}
+{{ m.event_nav() }}
+{% endblock %}
 
 {% block right_cont %}
 <div class="w-full flex flex-col px-12">
@@ -65,7 +72,7 @@
             <input type="text" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
             <input type="text" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
             <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
-            <select required class="rounded border outline-none px-2 my-1 md:my-0">
+            <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2">
                 <option value="Venue" selected>Venue</option>
                 <option value="Marketing">Marketing</option>
                 <option value="Food and Beverage">Food and Beverage</option>
