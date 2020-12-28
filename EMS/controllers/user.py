@@ -47,7 +47,7 @@ def register():
 
         # Checks whether the email already exists in the database.
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s', (email,)) 
-        users = cursor.fetchone() 
+        users = cursor.fetchone()
         if users: 
             msg = 'users already exists !'
         # most basic checks for email 
@@ -56,7 +56,7 @@ def register():
         elif not email or not password or not username: 
             msg = 'Please fill out the form !'
         else: 
-            # TODO: Random, kalau dapet angka yang sama gimana dong :(
+            # TODO: Random, kalau dapet angka yang sama gimana dong :(  (12/28/2020) edit: Id udh pkek AUTO_INCREMENT ganti aj biar idnya gk ke insert
             id = random.randint(0,9999)
             cursor.execute('INSERT INTO login_cred (Id, Pass, Email, Username) VALUES (%s, %s, %s, %s)', (id, password, email, username,)) 
             db.get_db().commit() 
