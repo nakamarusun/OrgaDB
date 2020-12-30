@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import Flask, render_template, request, redirect, url_for, session 
 from EMS import db
+from werkzeug.security import (check_password_hash, generate_password_hash)
 import random
 import re 
 
@@ -16,7 +17,7 @@ def login():
         cursor = db.get_db().cursor()
 
         # Gets the email and password pair from the database.
-        cursor.execute('SELECT * FROM login_cred WHERE Email = %s AND Pass = %s', (email, password, )) 
+        cursor.execute('SELECT * FROM login_cred WHERE Email = %s ', (email, )) 
 
         #method returns a single record or None if no more rows are available.
         users = cursor.fetchone() 
@@ -27,10 +28,15 @@ def login():
             session['email'] = users[2]
             session['user_name'] = users[3]
             msg = 'Logged in successfully !'
-            # TODO: Jangan pake render template, pake redirect
-            return redirect(url_for('index.index'))
-        else: 
-            msg = 'Wrong email / password'
+
+            pass_hash = users[1]
+    
+            if check_password_hash(pass_hash, password):
+                return redirect(url_for('index.index'))
+            else:
+                return redirect(url_for('user.login'))
+        else:
+            return redirect(url_for('user.login'))
     else:
         return render_template('login.html')
 
@@ -56,12 +62,12 @@ def register():
         elif not email or not password or not username: 
             msg = 'Please fill out the form !'
         else: 
-            # TODO: Random, kalau dapet angka yang sama gimana dong :(  (12/28/2020) edit: Id udh pkek AUTO_INCREMENT ganti aj biar idnya gk ke insert
-            id = random.randint(0,9999)
-            cursor.execute('INSERT INTO login_cred (Id, Pass, Email, Username) VALUES (%s, %s, %s, %s)', (id, password, email, username,)) 
+            hash = generate_password_hash(password, salt_length=20)
+            cursor.execute(" INSERT INTO login_cred (Pass, Email, Username) VALUES ('{}', '{}', '{}') ".format(
+                hash,
+                str(email),
+                username))
             db.get_db().commit() 
-            msg = 'You have successfully registered !'
-            # TODO: Jangan pake render template bent. Pake redirect.
             return redirect(url_for('user.login'))
 
     return render_template('register.html')
