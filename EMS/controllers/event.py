@@ -58,9 +58,6 @@ def description(id):
 @check_id
 def finance(id):
 
-    # TODO: add /event/<id>/description
-    # Displays the event's financy uh
-
     # Queries the database for necessary data to pass
     cursor = db.get_db().cursor()
 
@@ -102,16 +99,29 @@ def finance(id):
 @check_id
 def inventory(id):
 
-    # TODO: add /event/<id>/description
-    # Inventory moment right there
-    return "inventory: " + id
+    # Queries the database for necessary data to pass
+    cursor = db.get_db().cursor()
+
+    # First, we get the committee list
+    cursor.execute(
+        "SELECT Inventory_Id, Item_Name, Item_Quantity, Full_Name FROM Inventory i LEFT JOIN Sponsor s ON i.Sponsor_Id=s.Id WHERE i.Event_ID=%s;",
+        (id,)
+    )
+    
+    in_list = []
+    for data in cursor.fetchall():
+        in_list.append({
+            "id": data[0],
+            "name": data[1],
+            "amount": data[2],
+            "sponsor": data[3]
+        })
+
+    return render_template("inventory.html", in_list=in_list)
 
 @bp.route("/<string:id>/members")
 @check_id
 def members(id):
-
-    # TODO: add /event/<id>/description
-    # Show the memberrs associated with an event
 
     # Queries the database for necessary data to pass
     cursor = db.get_db().cursor()
@@ -151,9 +161,24 @@ def members(id):
 @check_id
 def feedback(id):
 
-    # TODO: add /event/<id>/description
-    # Shows all the FEEDBACKS!
-    return "feedback: " + id
+        # Queries the database for necessary data to pass
+    cursor = db.get_db().cursor()
+
+    # First, we get the committee list
+    cursor.execute(
+        "SELECT * FROM Feedback WHERE Event_ID=%s;",
+        (id,)
+    )
+    
+    f_list = []
+    for data in cursor.fetchall():
+        f_list.append({
+            "id": data[0],
+            "rating": data[1],
+            "comments": data[2]
+        })
+    
+    return render_template("feedback.html", f_list=f_list)
 
 @bp.route("/new", methods = ['POST', 'GET'] )
 def add_new():
@@ -167,6 +192,5 @@ def add_new():
         cursor.execute('INSERT INTO Events (Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s)', (event_name, venue, budget, description))
         db.get_db().commit()
         return redirect(url_for('index.index'))
-    # TODO: add /event/new
-    # Add new event
+
     return render_template('new.html')
