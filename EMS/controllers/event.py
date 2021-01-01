@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import Flask, render_template, request, redirect, url_for, session 
 from EMS import db
+import functools
 import re
 
 bp = Blueprint("event", __name__, url_prefix="/event")
@@ -8,6 +9,10 @@ bp = Blueprint("event", __name__, url_prefix="/event")
 def check_id(func):
     # Decorator function to check first whether the id exist.
     # If it does not, then redirect to 404
+
+    # Basically this decorator is used to fix flask, so that the function name is the
+    # name of the original function instead of "wrapped."
+    @functools.wraps(func)
     def wrapped(id):
         # First, we check whether the event exists in the database.
         cursor = db.get_db().cursor()
@@ -43,9 +48,11 @@ def event(id):
 @check_id
 def description(id):
 
-    # TODO: add /event/<id>/description
-    # Displays the event description
-    return "description: " + id
+    cursor = db.get_db().cursor()
+    cursor.execute('SELECT Event_Name, Event_Desc FROM Events WHERE Id=%s', (id,))
+    fetch = cursor.fetchall()[0]
+    
+    return render_template("description.html", title=fetch[0], desc=fetch[1])
 
 @bp.route("/<string:id>/finance")
 @check_id
@@ -58,14 +65,14 @@ def finance(id):
     cursor = db.get_db().cursor()
 
     # First, we get the income
-    fetch = cursor.execute(
-        "SELECT e.Id, e.Name, Expense_Type, Amount, Expense_Date FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
+    cursor.execute(
+        "SELECT e.Id, e.Other_Expense, Expense_Type, Amount, Expense_Date FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
         (id,)
     )
 
     # List of income
     income_list = []
-    for data in fetch.fetchall():
+    for data in cursor.fetchall():
         income_list.append({
             "date": data[4],
             "name": data[1],
@@ -74,14 +81,14 @@ def finance(id):
         })
     
     # Get the expense
-    fetch = cursor.execute(
-        "SELECT i.Id, i.Name, Income_Type, Amount, Income_Date FROM Income i JOIN Events ev ON ev.Id=I.Event_Id WHERE Event_Id=%s;",
+    cursor.execute(
+        "SELECT i.Id, i.Other_Income, Income_Type, Amount, Income_Date FROM Income i JOIN Events ev ON ev.Id=I.Event_Id WHERE Event_Id=%s;",
         (id,)
     )
 
     # And put to expense list
     expense_list = []
-    for data in fetch.fetchall():
+    for data in cursor.fetchall():
         expense_list.append({
             "date": data[4],
             "name": data[1],
@@ -110,14 +117,14 @@ def members(id):
     cursor = db.get_db().cursor()
 
     # First, we get the committee list
-    fetch = cursor.execute(
+    cursor.execute(
         "SELECT ec.Member_Id, m.Full_Name, ec.Member_Role FROM Event_Committee ec JOIN Members m ON ec.Member_Id=m.Id WHERE Event_Id=%s;",
         (id,)
     )
 
     # Committee list already includes volunteers, from the database.
     committee_list = []
-    for data in fetch.fetchall():
+    for data in cursor.fetchall():
         committee_list.append({
             "id": data[0],
             "name": data[1],
@@ -125,13 +132,13 @@ def members(id):
         })
 
     # Get the guests
-    fetch = cursor.execute(
+    cursor.execute(
         "SELECT Id, Full_Name FROM Guests WHERE Event_Id=%s;",
         (id,)
     )
 
     guest_list = []
-    for data in fetch.fetchall():
+    for data in cursor.fetchall():
         guest_list.append({
             "id": data[0],
             "name": data[1],
