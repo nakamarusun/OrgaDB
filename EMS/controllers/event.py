@@ -66,7 +66,7 @@ def add_new():
 
         cursor.execute('INSERT INTO Events (Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s)', (event_name, venue, budget, description))
         db.get_db().commit()
-        return redirect(url_for('event.add_new'))
+        return redirect(url_for('index.index'))
     # TODO: add /event/new
     # Add new event
     return render_template('new.html')
