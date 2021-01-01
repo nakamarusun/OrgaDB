@@ -5,6 +5,24 @@ import re
 
 bp = Blueprint("event", __name__, url_prefix="/event")
 
+def check_id(func):
+    # Decorator function to check first whether the id exist.
+    # If it does not, then redirect to 404
+    def wrapped(id):
+        # First, we check whether the event exists in the database.
+        cursor = db.get_db().cursor()
+        cursor.execute('SELECT * FROM Events WHERE Id=%s', (id,))
+        fetch = cursor.fetchall()
+
+        if not fetch:
+            # Return 404
+            return render_template("404.html")
+        else:
+            # Normal execution
+            return func(id)
+            
+    return wrapped
+
 @bp.route("/")
 def index():
 
@@ -14,6 +32,7 @@ def index():
     return """ Bruh """
 
 @bp.route("/<string:id>")
+@check_id
 def event(id):
 
     # TODO: add /event/<id>
@@ -21,6 +40,7 @@ def event(id):
     return id
 
 @bp.route("/<string:id>/description")
+@check_id
 def description(id):
 
     # TODO: add /event/<id>/description
@@ -28,6 +48,7 @@ def description(id):
     return "description: " + id
 
 @bp.route("/<string:id>/finance")
+@check_id
 def finance(id):
 
     # TODO: add /event/<id>/description
@@ -71,6 +92,7 @@ def finance(id):
     return render_template("finance.html", income_list=income_list, expense_list=expense_list)
 
 @bp.route("/<string:id>/inventory")
+@check_id
 def inventory(id):
 
     # TODO: add /event/<id>/description
@@ -78,6 +100,7 @@ def inventory(id):
     return "inventory: " + id
 
 @bp.route("/<string:id>/members")
+@check_id
 def members(id):
 
     # TODO: add /event/<id>/description
@@ -118,6 +141,7 @@ def members(id):
     return render_template("members.html", committee_list=committee_list, guest_list=guest_list)
 
 @bp.route("/<string:id>/feedback")
+@check_id
 def feedback(id):
 
     # TODO: add /event/<id>/description

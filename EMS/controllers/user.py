@@ -1,7 +1,8 @@
 from flask import Blueprint
-from flask import Flask, render_template, request, redirect, url_for, session 
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from EMS import db
 from werkzeug.security import (check_password_hash, generate_password_hash)
+import functools
 import random
 import re 
 
@@ -9,7 +10,7 @@ bp = Blueprint("user", __name__, url_prefix="/user")
 
 @bp.route("/login", methods =['GET', 'POST'])
 def login():
-    msg = '' 
+    msg = ''
     # indicate the desired action to be performed for a given resource.
     if request.method == 'POST': 
         email = request.form['mail'] 
@@ -20,8 +21,10 @@ def login():
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s ', (email, )) 
 
         #method returns a single record or None if no more rows are available.
-        users = cursor.fetchone() 
+        users = cursor.fetchall() 
         if users:
+            # Gets the first row
+            users = users[0]
             # Sets the internal session variables
             session['loggedin'] = True
             session['id'] = users[0]
@@ -53,7 +56,7 @@ def register():
 
         # Checks whether the email already exists in the database.
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s', (email,)) 
-        users = cursor.fetchone()
+        users = cursor.fetchall()
         if users: 
             msg = 'users already exists !'
         # most basic checks for email 
@@ -81,6 +84,21 @@ def logout():
     session.pop('id', None) 
     session.pop('email', None) 
     return redirect(url_for('index.index')) 
+
+
+def login_required(view):
+    # Decorator so that user that is not logged in gets redirected to the login page
+    # Before doing anything that messes with the data
+
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if session.get("user") == None:
+            flash("Login required!", "Error")
+            return redirect(url_for("user.login_user", referback=request.referrer))
+
+        return view(**kwargs)
+
+    return wrapped_view
 
 @bp.route("/<string:id>/profile")
 def profile_page(id):

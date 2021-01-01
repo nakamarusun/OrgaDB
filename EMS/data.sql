@@ -31,7 +31,7 @@ INSERT INTO Guests(Full_Name, Email, Phone_Number, Category, Event_id)
 INSERT INTO Expenses(Expense_Type, Other_Expense, Amount, Event_id, Expense_Date)
     VALUES("Venue", NULL, 23012838, 1, "2019-05-19"),
     ("Marketing", NULL, 24612983, 1, "2019-06-01"),
-    ("Other", "Something idk", 2734724726, "2019-05-29");
+    ("Other", "Something idk", 2734724726, 2, "2019-05-29");
 
 INSERT INTO Sponsor(Full_Name, Sponsor_Address, Phone_Number, Sponsor_Type, Event_Id)
     VALUES("NordVPN", "Nord@VPN.com", "0812373737349", "Money", 1),
