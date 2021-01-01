@@ -1,10 +1,14 @@
-{% extends 'event_template.html' %}
+{% extends 'general_template.html' %}
+
+{% block left_cont %}
+{{ m.event_nav() }}
+{% endblock %}
 
 <!-- TODO: Create event description page -->
 {% block right_cont %}
     <div class="container h-full p-5 flex flex-col items-center">
         <div class="m-3 w-48 h-48 flex-shrink-0">
-            <img src="https://via.placeholder.com/192" alt="" class="object-cover">
+            <img src="https://picsum.photos/192" alt="" class="object-cover">
         </div>
         <h1 class="text-3xl">NusaPonyCon</h1>
         <div class="black_fade_line container h-px flex flex-shrink-0 my-3"></div>

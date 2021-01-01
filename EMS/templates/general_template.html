@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% import 'macros.html' as m %}
 {% block body %}
     <div class="flex flex-col h-screen items-stretch w-screen">
         <header class="w-screen h-24 bg-green-200 border-b-4 flex flex-shrink-0 items-center justify-between">
@@ -20,7 +20,7 @@
             </nav>
         </header>
         <div class="w-screen flex flex-grow flex-row items-stretch">
-            <div class="md:w-72 lg:w-96 h-full border-r-4 bg-green-100 hidden md:block">
+            <div class="md:w-72 h-full border-r-4 bg-green-100 hidden md:block">
                 {% block left_cont %}{% endblock %}
             </div>
             <div class="flex-1 h-full border-r-4 w-full">

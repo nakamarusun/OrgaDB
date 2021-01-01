@@ -1,37 +1,91 @@
-{% extends 'event_template.html' %}
+{% extends 'general_template.html' %}
 <!-- TODO: Create income section and expense section, a certain icon will be used to mark a sponsored income record -->
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='event_template.css')}}">
+{% endblock %}
+
+{% block left_cont %}
+{{ m.event_nav() }}
+{% endblock %}
 
 {% block right_cont %}
-<div class="container flex flex-col px-12">
-    <h1 class="text-center">Finance</h1>
+<div class="w-full flex flex-col px-12">
+    <h1 class="text-center text-2xl pt-6 pb-4">Finance</h1>
     <div class="tab_container container flex h-18">
         <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Income</b></div>
         <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Expense</b></div>
     </div>
-    <table class="content container border-2 table-fixed">
+    <table class="content container border-2 table-auto">        
         <tr>
             <th class="border-2 h-10">Date</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
+            <th class="border-2 h-10">Type</th>
         </tr>
+
+        <!-- Commented out jinja template -->
+        {# 
+        {% for dict_item in income_list %}
+            <tr>
+                <td class="border-2 h-10">{{dict_item['date']}}</td>
+                <td class="border-2 h-10">{{dict_item['name']}}</td>
+                <td class="border-2 h-10">{{dict_item['amount']}}</td>
+                <td class="border-2 h-10">{{dict_item['type']}}</td>    
+            </tr>
+        {% else %}
+            <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
+        {% endfor %}
+        #}
+
+        <!-- Placeholder values -->
         <tr>
             <td class="border-2 h-10">12-11-2020</td>
             <td class="border-2 h-10">Fursuit</td>
-            <td class="border-2 h-10">Rp.2.000.000</td>
+            <td class="border-2 h-10">Rp.100.000.000</td>
+            <td class="border-2 h-10">Ticket Sales</td>
+        </tr>
+        <tr>
+            <td class="border-2 h-10">12-11-2020</td>
+            <td class="border-2 h-10">asdf</td>
+            <td class="border-2 h-10">Rp.100.000.000</td>
+            <td class="border-2 h-10">Ticket Sales</td>
         </tr>
     </table>
-    <table class="content container border-2 table-fixed">
+    
+    <table class="content container border-2 table-auto">
         <tr>
             <th class="border-2 h-10">Date</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
+            <th class="border-2 h-10">Type</th>
         </tr>
         <tr>
             <td class="border-2 h-10">12-11-2020</td>
-            <td class="border-2 h-10">Gay</td>
-            <td class="border-2 h-10">Rp.2.000.000</td>
+            <td class="border-2 h-10">asdf</td>
+            <td class="border-2 h-10">Rp.100.000.000</td>
+            <td class="border-2 h-10">Ticket Sales</td>
         </tr>
     </table>
+    <form action="" method="post" class="h-24 w-full py-2">
+        <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-md bg-green-200 md:py-3">
+            <input type="date" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
+            <input type="text" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+            <input type="text" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
+            <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
+            <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2">
+                <option value="Venue" selected>Venue</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Food and Beverage">Food and Beverage</option>
+                <option value="Art Supplies">Art Supplies</option>
+                <option value="Equipment">Equipment</option>
+                <option value="Other">Other</option>
+            </select>    
+        </div>
+        <div class="w-full flex justify-end pr-2 py-2">
+            <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
+        </div>
+    </form>
+    <!-- <img src="{{url_for('static',filename='asset/plus.svg')}}" alt="" class="w-6 h-6"> -->
 </div>
 {% endblock %}
 
