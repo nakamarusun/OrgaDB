@@ -1,12 +1,7 @@
 from flask import Blueprint
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, session 
 from EMS import db
 import re
-=======
-from flask import Flask, render_template, request, redirect, url_for, session
-import EMS.db as db
->>>>>>> html_testing_ground
 
 bp = Blueprint("event", __name__, url_prefix="/event")
 

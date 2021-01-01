@@ -80,7 +80,7 @@ def logout():
     session.pop('user_name', None)
     session.pop('id', None) 
     session.pop('email', None) 
-    return redirect(url_for('user.login')) 
+    return redirect(url_for('index.index')) 
 
 @bp.route("/<string:id>/profile")
 def profile_page(id):
