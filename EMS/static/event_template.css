@@ -25,3 +25,11 @@ select {
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
 }
+
+.form-panel{
+    display: none;
+}
+
+.chevron-down{
+    filter: invert(23%) sepia(84%) saturate(408%) hue-rotate(148deg) brightness(95%) contrast(86%);
+}
