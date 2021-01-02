@@ -39,15 +39,15 @@
 
         <!-- Placeholder values -->
         <tr>
-            <td class="border-2 h-10">12-11-2020</td>
+            <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Fursuit</td>
-            <td class="border-2 h-10">Rp.100.000.000</td>
+            <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Ticket Sales</td>
         </tr>
         <tr>
-            <td class="border-2 h-10">12-11-2020</td>
+            <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">asdf</td>
-            <td class="border-2 h-10">Rp.100.000.000</td>
+            <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Ticket Sales</td>
         </tr>
     </table>
@@ -60,20 +60,20 @@
             <th class="border-2 h-10">Type</th>
         </tr>
         <tr>
-            <td class="border-2 h-10">12-11-2020</td>
+            <td class="border-2 h-10">2020-12-11</td>
             <td class="border-2 h-10">asdf</td>
-            <td class="border-2 h-10">Rp.100.000.000</td>
+            <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Ticket Sales</td>
         </tr>
     </table>
    
     <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
         <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
-            <input type="date" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
-            <input type="text" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-            <input type="text" required name="" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
+            <input type="date" required name="Date" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
+            <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+            <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
             <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
-            <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2">
+            <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
                 <option value="Venue" selected>Venue</option>
                 <option value="Marketing">Marketing</option>
                 <option value="Food and Beverage">Food and Beverage</option>

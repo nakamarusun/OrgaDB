@@ -33,12 +33,19 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, nemo? Eos vero ex 
         })
 
         $('.submit').click(function(){
-            $.post('/urlHere',
+            // Var pathname is the path to the current url
+            var currentPath = window.location.pathname;
+            
+            $.post(currentPath + "/update",
+            // This is the JSON that's gonna be passed to the URL
             { description : $.trim($('.input-description').val())},
+
+            // Function that executes on succesful post
             function(data,status,jqXHR){
                 alert("Description succesfully updated");
             })
 
+            // Updates current HTML
             $('.description').html($.trim($('.input-description').val()))
 
             $('.edit').css({'display' : 'block'});
