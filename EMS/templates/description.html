@@ -1,5 +1,9 @@
 {% extends 'general_template.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='description.css')}}">
+{% endblock %}
+
 {% block left_cont %}
 {{ m.event_nav() }}
 {% endblock %}
@@ -7,15 +11,46 @@
 <!-- TODO: Create event description page -->
 {% block right_cont %}
     <div class="container h-full p-5 flex flex-col items-center">
-        <div class="m-3 w-48 h-48 flex-shrink-0">
-            <img src="https://picsum.photos/192" alt="" class="object-cover">
-        </div>
         <h1 class="text-3xl">NusaPonyCon</h1>
         <div class="black_fade_line container h-px flex flex-shrink-0 my-3"></div>
-        <div class="container mt-3 p-3 bg-gray-100 rounded-md h-full text-xl text-justify">
-        This is sketch, in the future, should be able to show paragraph and stuff, but because html i sweird. can't for now. TODO:Make paragraph be able</div>
-        <div class="w-full flex flex-row justify-end h-6 mt-2 cursor-pointer">
-            <img src="{{url_for('static',filename='asset/pencil.svg')}}" alt="object-cover">
+        <div class="description container mt-3 p-3 bg-gray-100 rounded-md h-full text-xl text-justify">
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, nemo? Eos vero ex quasi corrupti fuga quidem consectetur adipisci porro repellendus et eius delectus deleniti doloribus, aut rerum at sequi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi ut voluptates nulla, dolorem cupiditate accusamus perferendis, obcaecati hic eligendi voluptate adipisci ipsa alias illum rerum autem ad. Dolore, ducimus eaque?
+        </div>
+        <div class="w-full flex flex-row justify-end h-6 mt-2">
+            <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer w-6">
+            <img src="{{url_for('static',filename='asset/check.svg')}}" class="submit cursor-pointer w-6">
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    $(document).ready(function(){
+        $('.edit').click(function(){
+            $('.description').html('<textarea class="w-full h-full input-description" style="resize:none;">' + $('.description').text() + '</textarea>')
+            $('.edit').css({'display' : 'none'});
+            $('.submit').css({'display' : 'block'});
+        })
+
+        $('.submit').click(function(){
+            // Var pathname is the path to the current url
+            var currentPath = window.location.pathname;
+            
+            $.post(currentPath + "/update",
+            // This is the JSON that's gonna be passed to the URL
+            { description : $.trim($('.input-description').val())},
+
+            // Function that executes on succesful post
+            function(data,status,jqXHR){
+                alert("Description succesfully updated");
+            })
+
+            // Updates current HTML
+            $('.description').html($.trim($('.input-description').val()))
+
+            $('.edit').css({'display' : 'block'});
+            $('.submit').css({'display' : 'none'});
+        })
+    })
+    </script>
 {% endblock %}
