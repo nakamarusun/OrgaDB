@@ -26,15 +26,14 @@ $(document).ready(function(){
         
         // Used to add a record on the front end
         var serializedArray = $(this).serializeArray();
-
         var currentPath = window.location.pathname;
-        
         $.ajax({
             type : "POST",
             url : currentPath + "/add",
             data : serializedForm,
             success : function(){
                 var row = '';
+                // console.log(result)
                 for(x in serializedArray){
                     if(x == 2){
                         row += '<td class="border-2 h-10">' +  formatter.format(serializedArray[x]['value']) + '</td>';
@@ -42,7 +41,6 @@ $(document).ready(function(){
                         row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
                     }
                 }
-                console.log(row)
                 $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
                 alert("Succesfully added record");
             }
