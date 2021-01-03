@@ -9,20 +9,25 @@
     <h1 class="text-xl">Create a new event</h1>
 
     <div class="fade_line h-px w-1/2 my-2"></div>
-    <form action="/new" method="post" class="flex flex-col w-1/2">
+    <form action={{url_for('event.add_new')}} method="post" class="flex flex-col w-1/2">
         <div class="pb-2">
             <span class="text-sm py-2">Event Name </span><span class="text-red-600">*</span>
         </div>
-        <input type="text" class="rounded-md h-8 md:w-full lg:w-72 border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" required>
+        <input type="text" class="rounded-md h-8 md:w-full lg:w-72 border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" name="event_name" id="event_name" required>
         <div class="py-2">
             <span class="text-sm py-2">Venue </span><span class="text-red-600">*</span>
         </div>
-        <input type="text" class="rounded-md h-8 md:w-full lg:w-72 border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" required>
-        
+        <input type="text" class="rounded-md h-8 md:w-full lg:w-72 border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" name="venue" id="venue" required>
+        <div class="py-2">
+            <span class="text-sm py-2">Budget </span><span class="text-red-600">*</span>
+        </div>
+        <input type="text" class="rounded-md h-8 md:w-full lg:w-72 border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" name="budget" id="budget" required>
+
         <div class="py-2">
             <span class="text-sm py-2">Description </span><span class="text-xs text-gray-400">(optional)</span>
         </div>
-        <textarea type="text" class="rounded-md h-32 w-full border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" style="resize: none;"></textarea>
+        <textarea type="text" class="rounded-md h-32 w-full border bg-gray-100 p-2 focus:ring-2 focus:ring-green-400" name="desc" id ="desc" style="resize: none;"></textarea>
+
         <div class="w-full flex justify-end">
             <input type="submit" class="button transition w-32 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white my-2 px-2 text-center" required value="Create Event">
         </div>
