@@ -24,11 +24,21 @@
         <span class="text-lg">Events</span>
         <a href="{{url_for('event.add_new')}}"><span class="bg-green-300 text-sm h-full py-px px-1 rounded-sm">New+</span></a>
     </div>
-    <div class="left_fade_line h-px my-2"></div>
+    <div class="left_fade_line h-px my-3"></div>
     <div class="text-md flex flex-col truncate overflow-hidden">
         <!-- For i in someone's event list,  -->
-        <a class="text-blue-600 hover:underline" href="">Username/Nama Event</a>
-        <a class="text-blue-600 hover:underline" href="">Username/Nama Event</a>
+        <a class="text-blue-600 event-list-item pb-1" href="">
+            <t>Username/Nama Event</t><span>»</span>
+        </a>
+        <a class="text-blue-600 event-list-item pb-1" href="">
+            <t>Username/Nama Event</t><span>»</span>
+        </a>
+        <a class="text-blue-600 event-list-item pb-1" href="">
+            <t>Username/Nama Event</t><span>»</span>
+        </a>
+        <a class="text-blue-600 event-list-item pb-1" href="">
+            <t>Username/Nama Event</t><span>»</span>
+        </a>
     </div>
 </aside>
 {% endmacro %}
