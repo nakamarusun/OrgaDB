@@ -28,7 +28,7 @@ INSERT INTO Guests(Full_Name, Email, Phone_Number, Category, Event_id)
     ("Yowen Yowen Yowen", "Yowen@yowen.com", "+696969696969", "Moderator", 2),
     ("Reximus Maximus", "Rex@ganteng.com", "+273187362", "Speaker", 3);
 
-INSERT INTO Expenses(Expense_Type, Other_Expense, Amount, Event_id, Expense_Date)
+INSERT INTO Expenses(Expense_Type, Item_Name, Amount, Event_id, Expense_Date)
     VALUES("Venue", NULL, 23012838, 1, "2019-05-19"),
     ("Marketing", NULL, 24612983, 1, "2019-06-01"),
     ("Other", "Something idk", 2734724726, 2, "2019-05-29");
@@ -43,7 +43,7 @@ INSERT INTO Inventory(Item_Name, Item_Quantity, Sponsor_Id, Event_Id)
     ("IOT Doorbell", 5, 3, 2),
     ("Playstation 6", 69, NULL, 3);
 
-INSERT INTO Income(Income_Type, Other_Income, Amount, Sponsor_Id, Event_id, Income_Date)
+INSERT INTO Income(Income_Type, Item_Name, Amount, Sponsor_Id, Event_id, Income_Date)
     VALUES("Ticket Sales", NULL, 234500000, NULL, 1, "2020-05-09"),
     ("Merchandise", NULL, 2381723899, NULL, 2, "2077-12-10"),
     ("Other", "Robbery", 23818900000, NULL, 2, "2019-12-25");
