@@ -1,6 +1,8 @@
 from flask import Blueprint
-from flask import Flask, render_template, request, redirect, url_for, session 
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from EMS import db
+from werkzeug.security import (check_password_hash, generate_password_hash)
+import functools
 import random
 import re 
 
@@ -8,7 +10,7 @@ bp = Blueprint("user", __name__, url_prefix="/user")
 
 @bp.route("/login", methods =['GET', 'POST'])
 def login():
-    msg = '' 
+    msg = ''
     # indicate the desired action to be performed for a given resource.
     if request.method == 'POST': 
         email = request.form['mail'] 
@@ -16,21 +18,28 @@ def login():
         cursor = db.get_db().cursor()
 
         # Gets the email and password pair from the database.
-        cursor.execute('SELECT * FROM login_cred WHERE Email = %s AND Pass = %s', (email, password, )) 
+        cursor.execute('SELECT * FROM login_cred WHERE Email = %s ', (email, )) 
 
         #method returns a single record or None if no more rows are available.
-        users = cursor.fetchone() 
+        users = cursor.fetchall() 
         if users:
+            # Gets the first row
+            users = users[0]
             # Sets the internal session variables
             session['loggedin'] = True
             session['id'] = users[0]
             session['email'] = users[2]
             session['user_name'] = users[3]
             msg = 'Logged in successfully !'
-            # TODO: Jangan pake render template, pake redirect
-            return redirect(url_for('index.index'))
-        else: 
-            msg = 'Wrong email / password'
+
+            pass_hash = users[1]
+    
+            if check_password_hash(pass_hash, password):
+                return redirect(url_for('index.index'))
+            else:
+                return redirect(url_for('user.login'))
+        else:
+            return redirect(url_for('user.login'))
     else:
         return render_template('login.html')
 
@@ -47,7 +56,7 @@ def register():
 
         # Checks whether the email already exists in the database.
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s', (email,)) 
-        users = cursor.fetchone() 
+        users = cursor.fetchall()
         if users: 
             msg = 'users already exists !'
         # most basic checks for email 
@@ -56,12 +65,12 @@ def register():
         elif not email or not password or not username: 
             msg = 'Please fill out the form !'
         else: 
-            # TODO: Random, kalau dapet angka yang sama gimana dong :(
-            id = random.randint(0,9999)
-            cursor.execute('INSERT INTO login_cred (Id, Pass, Email, Username) VALUES (%s, %s, %s, %s)', (id, password, email, username,)) 
+            hash = generate_password_hash(password, salt_length=20)
+            cursor.execute(" INSERT INTO login_cred (Pass, Email, Username) VALUES ('{}', '{}', '{}') ".format(
+                hash,
+                str(email),
+                username))
             db.get_db().commit() 
-            msg = 'You have successfully registered !'
-            # TODO: Jangan pake render template bent. Pake redirect.
             return redirect(url_for('user.login'))
 
     return render_template('register.html')
@@ -74,7 +83,22 @@ def logout():
     session.pop('user_name', None)
     session.pop('id', None) 
     session.pop('email', None) 
-    return redirect(url_for('user.login')) 
+    return redirect(url_for('index.index')) 
+
+
+def login_required(view):
+    # Decorator so that user that is not logged in gets redirected to the login page
+    # Before doing anything that messes with the data
+
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if session.get("user") == None:
+            flash("Login required!", "Error")
+            return redirect(url_for("user.login_user", referback=request.referrer))
+
+        return view(**kwargs)
+
+    return wrapped_view
 
 @bp.route("/<string:id>/profile")
 def profile_page(id):
