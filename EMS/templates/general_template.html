@@ -9,10 +9,10 @@
             <nav class = "flex flex-row mr-6">
                 {% if session.get("user_name") == None %}
                 <a class = "m-3" href="{{url_for('user.login')}}">
-                    <div class="transition w-16 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Login</div>
+                    <div class="button transition w-16 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Login</div>
                 </a>
                 <a class = "m-3" href="{{url_for('user.register')}}">
-                    <div class="transition w-20 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Register</div>
+                    <div class="button transition w-20 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Register</div>
                 </a>
                 {% else %}
                 <div class="w-auto bg-white m-3 p-1">{{session["user_name"]}}</div>

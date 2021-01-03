@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
     font-family: 'calendas_plusregular';
     src: url('font/Calendas/calendas_plus-webfont.eot');
     src: url('font/Calendas/calendas_plus-webfont.eot?#iefix') format('embedded-opentype'),
@@ -8,7 +8,7 @@
          url('font/Calendas/calendas_plus-webfont.svg#calendas_plusregular') format('svg');
     font-weight: normal;
     font-style: normal;
-} */
+}
 
 *{
     color: #205566;
@@ -19,11 +19,11 @@ h1{
 }
 
 .event-list-item{
-    transition: 0.3s;
+    transition: 0.15s;
 }
 .event-list-item span{
     opacity: 0;
-    transition: all 0.3s;
+    transition: all 0.15s;
 }
 .event-list-item:hover span{
     padding-left: 5px;
@@ -34,6 +34,10 @@ h1{
 }
 .event-list-item:hover{
     padding-left: 3px;
+}
+
+.button:active{
+    background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }
 
 .fade_line{ 
