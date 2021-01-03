@@ -23,19 +23,10 @@
         </tr>
 
         <!-- Commented out jinja template -->
-        {# 
-        {% for dict_item in inventory_list %}
-            <tr>
-                <td class="border-2 h-10">{{dict_item['name']}}</td>
-                <td class="border-2 h-10">{{dict_item['amount']}}</td>
-                <td class="border-2 h-10">{{dict_item['sponsor']}}</td>    
-            </tr>
-        {% else %}
-            <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
-        {% endfor %}
+        {#
+            {{ m.table_content(inventory_dict) }}
         #}
             
-        
         <!-- Placeholder values -->
         <tr>
             <td class="border-2 h-10">Fursuit</td>

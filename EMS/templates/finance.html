@@ -23,18 +23,8 @@
             <th class="border-2 h-10">Type</th>
         </tr>
 
-        <!-- Commented out jinja template -->
-        {# 
-        {% for dict_item in income_list %}
-            <tr>
-                <td class="border-2 h-10">{{dict_item['date']}}</td>
-                <td class="border-2 h-10">{{dict_item['name']}}</td>
-                <td class="border-2 h-10">{{dict_item['amount']}}</td>
-                <td class="border-2 h-10">{{dict_item['type']}}</td>    
-            </tr>
-        {% else %}
-            <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
-        {% endfor %}
+        {#
+            {{ m.table_content(income_dict) }}
         #}
 
         <!-- Placeholder values -->
@@ -59,6 +49,9 @@
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Type</th>
         </tr>
+        {#
+            {{ m.table_content(expense_dict) }}
+        #}
         <tr>
             <td class="border-2 h-10">2020-12-11</td>
             <td class="border-2 h-10">asdf</td>
@@ -72,7 +65,6 @@
             <input type="date" required name="Date" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
             <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
             <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
-            <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
             <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
                 <option value="Venue" selected>Venue</option>
                 <option value="Marketing">Marketing</option>
