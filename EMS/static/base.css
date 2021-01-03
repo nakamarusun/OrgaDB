@@ -9,6 +9,12 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: 'mermaid';
+    src: url('font/mermaid/Mermaid1001.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 *{
     color: #205566;
