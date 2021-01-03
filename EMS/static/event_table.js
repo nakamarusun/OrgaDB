@@ -11,7 +11,6 @@ $(document).ready(function(){
 
     // Keeps track of the active table, appends posted stuff into the table.
     var activeTable = 0;
-
     $('.tabs').click(function(event){
         activeTable = $(this).index();
 
@@ -23,14 +22,16 @@ $(document).ready(function(){
 
     $('form').on("submit",function(e){
         // Serializes form data into string
-        var serializedForm = $(this).serialize();
+        var serializedForm = $(this).serialize() + "&ActiveTable=" + activeTable;
         
+        // Used to add a record on the front end
         var serializedArray = $(this).serializeArray();
 
         var currentPath = window.location.pathname;
+        
         $.ajax({
             type : "POST",
-            url : currentPath + "add",
+            url : currentPath + "/add",
             data : serializedForm,
             success : function(){
                 var row = '';
@@ -47,10 +48,10 @@ $(document).ready(function(){
             }
         });
         
+        // Prevents regular submit action on submit click
         e.preventDefault();
     });
     
-
     var rotation = 0;
     jQuery.fn.rotate180 = function(degrees) {
         $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
