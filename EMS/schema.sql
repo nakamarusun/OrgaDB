@@ -62,7 +62,7 @@ CREATE TABLE Guests(
 CREATE TABLE Expenses(
     Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Expense_Type ENUM("Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other") NOT NULL,
-    Other_Expense VARCHAR(50),
+    Item_Name VARCHAR(50),
     Amount BIGINT NOT NULL,
     Event_Id SMALLINT NOT NULL,
     Expense_Date DATE NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE Inventory(
 CREATE TABLE Income(
     Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Income_Type ENUM("Sponsor", "Ticket Sales", "Merchandise", "Other") NOT NULL,
-    Other_Income VARCHAR(50),
+    Item_Name VARCHAR(50),
     Amount BIGINT NOT NULL,
     Sponsor_Id SMALLINT,
     Event_Id SMALLINT NOT NULL,

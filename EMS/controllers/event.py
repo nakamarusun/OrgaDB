@@ -81,7 +81,7 @@ def finance(id):
 
     # First, we get the income
     cursor.execute(
-        "SELECT e.Id, e.Other_Expense, Expense_Type, Amount, Expense_Date FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
+        "SELECT e.Id, e.Item_Name, Expense_Type, Amount, Expense_Date FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
         (id,)
     )
 
@@ -97,7 +97,7 @@ def finance(id):
     
     # Get the expense
     cursor.execute(
-        "SELECT i.Id, i.Other_Income, Income_Type, Amount, Income_Date FROM Income i JOIN Events ev ON ev.Id=I.Event_Id WHERE Event_Id=%s;",
+        "SELECT i.Id, i.Item_Name, Income_Type, Amount, Income_Date FROM Income i JOIN Events ev ON ev.Id=I.Event_Id WHERE Event_Id=%s;",
         (id,)
     )
 
@@ -112,6 +112,44 @@ def finance(id):
         })
 
     return render_template("finance.html", income_list=income_list, expense_list=expense_list)
+
+@bp.route("/<string:id>/finance/add", methods=['POST'])
+def add_finance(id):
+    """ POST method for updating the description """
+    try:
+        db_obj = db.get_db()
+
+        # Update datbase
+        cursor = db_obj.cursor()
+
+        # Depending on the table selected (Income / Expense), insert the data.
+        # TODO: Sponsor
+        if request.form['activeTable'] == 0:
+            cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id) VALUES (%s, %s, %s, %s);', (
+                request.form['Type'],
+                request.form['Name'],
+                request.form['Amount'],
+                request.form['Date'],
+                id,
+                ))
+
+        elif request.form['activeTable'] == 1:
+            cursor.execute('Insert INTO Expenses (Expense_Type, Item_Name, Amount, Expense_Date, Event_Id) VALUES (%s, %s, %s, %s);', (
+                request.form['Type'],
+                request.form['Name'],
+                request.form['Amount'],
+                request.form['Date'],
+                id,
+                ))
+
+        # Commit
+        db_obj.commit()
+
+        return "1"
+    
+    except Exception:
+        print(Exception)
+        return "0"
 
 @bp.route("/<string:id>/inventory")
 @check_id
@@ -136,6 +174,25 @@ def inventory(id):
         })
 
     return render_template("inventory.html", in_list=in_list)
+
+@bp.route("/<string:id>/inventory/add", methods=['POST'])
+def add_inventory(id):
+
+    try:
+        db_obj = db.get_db()
+
+        # Update datbase
+        # TODO: Sponsor
+        cursor = db_obj.cursor()
+        cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (request.form['name'], request.form['amount'], 1, id,))
+
+        # Commit
+        db_obj.commit()
+
+        return "1"
+    except:
+        print(Exception)
+        return "0"
 
 @bp.route("/<string:id>/members")
 @check_id
@@ -174,6 +231,33 @@ def members(id):
 
 
     return render_template("members.html", committee_list=committee_list, guest_list=guest_list)
+
+@bp.route("/<string:id>/members/add", methods=['POST'])
+def add_members(id):
+
+    try:
+        db_obj = db.get_db()
+
+        # Update database
+        cursor = db_obj.cursor()
+        
+        # TODO: Talk with aric how to this message
+        if request.form['activeTable'] == 0:
+            pass
+
+        elif request.form['activeTable'] == 1:
+            pass
+
+        elif request.form['activeTable'] == 2:
+            pass
+
+        # Commit
+        db_obj.commit()
+
+        return "1"
+    except:
+        print(Exception)
+        return "0"
 
 @bp.route("/<string:id>/feedback")
 @check_id
