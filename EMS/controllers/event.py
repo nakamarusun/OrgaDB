@@ -54,6 +54,24 @@ def description(id):
     
     return render_template("description.html", title=fetch[0], desc=fetch[1])
 
+@bp.route("/<string:id>/description/update", methods=['POST'])
+def update_description(id):
+    """ POST method for updating the description """
+    try:
+        db_obj = db.get_db()
+
+        # Update datbase
+        cursor = db_obj.cursor()
+        cursor.execute('UPDATE Events SET Event_Desc=%s WHERE Id=%s;', (request.form['description'], id,))
+
+        # Commit
+        db_obj.commit()
+
+        return "1"
+    
+    except Exception:
+        return "0"
+
 @bp.route("/<string:id>/finance")
 @check_id
 def finance(id):
