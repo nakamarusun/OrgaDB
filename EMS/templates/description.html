@@ -11,7 +11,12 @@
 <!-- TODO: Create event description page -->
 {% block right_cont %}
     <div class="container h-full p-5 flex flex-col items-center">
-        <h1 class="text-3xl">NusaPonyCon</h1>
+        <h1 class="text-3xl">NusaPonyCon
+            <!-- Jinja template for title -->
+            {#
+                {{ event_name }}    
+            #}
+        </h1>
         <div class="black_fade_line container h-px flex flex-shrink-0 my-3"></div>
         <div class="description container mt-3 p-3 bg-gray-100 rounded-md h-full text-xl text-justify">
             <!-- Jinja template for description -->
