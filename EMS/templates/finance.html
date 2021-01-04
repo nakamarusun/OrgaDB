@@ -16,11 +16,12 @@
         <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Expense</b></div>
     </div>
     <table class="content container border-2 table-auto">        
-        <tr>
+        <tr id="table-header">
             <th class="border-2 h-10">Date</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Type</th>
+            <th class="border-2 h-10">Edit</th>
         </tr>
 
         {#
@@ -29,16 +30,26 @@
 
         <!-- Placeholder values -->
         <tr>
-            <td class="border-2 h-10">2020-11-13</td>
-            <td class="border-2 h-10">Fursuit</td>
-            <td class="border-2 h-10">IDR 100,000,000.00</td>
-            <td class="border-2 h-10">Ticket Sales</td>
+            <!-- <form method="POST" class="update-panel"> -->
+                <td class="border-2 h-10">2020-11-13</td>
+                <td class="border-2 h-10">Fursuit</td>
+                <td class="border-2 h-10">IDR 100,000,000.00</td>
+                <td class="border-2 h-10">Ticket Sales</td>
+                <td class="border-2 h-10">
+                    <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6" alt="">
+                    <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                </td>
+            <!-- </form> -->
         </tr>
         <tr>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">asdf</td>
             <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Ticket Sales</td>
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
     </table>
     
@@ -48,6 +59,7 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Type</th>
+            <th class="border-2 h-10">Edit</th>
         </tr>
         {#
             {{ m.table_content(expense_dict) }}
@@ -57,6 +69,10 @@
             <td class="border-2 h-10">asdf</td>
             <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Ticket Sales</td>
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
     </table>
    
@@ -88,5 +104,67 @@
 {% endblock %}
 
 {% block scripts %}
+    <script>var activeTable = 0;</script>
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
+    <script>
+        $('.edit').click(function(){
+            $(this).css({'display' : 'none'});
+
+            // Row that is being edited
+            editRow = $(this).parent().parent();
+            // console.log(editRow)
+
+            // Initializes all default values into the new input
+            defaultDateVal = $(editRow).children('td').eq(0).text()
+            defaultNameVal = $(editRow).children('td').eq(1).text() 
+            defaultAmountVal = $(editRow).children('td').eq(2).text().replace(/[^0-9.-]+/g,"")
+            defaultTypeVal = $(editRow).children('td').eq(3).text()
+            
+            $(editRow).children('td').eq(0).html('<input class="m-auto outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
+            $(editRow).children('td').eq(1).html('<input class="m-auto outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
+            $(editRow).children('td').eq(2).html('<input class="m-auto outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
+                                                defaultAmountVal +'>');
+            $(editRow).children('td').eq(3).html(`
+                <select class="m-auto text-center outline-none" id="type" required name="Type">
+                    <option value=` + defaultTypeVal + ` selected hidden> ` + defaultTypeVal + `</option>
+                    <option value="Venue">Venue</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Food and Beverage">Food and Beverage</option>
+                    <option value="Art Supplies">Art Supplies</option>
+                    <option value="Equipment">Equipment</option>
+                    <option value="Other">Other</option>
+                </select>
+                `);
+
+            // Activates second child (checkmark)
+            $(this).parent().children('input').css({'display':'block'});    
+        })
+        
+        $('.submit').click(function(){
+            // Serializes form data into string
+            console.log($(this)) 
+            
+            // Gets the row that is being edited
+            editRow = $(this).parent().parent();
+            console.log(editRow.find('#date'))
+
+            var serializedForm = "&ActiveTable=" + activeTable;
+            console.log(serializedForm)
+            // Used to add a record on the front end
+            var serializedArray = $(this).serializeArray();
+            var currentPath = window.location.pathname;
+            
+            $(this).parent().children('img').css({'display' : 'block'});
+
+            $.ajax({
+                type : "POST",
+                url : "update",
+                data : serializedForm,
+                success : function(){
+                    
+                    alert("Succesfully added record");
+                }
+            });
+        });
+    </script>
 {% endblock %} 

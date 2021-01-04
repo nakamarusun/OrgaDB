@@ -20,7 +20,7 @@ $(document).ready(function(){
         $('.content').eq(activeTable).show();
     });
 
-    $('form').on("submit",function(e){
+    $('.form-panel').on("submit",function(e){
         // Serializes form data into string
         var serializedForm = $(this).serialize() + "&ActiveTable=" + activeTable;
         
@@ -49,7 +49,7 @@ $(document).ready(function(){
         // Prevents regular submit action on submit click
         e.preventDefault();
     });
-    
+
     var rotation = 0;
     jQuery.fn.rotate180 = function(degrees) {
         $(this).css({'transform' : 'rotate('+ degrees +'deg)'});
@@ -61,4 +61,5 @@ $(document).ready(function(){
         $('.form-panel').slideToggle();
         $('.chevron-down').rotate180(rotation);
     });
+    
 });

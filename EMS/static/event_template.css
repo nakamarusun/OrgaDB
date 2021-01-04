@@ -33,3 +33,6 @@ select {
 .chevron-down{
     filter: invert(23%) sepia(84%) saturate(408%) hue-rotate(148deg) brightness(95%) contrast(86%);
 }
+.submit{
+    display: none;
+}
