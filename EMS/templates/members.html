@@ -23,6 +23,7 @@
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
+            <th class="border-2 h-10">Clearance</th>
         </tr>
 
         <!-- Commented out jinja template -->
@@ -42,6 +43,7 @@
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
+            <th class="border-2 h-10">Clearance</th>
         </tr>
         
         {#
@@ -73,24 +75,65 @@
         </tr>
     </table>
     
-    
-    <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
-        <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-2 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
-            <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-            
-            <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="position">
-                <option value="Gamer" selected> Gamer </option>
-                <option value="Owner">Owner</option>
-                <option value="I don't know">I don't know</option>
-            </select>    
+    <div class="form-wrapper">
+        <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
+            <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-2 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+                <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="position">
+                    <option value="Gamer" selected> Gamer </option>
+                    <option value="Owner">Owner</option>
+                    <option value="I don't know">I don't know</option>
+                </select>    
+            </div>
+            <div class="w-full flex justify-end pr-2 py-2">
+                <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
+            </div>
+        </form>
+        <div class="w-full flex justify-end h-6">
+            <div class="w-12 bg-gray-100 border-b-2 border-l-2 border-r-2 flex justify-center mr-2 show-form">
+                <img src="{{url_for('static',filename='asset/chevron-down.svg')}}" alt="" class="chevron-down transition h-6 w-6">
+            </div>
         </div>
-        <div class="w-full flex justify-end pr-2 py-2">
-            <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
+    </div>
+    <div class="form-wrapper">
+        <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
+            <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-2 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+                <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="position">
+                    <option value="Gamer" selected> Gamer </option>
+                    <option value="Owner">Owner</option>
+                    <option value="I don't know">I don't know</option>
+                </select>    
+            </div>
+            <div class="w-full flex justify-end pr-2 py-2">
+                <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
+            </div>
+        </form>
+        <div class="w-full flex justify-end h-6">
+            <div class="w-12 bg-gray-100 border-b-2 border-l-2 border-r-2 flex justify-center mr-2 show-form">
+                <img src="{{url_for('static',filename='asset/chevron-down.svg')}}" alt="" class="chevron-down transition h-6 w-6">
+            </div>
         </div>
-    </form>
-    <div class="w-full flex justify-end h-6">
-        <div class="w-12 bg-gray-100 border-b-2 border-l-2 border-r-2 flex justify-center mr-2 show-form">
-            <img src="{{url_for('static',filename='asset/chevron-down.svg')}}" alt="" class="chevron-down transition h-6 w-6">
+    </div>
+    <div class="form-wrapper">
+        <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
+            <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+                <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+                <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="position">
+                    <option value="Gamer" selected> Gamer </option>
+                    <option value="Owner">Owner</option>
+                    <option value="I don't know">I don't know</option>
+                </select>    
+            </div>
+            <div class="w-full flex justify-end pr-2 py-2">
+                <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
+            </div>
+        </form>
+        <div class="w-full flex justify-end h-6">
+            <div class="w-12 bg-gray-100 border-b-2 border-l-2 border-r-2 flex justify-center mr-2 show-form">
+                <img src="{{url_for('static',filename='asset/chevron-down.svg')}}" alt="" class="chevron-down transition h-6 w-6">
+            </div>
         </div>
     </div>
 </div>

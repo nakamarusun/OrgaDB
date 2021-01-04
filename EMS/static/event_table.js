@@ -2,7 +2,8 @@ $(document).ready(function(){
     // Tabs and table handler
     $('.content:first').show();
     $('.tabs:first').addClass('active');
-    
+    $('.form-wrapper').hide();
+    $('.form-wrapper:first').show();
     // Formats number to currency
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -17,7 +18,9 @@ $(document).ready(function(){
         $('.tabs').removeClass('active');
         $(this).addClass('active');
         $('.content').hide();
+        $('.form-wrapper').hide();
         $('.content').eq(activeTable).show();
+        $('.form-wrapper').eq(activeTable).show();
     });
 
     $('.form-panel').on("submit",function(e){
@@ -58,8 +61,8 @@ $(document).ready(function(){
     
     $('.show-form').click(function() {
         rotation += 180;
-        $('.form-panel').slideToggle();
-        $('.chevron-down').rotate180(rotation);
+        $('.form-panel').eq(activeTable).slideToggle();
+        $('.chevron-down').eq(activeTable).rotate180(rotation);
     });
     
 });

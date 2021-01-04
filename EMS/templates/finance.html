@@ -35,7 +35,7 @@
             <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Food and Beverage</td>
             <td class="border-2 h-10">
-                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
@@ -45,7 +45,7 @@
             <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Food and Beverage</td>
             <td class="border-2 h-10">
-                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
@@ -68,7 +68,7 @@
             <td class="border-2 h-10">IDR 100,000,000.00</td>
             <td class="border-2 h-10">Food and Beverage</td>
             <td class="border-2 h-10">
-                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
@@ -86,7 +86,7 @@
                 <option value="Art Supplies">Art Supplies</option>
                 <option value="Equipment">Equipment</option>
                 <option value="Other">Other</option>
-            </select>    
+            </select>
         </div>
         <div class="w-full flex justify-end pr-2 py-2">
             <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
@@ -126,12 +126,12 @@
             defaultAmountVal = $(editRow).children('td').eq(2).text().replace(/[^0-9.-]+/g,"")
             defaultTypeVal = $(editRow).children('td').eq(3).text()
             
-            $(editRow).children('td').eq(0).html('<input class="m-auto outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
-            $(editRow).children('td').eq(1).html('<input class="m-auto outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
-            $(editRow).children('td').eq(2).html('<input class="m-auto outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
+            $(editRow).children('td').eq(0).html('<input class="m-auto focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
+            $(editRow).children('td').eq(1).html('<input class="m-auto focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
+            $(editRow).children('td').eq(2).html('<input class="m-auto focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
                                                 defaultAmountVal +'>');
             $(editRow).children('td').eq(3).html(`
-                <select class="m-auto text-center outline-none" id="type" required name="Type">
+                <select class="m-auto text-center focus:ring-2 outline-none" id="type" required name="Type">
                     <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
                     <option value="Venue">Venue</option>
                     <option value="Marketing">Marketing</option>
@@ -152,12 +152,12 @@
             // Gets the row that is being edited
             editRow = $(this).parent().parent();
             
+            // TODO : input validation
             var serializedForm = ""
             serializedForm += editRow.find('#date').attr('name') + '=' + editRow.find('#date').val()
             serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
             serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + parseFloat(editRow.find('#amount').val())
             serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
-            console.log()
             serializedForm += "&activeTable=" + activeTable;
 
             editRow = $(this).parent().parent();
@@ -169,14 +169,13 @@
             console.log(serializedForm);
             // Used to add a record on the front end
             var currentPath = window.location.pathname;
-            
+            $('.edit').css({'display' : 'block'});
             
             $.ajax({
                 type : "POST",
-                url : currentPath + "update",
+                url : currentPath + "/update",
                 data : serializedForm,
                 success : function(){
-                    $('.edit').css({'display' : 'block'});
                     alert("Succesfully added record");
                 }
             });

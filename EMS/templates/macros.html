@@ -14,6 +14,7 @@
         <a class="text-blue-600 event-list-item outline-none" href=""><t>Members</t><span>»</span></a>
         <a class="text-blue-600 event-list-item outline-none" href=""><t>Finance</t><span>»</span></a>
         <a class="text-blue-600 event-list-item outline-none" href=""><t>Inventory</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href=""><t>Admin</t><span>»</span></a>
     </div>
 </aside>
 {% endmacro %}
@@ -51,7 +52,12 @@
             {% for key,value in dict_item.items() %}
                 <td class="border-2 h-10">{{ value }}</td>
             {% endfor %}
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
+    <!-- In the case of no values passed -->
     {% else %}
         <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
     {% endfor %}
