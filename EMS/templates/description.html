@@ -8,22 +8,16 @@
 {{ m.event_nav() }}
 {% endblock %}
 
-<!-- TODO: Create event description page -->
 {% block right_cont %}
     <div class="container h-full p-5 flex flex-col items-center">
-        <h1 class="text-3xl">NusaPonyCon
+        <h1 class="text-3xl">
             <!-- Jinja template for title -->
-            {#
                 {{ event_name }}    
-            #}
         </h1>
         <div class="black_fade_line container h-px flex flex-shrink-0 my-3"></div>
         <div class="description container mt-3 p-3 bg-gray-100 rounded-md h-full text-xl text-justify">
             <!-- Jinja template for description -->
-            {#
                 {{ description_text }}    
-            #}
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, nemo? Eos vero ex quasi corrupti fuga quidem consectetur adipisci porro repellendus et eius delectus deleniti doloribus, aut rerum at sequi. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi ut voluptates nulla, dolorem cupiditate accusamus perferendis, obcaecati hic eligendi voluptate adipisci ipsa alias illum rerum autem ad. Dolore, ducimus eaque?
         </div>
         <div class="w-full flex flex-row justify-end h-6 mt-2">
             <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer w-6">

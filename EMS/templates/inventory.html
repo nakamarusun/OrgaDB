@@ -17,18 +17,18 @@
     </div>
     <table class="content container border-2 table-auto">        
         <tr>
+            <th class="border-2 h-10">Id</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Sponsor</th>
         </tr>
 
         <!-- Commented out jinja template -->
-        {#
-            {{ m.table_content(inventory_dict) }}
-        #}
+        {{ m.table_content(inventory_dict) }}
             
         <!-- Placeholder values -->
         <tr>
+            <td class="border-2 h-10">0</td>
             <td class="border-2 h-10">Fursuit</td>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">The Furry Community</td>
