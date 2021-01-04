@@ -46,14 +46,13 @@
 {% macro table_content(table_dict) %}
 <!-- Iterates over a dictionary, showing it on table -->
 <!-- If there is no item, show 'No entries in table' -->
-
-{% for dict_item in table_dict %}
-    <tr>
-        {% for key,value in dict_item.items() %}
-            <td class="border-2 h-10">{{ value }}</td>
-        {% endfor %}
-    </tr>
-{% else %}
-    <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
-{% endfor %}
+    {% for dict_item in table_dict %}
+        <tr>
+            {% for key,value in dict_item.items() %}
+                <td class="border-2 h-10">{{ value }}</td>
+            {% endfor %}
+        </tr>
+    {% else %}
+        <td class="empty_message text-gray-400 text-center text-2xl" colspan="4">No entries in table</div>
+    {% endfor %}
 {% endmacro %}
