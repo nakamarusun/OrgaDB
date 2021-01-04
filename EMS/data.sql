@@ -33,10 +33,10 @@ INSERT INTO Expenses(Expense_Type, Item_Name, Amount, Event_id, Expense_Date)
     ("Marketing", NULL, 24612983, 1, "2019-06-01"),
     ("Other", "Something idk", 2734724726, 2, "2019-05-29");
 
-INSERT INTO Sponsor(Full_Name, Sponsor_Address, Phone_Number, Sponsor_Type, Event_Id)
-    VALUES("NordVPN", "Nord@VPN.com", "0812373737349", "Money", 1),
-    ("Raid Shadow Legends", "Shadow@man.com", "+65482947523", "Money", 2),
-    ("Ring Doorbell", "Ring@door.com", "+64278361232", "Equipment", 3);
+INSERT INTO Sponsor(Sponsor_Name, Contact_Name, Sponsor_Address, Phone_Number, Sponsor_Type, Event_Id)
+    VALUES("NordVPN", "Aboo", "Nord@VPN.com", "0812373737349", "Money", 1),
+    ("Raid Shadow Legends", "Booba", "Shadow@man.com", "+65482947523", "Money", 2),
+    ("Ring Doorbell", "John Smith", "Ring@door.com", "+64278361232", "Equipment", 3);
 
 INSERT INTO Inventory(Item_Name, Item_Quantity, Sponsor_Id, Event_Id)
     VALUES("Bruh Mat", 20, NULL, 1),

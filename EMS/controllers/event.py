@@ -111,7 +111,14 @@ def finance(id):
             "type": data[2]
         })
 
-    return render_template("finance.html", income_list=income_list, expense_list=expense_list)
+    # Get the sponsors
+    cursor.execute(
+        "SELECT Sponsor_Name FROM Sponsor WHERE Event_Id=%s;",
+        (id,)
+    )
+    sponsor_list = [ d[0] for d in cursor.fetchall() ]
+
+    return render_template("finance.html", income_list=income_list, expense_list=expense_list, sponsor_list=sponsor_list)
 
 @bp.route("/<string:id>/finance/add", methods=['POST'])
 def add_finance(id):
@@ -123,7 +130,6 @@ def add_finance(id):
         cursor = db_obj.cursor()
 
         # Depending on the table selected (Income / Expense), insert the data.
-        # TODO: Sponsor
         if request.form['activeTable'] == 0:
             cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id) VALUES (%s, %s, %s, %s);', (
                 request.form['Type'],
@@ -160,7 +166,7 @@ def inventory(id):
 
     # First, we get the committee list
     cursor.execute(
-        "SELECT Inventory_Id, Item_Name, Item_Quantity, Full_Name FROM Inventory i LEFT JOIN Sponsor s ON i.Sponsor_Id=s.Id WHERE i.Event_ID=%s;",
+        "SELECT Inventory_Id, Item_Name, Item_Quantity, Sponsor_Name FROM Inventory i LEFT JOIN Sponsor s ON i.Sponsor_Id=s.Id WHERE i.Event_ID=%s;",
         (id,)
     )
     
@@ -173,7 +179,14 @@ def inventory(id):
             "sponsor": data[3]
         })
 
-    return render_template("inventory.html", in_list=in_list)
+    # Get the sponsors
+    cursor.execute(
+        "SELECT Sponsor_Name FROM Sponsor WHERE Event_Id=%s;",
+        (id,)
+    )
+    sponsor_list = [ d[0] for d in cursor.fetchall() ]
+
+    return render_template("inventory.html", in_list=in_list, sponsor_list=sponsor_list)
 
 @bp.route("/<string:id>/inventory/add", methods=['POST'])
 def add_inventory(id):
@@ -182,7 +195,6 @@ def add_inventory(id):
         db_obj = db.get_db()
 
         # Update datbase
-        # TODO: Sponsor
         cursor = db_obj.cursor()
         cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (request.form['name'], request.form['amount'], 1, id,))
 
