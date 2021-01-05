@@ -75,9 +75,7 @@ CREATE TABLE Sponsor(
     Contact_Name VARCHAR(50) NOT NULL,
     Sponsor_Address VARCHAR(50) NOT NULL,
     Phone_Number VARCHAR(50) NOT NULL,
-    Sponsor_Type ENUM("Money", "Equipment") NOT NULL,
-    Event_Id SMALLINT NOT NULL,
-    FOREIGN KEY (Event_Id) REFERENCES Events(Id)
+    Sponsor_Type ENUM("Money", "Equipment", "Money and Equipment") NOT NULL
 );
 
 CREATE TABLE Inventory(
