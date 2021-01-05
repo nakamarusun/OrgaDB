@@ -18,7 +18,6 @@ CREATE TABLE Events(
     Event_Desc TEXT NOT NULL
 );
 
--- This is the users table
 CREATE TABLE Members(
     Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
