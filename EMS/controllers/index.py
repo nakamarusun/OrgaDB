@@ -5,4 +5,4 @@ bp = Blueprint("index", __name__, url_prefix="/")
 @bp.route("/")
 def index():
     # TODO @aric: Create index.html here and use render_template
-    return render_template("inventory.html", debug = True)
+    return render_template("admin.html", debug = True)
