@@ -113,8 +113,7 @@ def finance(id):
 
     # Get the sponsors
     cursor.execute(
-        "SELECT Sponsor_Name FROM Sponsor WHERE Event_Id=%s;",
-        (id,)
+        "SELECT Sponsor_Name FROM Sponsor;"
     )
     sponsor_list = [ d[0] for d in cursor.fetchall() ]
 
@@ -184,8 +183,7 @@ def inventory(id):
 
     # Get the sponsors
     cursor.execute(
-        "SELECT Sponsor_Name FROM Sponsor WHERE Event_Id=%s;",
-        (id,)
+        "SELECT Sponsor_Name FROM Sponsor;"
     )
     sponsor_list = [ d[0] for d in cursor.fetchall() ]
 
