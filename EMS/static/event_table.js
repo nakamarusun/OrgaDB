@@ -30,11 +30,13 @@ $(document).ready(function(){
         // Used to add a record on the front end
         var serializedArray = $(this).serializeArray();
         var currentPath = window.location.pathname;
+        
         $.ajax({
             type : "POST",
             url : currentPath + "/add",
             data : serializedForm,
             success : function(){
+                $('.empty-message').hide()
                 var row = '';
                 // console.log(result)
                 for(x in serializedArray){
