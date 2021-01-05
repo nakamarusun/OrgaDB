@@ -20,6 +20,7 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Sponsor</th>
+            <th class="border-2 h-10 w-14">Edit</th>
         </tr>
 
         <!-- Commented out jinja template -->
@@ -32,6 +33,10 @@
             <td class="border-2 h-10">Fursuit</td>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">The Furry Community</td>
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
     </table>
     <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">

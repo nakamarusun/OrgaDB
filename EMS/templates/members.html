@@ -24,6 +24,7 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Clearance</th>
+            <th class="border-2 h-10 w-14">Edit</th>
         </tr>
 
         <!-- Commented out jinja template -->
@@ -36,6 +37,11 @@
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Chaika</td>
             <td class="border-2 h-10">Best girl</td>
+            <td class="border-2 h-10">1</td>
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
     </table>
     <table class="content container border-2 table-fixed">
@@ -44,6 +50,7 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Clearance</th>
+            <th class="border-2 h-10 w-14">Edit</th>
         </tr>
         
         {#
@@ -55,6 +62,11 @@
             <td class="border-2 h-10">2</td>
             <td class="border-2 h-10">Gay</td>
             <td class="border-2 h-10">Bouncer</td>
+            <td class="border-2 h-10">2</td>
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
     </table>
     <table class="content container border-2 table-fixed">
@@ -62,6 +74,7 @@
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
+            <th class="border-2 h-10 w-14">Edit</th>
         </tr>
         {#
             {{ m.table_content(guest_dict) }}
@@ -72,17 +85,26 @@
             <td class="border-2 h-10">3</td>
             <td class="border-2 h-10">Haha</td>
             <td class="border-2 h-10">LOL!</td>
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+            </td>
         </tr>
     </table>
     
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
-            <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-2 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+            <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="position">
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Position">
                     <option value="Gamer" selected> Gamer </option>
                     <option value="Owner">Owner</option>
                     <option value="I don't know">I don't know</option>
+                </select>
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Clearance">
+                    <option value="1" selected>Clearance level : 1</option>
+                    <option value="2">Clearance level : 2</option>
+                    <option value="3">Clearance level : 3</option>
                 </select>    
             </div>
             <div class="w-full flex justify-end pr-2 py-2">
@@ -97,12 +119,17 @@
     </div>
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
-            <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-2 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+            <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="position">
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Position">
                     <option value="Gamer" selected> Gamer </option>
                     <option value="Owner">Owner</option>
                     <option value="I don't know">I don't know</option>
+                </select>
+                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Clearance">
+                    <option value="1" selected>Clearance level : 1</option>
+                    <option value="2">Clearance level : 2</option>
+                    <option value="3">Clearance level : 3</option>
                 </select>    
             </div>
             <div class="w-full flex justify-end pr-2 py-2">

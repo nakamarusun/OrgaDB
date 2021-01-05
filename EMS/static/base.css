@@ -46,6 +46,9 @@ h1{
     background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }
 
+.star{
+    filter: invert(94%) sepia(74%) saturate(1562%) hue-rotate(319deg) brightness(104%) contrast(98%);
+}
 .fade_line{ 
     background: #ffffff; /* Old browsers */
     background: -moz-linear-gradient(left,  rgb(209, 250, 229) 0%, grey 25%, grey 75%, rgb(209, 250, 229) 100%); /* FF3.6+ */

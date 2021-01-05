@@ -1,4 +1,53 @@
 {% extends 'general_template.html' %}
-<div class="w-full h-full">
 
+{% block left_cont %}
+    {{ m.event_nav() }}
+{% endblock%}
+
+{% block right_cont %}
+<h1 class="text-center text-2xl pt-6 pb-2">Feedbacks</h1>
+<div class="text-center text-sm pb-4 text-gray-400">Collected feedbacks of the event, integrated with Google Form</div>
+    
+<div class="w-full border-b border-gray-300">
+    <div class="h-8 border-b border-t border-gray-300 flex items-center pl-2 bg-gray-100" id="star-container">
+        <!-- For i in -->
+        <img src="{{url_for('static',filename='asset/star-filled.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+        <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+    </div>
+    <div class="p-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum reprehenderit non molestiae qui sapiente nemo vitae asperiores nihil nulla ea. Vero excepturi eum assumenda omnis? Adipisci non nemo minus neque!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident ullam voluptates architecto est temporibus placeat, velit accusantium, consequuntur rerum eaque harum itaque. Incidunt facere nobis voluptate consectetur accusantium repellat odit!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam natus molestiae odio modi sit repudiandae, deleniti odit rem ipsum assumenda laborum? Provident nisi architecto unde, distinctio expedita laudantium id reiciendis.
+    </div>
 </div>
+{#
+    {% for dict_item in parent_list %}
+        <div class="w-full border-b border-gray-300">
+            <div class="h-8 border-b border-t border-gray-300 flex items-center pl-2 bg-gray-100" id="star-container">
+                {% for i in range({{ dict_item['rating'] }})%}
+                    <img src="{{url_for('static',filename='asset/star-filled.svg')}}" alt="" class="star h-6 w-6">
+                {% endfor%}
+                <!-- Untested flask template -->
+                {% for i in range({{ 10 - dict_item['rating'] }})%}
+                <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+                {% endfor %}
+            </div>
+            <div class="p-2 text-justify">
+                {{ dict_item['feedback_text'] }}
+            </div>
+        </div>
+    {% endfor %}
+#}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

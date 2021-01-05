@@ -62,6 +62,7 @@ $(document).ready(function(){
     $('.show-form').click(function() {
         rotation += 180;
         $('.form-panel').eq(activeTable).slideToggle();
+        console.log($('.chevron-down').eq(activeTable).cssText)
         $('.chevron-down').eq(activeTable).rotate180(rotation);
     });
     
