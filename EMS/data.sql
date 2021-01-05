@@ -29,14 +29,14 @@ INSERT INTO Guests(Full_Name, Email, Phone_Number, Category, Event_id)
     ("Reximus Maximus", "Rex@ganteng.com", "+273187362", "Speaker", 3);
 
 INSERT INTO Expenses(Expense_Type, Item_Name, Amount, Event_id, Expense_Date)
-    VALUES("Venue", NULL, 23012838, 1, "2019-05-19"),
-    ("Marketing", NULL, 24612983, 1, "2019-06-01"),
+    VALUES("Venue", "Balai somewhere out there", 23012838, 1, "2019-05-19"),
+    ("Marketing", "Instagram ads", 24612983, 1, "2019-06-01"),
     ("Other", "Something idk", 2734724726, 2, "2019-05-29");
 
-INSERT INTO Sponsor(Full_Name, Sponsor_Address, Phone_Number, Sponsor_Type, Event_Id)
-    VALUES("NordVPN", "Nord@VPN.com", "0812373737349", "Money", 1),
-    ("Raid Shadow Legends", "Shadow@man.com", "+65482947523", "Money", 2),
-    ("Ring Doorbell", "Ring@door.com", "+64278361232", "Equipment", 3);
+INSERT INTO Sponsor(Sponsor_Name, Contact_Name, Sponsor_Address, Phone_Number, Sponsor_Type)
+    VALUES("NordVPN", "Aboo", "Nord@VPN.com", "0812373737349", "Money"),
+    ("Raid Shadow Legends", "Booba", "Shadow@man.com", "+65482947523", "Money"),
+    ("Ring Doorbell", "John Smith", "Ring@door.com", "+64278361232", "Equipment");
 
 INSERT INTO Inventory(Item_Name, Item_Quantity, Sponsor_Id, Event_Id)
     VALUES("Bruh Mat", 20, NULL, 1),
@@ -44,6 +44,6 @@ INSERT INTO Inventory(Item_Name, Item_Quantity, Sponsor_Id, Event_Id)
     ("Playstation 6", 69, NULL, 3);
 
 INSERT INTO Income(Income_Type, Item_Name, Amount, Sponsor_Id, Event_id, Income_Date)
-    VALUES("Ticket Sales", NULL, 234500000, NULL, 1, "2020-05-09"),
-    ("Merchandise", NULL, 2381723899, NULL, 2, "2077-12-10"),
+    VALUES("Ticket Sales", "Tickets", 234500000, NULL, 1, "2020-05-09"),
+    ("Merchandise", "Merch on uh keychain's", 2381723899, NULL, 2, "2077-12-10"),
     ("Other", "Robbery", 23818900000, NULL, 2, "2019-12-25");
