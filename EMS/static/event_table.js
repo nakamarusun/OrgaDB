@@ -11,7 +11,7 @@ $(document).ready(function(){
     });
 
     // Keeps track of the active table, appends posted stuff into the table.
-    var activeTable = 0;
+    activeTable = 0;
     $('.tabs').click(function(event){
         activeTable = $(this).index();
 
