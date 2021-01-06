@@ -18,7 +18,7 @@
         <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Guests</b></div>
     </div>
     
-    <table class="content container border-2 table-fixed">
+    <table class="content container border-2 table-auto">
         <tr>
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
@@ -42,7 +42,7 @@
             </td>
         </tr>
     </table>
-    <table class="content container border-2 table-fixed">
+    <table class="content container border-2 table-auto">
         <tr>
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
@@ -65,11 +65,13 @@
             </td>
         </tr>
     </table>
-    <table class="content container border-2 table-fixed">
+    <table class="content container border-2 table-auto">
         <tr>
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
+            <th class="border-2 h-10">Phone number</th>
+            <th class="border-2 h-10">Mail</th>
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
             {{ m.table_content(guest_dict) }}
@@ -79,6 +81,8 @@
             <td class="border-2 h-10">3</td>
             <td class="border-2 h-10">Haha</td>
             <td class="border-2 h-10">LOL!</td>
+            <td class="border-2 h-10">+1203912803</td>
+            <td class="border-2 h-10">hotMail</td>
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
@@ -202,6 +206,9 @@
             } else{
                 defaultNameVal = $(editRow).children('td').eq(1).text();
                 defaultPositionVal = $(editRow).children('td').eq(2).text();
+                defaultPhoneVal = $(editRow).children('td').eq(3).text().replace(/[^0-9.-/+]+/g,"")                
+                defaultMailVal = $(editRow).children('td').eq(4).text()                
+                
                 $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="Name" type="text" required name="Name" value='+ defaultNameVal + '>');
                 $(editRow).children('td').eq(2).html(`
                     <select class="m-auto text-center focus:ring-2 border outline-none" id="Position" required name="Position">
@@ -211,6 +218,9 @@
                         <option value="Position z">Position z</option>
                     </select>   
                 `);
+                $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="Phone" type="text" required name="Phone" value='+ defaultPhoneVal + '>');
+                $(editRow).children('td').eq(4).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="Mail" type="text" required name="Mail" value='+ defaultMailVal + '>');
+                
             }
             $(this).parent().children('input').css({'display':'block'});    
         })
@@ -233,10 +243,14 @@
             } else{
                 serializedForm += editRow.find('#Name').attr('name') + '=' + editRow.find('#Name').val()
                 serializedForm += '&' + editRow.find('#Position').attr('name') + '=' + editRow.find('#Position').val()
+                serializedForm += '&' + editRow.find('#Phone').attr('name') + '=' + editRow.find('#Phone').val()
+                serializedForm += '&' + editRow.find('#Mail').attr('name') + '=' + editRow.find('#Mail').val()
                 serializedForm += "&activeTable=" + activeTable;
                 
                 $(editRow).children('td').eq(1).html(editRow.find('#Name').val());
                 $(editRow).children('td').eq(2).html(editRow.find('#Position').val());
+                $(editRow).children('td').eq(3).html(editRow.find('#Phone').val());
+                $(editRow).children('td').eq(4).html(editRow.find('#Mail').val());
             }
             
             console.log(serializedForm);
