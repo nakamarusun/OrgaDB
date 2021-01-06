@@ -11,12 +11,13 @@ INSERT INTO Members(Full_Name, Position)
 INSERT INTO Clearance(Member_Id, Clearance_Level, Event_id)
     VALUES(1, "5", 1),
     (2, "3", 2),
+    (2, "4", 1),
     (3, "1", 2);
 
-INSERT INTO Event_Committee(Event_id,  Member_Id, Member_Role)
-    VALUES(1, 1, "Bruh"),
-    (2, 2, "Hololiver"),
-    (2, 3, "Genshiin Player");
+INSERT INTO Event_Committee(Event_id,  Member_Id, Member_Role, IsVolunteer)
+    VALUES(1, 1, "Bruh", 0),
+    (2, 2, "Hololiver", 1),
+    (2, 3, "Genshiin Player", 0);
 
 INSERT INTO Feedback(Rating, Comments, Event_id)
     VALUES(5, "yeah dude im :(", 1),

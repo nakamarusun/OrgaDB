@@ -36,6 +36,7 @@ CREATE TABLE Event_Committee(
     Event_Id SMALLINT NOT NULL,
     Member_Id SMALLINT NOT NULL,
     Member_Role VARCHAR(50) NOT NULL,
+    IsVolunteer BOOLEAN NOT NULL,
     FOREIGN KEY (Member_Id) REFERENCES Members(Id),
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );
@@ -51,9 +52,9 @@ CREATE TABLE Feedback(
 CREATE TABLE Guests(
     Id SMALLINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Full_Name VARCHAR(50) NOT NULL,
-    Email VARCHAR(50) NOT NULL,
-    Phone_Number VARCHAR(30) NOT NULL,
-    Category VARCHAR(50) NOT NULL,
+    Email VARCHAR(50),
+    Phone_Number VARCHAR(30),
+    Category VARCHAR(50),
     Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Event_Id) REFERENCES Events(Id)
 );

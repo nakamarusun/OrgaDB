@@ -28,21 +28,21 @@ def check_id(func):
             
     return wrapped
 
-@bp.route("/")
-def index():
+# @bp.route("/")
+# def index():
 
-    # TODO: Add /event
-    # This should be the index page of /event.
-    # So this should display all the events the user can see.
-    return """ Bruh """
+#     # TODO: Add /event
+#     # This should be the index page of /event.
+#     # So this should display all the events the user can see.
+#     return """ Bruh """
 
-@bp.route("/<string:id>")
-@check_id
-def event(id):
+# @bp.route("/<string:id>")
+# @check_id
+# def event(id):
 
-    # TODO: add /event/<id>
-    # This should display the summary of the event
-    return id
+#     # TODO: add /event/<id>
+#     # This should display the summary of the event
+#     return id
 
 @bp.route("/<string:id>/description")
 @check_id
@@ -81,7 +81,7 @@ def finance(id):
 
     # First, we get the income
     cursor.execute(
-        "SELECT i.Id, i.Item_Name, Income_Type, Amount, Income_Date FROM Income i JOIN Events ev ON ev.Id=I.Event_Id WHERE Event_Id=%s;",
+        "SELECT Income_Date, Item_Name, Amount, Income_Type, Sponsor_Name FROM Income i LEFT JOIN Sponsor s ON i.Sponsor_Id=s.Id WHERE Event_Id=%s;",
         (id,)
     )
 
@@ -89,10 +89,11 @@ def finance(id):
     income_list = []
     for data in cursor.fetchall():
         income_list.append({
-            "date": data[4],
+            "date": data[0],
             "name": data[1],
-            "amount": data[3],
-            "type": data[2]
+            "amount": data[2],
+            "type": data[3],
+            "sponsor_name": data[4]
         })
     
     # Get the expense
@@ -221,22 +222,34 @@ def members(id):
 
     # First, we get the committee list
     cursor.execute(
-        "SELECT ec.Member_Id, m.Full_Name, ec.Member_Role FROM Event_Committee ec JOIN Members m ON ec.Member_Id=m.Id WHERE Event_Id=%s;",
-        (id,)
+        "SELECT Id, Full_Name, Member_Role, Clearance_Level, IsVolunteer FROM Members m LEFT JOIN Clearance c ON m.Id=c.Member_Id JOIN Event_Committee ec ON ec.Member_Id=m.Id WHERE c.Event_Id=%s AND ec.Event_id=%s;",
+        (id, id,)
     )
 
     # Committee list already includes volunteers, from the database.
     committee_list = []
+    volunteer_list = []
     for data in cursor.fetchall():
-        committee_list.append({
-            "id": data[0],
-            "name": data[1],
-            "position": data[2]
-        })
+
+        # Checks whether the member is a volunteer.
+        if not data[4]:
+            committee_list.append({
+                "id": data[0],
+                "name": data[1],
+                "position": data[2],
+                "clearance": data[3]
+            })
+        else:
+            volunteer_list.append({
+                "id": data[0],
+                "name": data[1],
+                "position": data[2],
+                "clearance": data[3]
+            })
 
     # Get the guests
     cursor.execute(
-        "SELECT Id, Full_Name FROM Guests WHERE Event_Id=%s;",
+        "SELECT Id, Full_Name, Category, Phone_Number, Email FROM Guests WHERE Event_Id=%s;",
         (id,)
     )
 
@@ -245,10 +258,12 @@ def members(id):
         guest_list.append({
             "id": data[0],
             "name": data[1],
+            "category": data[2],
+            "Phone_Number": data[3],
+            "Email": data[4]
         })
 
-
-    return render_template("members.html", committee_list=committee_list, guest_list=guest_list)
+    return render_template("members.html", committee_dict=committee_list, volunteer_dict=volunteer_list, guest_dict=guest_list)
 
 @bp.route("/<string:id>/members/add", methods=['POST'])
 def add_members(id):
