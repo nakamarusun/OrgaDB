@@ -148,7 +148,7 @@
         // This is a blunder of a code
         $('.edit').click(function(){
             $(this).css({'display' : 'none'});
-
+            
             // Row that is being edited
             editRow = $(this).parent().parent();
             // console.log(editRow)
@@ -158,6 +158,7 @@
             defaultNameVal = $(editRow).children('td').eq(1).text() 
             defaultAmountVal = $(editRow).children('td').eq(2).text().replace(/[^0-9.-]+/g,"")
             defaultTypeVal = $(editRow).children('td').eq(3).text()
+            defaultSponsorVal = $(editRow).children('td').eq(4).text()
             
 
             $(editRow).children('td').eq(0).html('<input class="m-auto focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
@@ -176,6 +177,17 @@
                 </select>
                 `);
 
+            if(activeTable == 0){
+                $(editRow).children('td').eq(4).html(`
+                <select class="m-auto text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
+                    <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                </select>
+                `);
+            }
             // Activates second child (checkmark)
             $(this).parent().children('input').css({'display':'block'});    
         })
@@ -192,6 +204,9 @@
             serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
             serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + parseFloat(editRow.find('#amount').val())
             serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
+            if(activeTable == 0){
+                serializedForm += '&' + editRow.find('#sponsor').attr('name') + '=' + editRow.find('#type').val()    
+            }
             serializedForm += "&activeTable=" + activeTable;
 
             editRow = $(this).parent().parent();
@@ -199,6 +214,9 @@
             $(editRow).children('td').eq(1).html(editRow.find('#name').val());
             $(editRow).children('td').eq(2).html(formatter.format(editRow.find('#amount').val()));
             $(editRow).children('td').eq(3).html(editRow.find('#type').val());
+            if(activeTable == 0){
+                $(editRow).children('td').eq(4).html(editRow.find('#sponsor').val()); 
+            }
             
             console.log(serializedForm);
             // Used to add a record on the front end

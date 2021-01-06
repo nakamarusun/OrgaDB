@@ -11,7 +11,7 @@ $(document).ready(function(){
     });
 
     // Keeps track of the active table, appends posted stuff into the table.
-    var activeTable = 0;
+    activeTable = 0;
     $('.tabs').click(function(event){
         activeTable = $(this).index();
 
@@ -30,11 +30,13 @@ $(document).ready(function(){
         // Used to add a record on the front end
         var serializedArray = $(this).serializeArray();
         var currentPath = window.location.pathname;
+        
         $.ajax({
             type : "POST",
             url : currentPath + "/add",
             data : serializedForm,
             success : function(){
+                $('.empty-message').hide()
                 var row = '';
                 // console.log(result)
                 for(x in serializedArray){
