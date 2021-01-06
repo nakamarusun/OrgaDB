@@ -35,7 +35,7 @@
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Chaika</td>
             <td class="border-2 h-10">Best girl</td>
-            <td class="border-2 h-10">1</td>
+            <td class="border-2 h-10">1alsdfkjlk</td>
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
@@ -80,7 +80,7 @@
         <tr>
             <td class="border-2 h-10">3</td>
             <td class="border-2 h-10">Haha</td>
-            <td class="border-2 h-10">LOL!</td>
+            <td class="border-2 h-10">LOL</td>
             <td class="border-2 h-10">+1203912803</td>
             <td class="border-2 h-10">hotMail</td>
             <td class="border-2 h-10">
@@ -170,6 +170,7 @@
         var activeTable = 0;
     </script>
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
+    <script src="{{url_for('static',filename='input_validator.js')}}"></script>
     <script>
         
         // I'm not proud of this
@@ -238,6 +239,14 @@
                 serializedForm += '&' + editRow.find('#Clearance').attr('name') + '=' + editRow.find('#Clearance').val()
                 serializedForm += "&activeTable=" + activeTable;
 
+                if(!validateName(editRow.find('#Position').val())){
+                    editRow.find('#Position').addClass('border-red-500');
+                    return 0;
+                } else if(!validateInt(editRow.find('#Clearance').val())){
+                    editRow.find('#Clearance').addClass('border-red-500');
+                    return 0;
+                }
+
                 $(editRow).children('td').eq(2).html(editRow.find('#Position').val());
                 $(editRow).children('td').eq(3).html(editRow.find('#Clearance').val());
             } else{
@@ -246,6 +255,20 @@
                 serializedForm += '&' + editRow.find('#Phone').attr('name') + '=' + editRow.find('#Phone').val()
                 serializedForm += '&' + editRow.find('#Mail').attr('name') + '=' + editRow.find('#Mail').val()
                 serializedForm += "&activeTable=" + activeTable;
+                
+                if(!validateName(editRow.find('#Name').val())){
+                    editRow.find('#Name').addClass('border-red-500');
+                    return 0;
+                } else if(!validateName(editRow.find('#Position').val())){
+                    editRow.find('#Position').addClass('border-red-500');
+                    return 0;
+                } else if(!validatePhone(editRow.find('#Phone').val())){
+                    editRow.find('#Phone').addClass('border-red-500');
+                    return 0;
+                } else if(!validateEmail(editRow.find('#Mail').val())){
+                    editRow.find('#Mail').addClass('border-red-500');
+                    return 0;
+                }
                 
                 $(editRow).children('td').eq(1).html(editRow.find('#Name').val());
                 $(editRow).children('td').eq(2).html(editRow.find('#Position').val());

@@ -138,12 +138,13 @@
         var activeTable = 0;
     </script>
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
+    <script src="{{url_for('static',filename='input_validator.js')}}"></script>
     <script>
         var formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'IDR',
         });
-        
+
         // I'm not proud of this
         // This is a blunder of a code
         $('.edit').click(function(){
@@ -161,12 +162,12 @@
             defaultSponsorVal = $(editRow).children('td').eq(4).text()
             
 
-            $(editRow).children('td').eq(0).html('<input class="m-auto focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
-            $(editRow).children('td').eq(1).html('<input class="m-auto focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
-            $(editRow).children('td').eq(2).html('<input class="m-auto focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
+            $(editRow).children('td').eq(0).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
+            $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
+            $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
                                                 defaultAmountVal +'>');
             $(editRow).children('td').eq(3).html(`
-                <select class="m-auto text-center focus:ring-2 outline-none" id="type" required name="Type">
+                <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
                     <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
                     <option value="Venue">Venue</option>
                     <option value="Marketing">Marketing</option>
@@ -179,7 +180,7 @@
 
             if(activeTable == 0){
                 $(editRow).children('td').eq(4).html(`
-                <select class="m-auto text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
+                <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
                     <option value="Sponsor x">Sponsor x</option>
                     <option value="Sponsor x">Sponsor x</option>
@@ -199,15 +200,26 @@
             editRow = $(this).parent().parent();
             
             // TODO : input validation
-            var serializedForm = ""
-            serializedForm += editRow.find('#date').attr('name') + '=' + editRow.find('#date').val()
-            serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
-            serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + parseFloat(editRow.find('#amount').val())
-            serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
+            var serializedForm = "";
+            serializedForm += editRow.find('#date').attr('name') + '=' + editRow.find('#date').val();
+            serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val();
+            serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + parseFloat(editRow.find('#amount').val());
+            serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val();
             if(activeTable == 0){
-                serializedForm += '&' + editRow.find('#sponsor').attr('name') + '=' + editRow.find('#type').val()    
+                serializedForm += '&' + editRow.find('#sponsor').attr('name') + '=' + editRow.find('#type').val();
             }
             serializedForm += "&activeTable=" + activeTable;
+            
+            if(!validateEmpty(editRow.find('#date').val())){
+                editRow.find('#date').addClass('border-red-500');
+                return 0;
+            } else if(!validateName(editRow.find('#name').val())){
+                editRow.find('#name').addClass('border-red-500');
+                return 0;
+            } else if(!validateMoney(editRow.find('#amount').val())){
+                editRow.find('#amount').addClass('border-red-500');
+                return 0;
+            }
 
             editRow = $(this).parent().parent();
             $(editRow).children('td').eq(0).html(editRow.find('#date').val());
