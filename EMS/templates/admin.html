@@ -39,7 +39,7 @@
             </td>
         </tr>
     </table>
-    <form action="" method="post" class="form-panel mb-4 flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md" style="display: block;">
+    <form action="" method="post" class="form-sponsor mb-4 flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md" style="display: block;">
         <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
             <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
             <input type="text" required name="Address" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Address">
@@ -212,6 +212,68 @@
             $('.submit-position').css({'display' : 'none'});
         })
     
-        
+        $('.form-sponsor').on("submit",function(e){
+            // Serializes form data into string
+            var serializedForm = $(this).serialize() + "&ActiveTable=" + activeTable;
+            
+            // Used to add a record on the front end
+            var serializedArray = $(this).serializeArray();
+            var currentPath = window.location.pathname;
+            console.log(serializedArray)
+            $.ajax({
+                type : "POST",
+                url : currentPath + "/add",
+                data : serializedForm,
+                success : function(){
+                    $('.empty-message').hide()
+                    var row = '';
+                    // console.log(result)
+                    for(x in serializedArray){
+                        row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
+                    }
+                    row += 
+                    `<td class="border-2 h-10">
+                        <img src="/static/asset/pencil.svg" class="edit-sponsor cursor-pointer m-auto w-6 h-6" alt="">
+                        <input type="image" src="/static/asset/check.svg" class="submit-sponsor m-auto w-6 h-6" alt="">
+                    </td>`
+                    $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
+                    alert("Succesfully added record");
+                }
+            });
+            // Prevents regular submit action on submit click
+            e.preventDefault();
+        });
+
+        $('.form-position').on("submit",function(e){
+            // Serializes form data into string
+            var serializedForm = $(this).serialize() + "&ActiveTable=" + activeTable;
+            
+            // Used to add a record on the front end
+            var serializedArray = $(this).serializeArray();
+            var currentPath = window.location.pathname;
+            console.log(serializedArray)
+            $.ajax({
+                type : "POST",
+                url : currentPath + "/add",
+                data : serializedForm,
+                success : function(){
+                    $('.empty-message').hide()
+                    var row = '';
+                    // console.log(result)
+                    for(x in serializedArray){
+                        row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
+                    }
+                    row += 
+                    `<td class="border-2 h-10">
+                        <img src="/static/asset/pencil.svg" class="edit-position cursor-pointer m-auto w-6 h-6" alt="">
+                        <input type="image" src="/static/asset/check.svg" class="submit-position m-auto w-6 h-6" alt="">
+                    </td>`
+                    $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
+                    alert("Succesfully added record");
+                }
+            });
+            // Prevents regular submit action on submit click
+            e.preventDefault();
+        });
     </script>
 {% endblock %} 
