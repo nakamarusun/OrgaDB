@@ -48,8 +48,8 @@ $(document).ready(function(){
                 }
                 row += 
                 `<td class="border-2 h-10">
-                    <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
-                    <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                    <img src="/static/asset/pencil.svg" class="edit cursor-pointer m-auto w-6 h-6" alt="">
+                    <input type="image" src="/static/asset/check.svg" class="submit m-auto w-6 h-6" alt="">
                 </td>`
                 $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
                 alert("Succesfully added record");

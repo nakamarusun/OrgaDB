@@ -147,7 +147,8 @@
 
         // I'm not proud of this
         // This is a blunder of a code
-        $('.edit').click(function(){
+        
+        $(document).on('click','.edit', function(){
             $(this).css({'display' : 'none'});
             
             // Row that is being edited
@@ -193,7 +194,7 @@
             $(this).parent().children('input').css({'display':'block'});    
         })
         
-        $('.submit').click(function(){
+        $(document).on('click','.submit', function(){
             // Serializes form data into string
         
             // Gets the row that is being edited
