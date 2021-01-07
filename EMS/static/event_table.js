@@ -33,7 +33,7 @@ $(document).ready(function(){
         console.log(serializedArray)
         $.ajax({
             type : "POST",
-            url : currentPath + "add",
+            url : currentPath + "/add",
             data : serializedForm,
             success : function(){
                 $('.empty-message').hide()
@@ -45,6 +45,13 @@ $(document).ready(function(){
                     } else{
                         row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
                     }
+                }
+                if(document.URL.includes("admin")){
+                    row +=
+                    `<td class="border-2 h-10">
+                        <img src="/static/asset/pencil.svg" class="edit cursor-pointer m-auto w-6 h-6" alt="">
+                        <input type="image" src="/static/asset/check.svg" class="submit m-auto w-6 h-6" alt="">
+                    </td>`    
                 }
                 row += 
                 `<td class="border-2 h-10">
