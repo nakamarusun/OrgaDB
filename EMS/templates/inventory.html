@@ -28,6 +28,7 @@
         {{ m.table_content(inventory_dict) }}
             
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">0</td>
             <td class="border-2 h-10">Fursuit</td>
@@ -38,6 +39,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
         <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
@@ -45,10 +47,10 @@
             <input type="text" required name="amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
             <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
             <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="sponsor">
-                <option value="-" selected>No sponsor</option>
-                <option value="Sponsor 1">Sponsor 1</option>
-                <option value="Sponsor 2">Sponsor 2</option>
-                <option value="Sponsor 3">Sponsor 3</option>
+                <option value="None" selected>None</option>
+                {% for s in sponsor_list %}
+                    <option value='{{ s }}'>{{ s }}</option>
+                {% endfor %}
             </select>    
         </div>
         <div class="w-full flex justify-end pr-2 py-2">

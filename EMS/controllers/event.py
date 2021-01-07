@@ -193,13 +193,19 @@ def add_inventory(id):
 
     try:
         db_obj = db.get_db()
+        cursor = db_obj.cursor()
+
+        # Get the sponsor ID, if available
+        sponsor_id = None
+        if request.form['sponsor'] != "None":
+            cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['sponsor'].replace("+", " "),))
+            sponsor_id = cursor.fetchall()[0][0]
 
         # Update datbase
-        cursor = db_obj.cursor()
         cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (
-            request.form['name'],
-            request.form['amount'],
-            1,
+            request.form['name'].replace("+", " "),
+            request.form['amount'].replace("+", " "),
+            sponsor_id,
             id,
         ))
 
