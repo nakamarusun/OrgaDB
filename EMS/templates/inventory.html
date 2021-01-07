@@ -64,7 +64,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>var activeTable = 0;</script>
+    <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }};</script>
     <script src="{{url_for('static', filename='event_table.js')}}"></script>
     <script>
         $(document).on('click','.edit', function(){

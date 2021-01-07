@@ -100,6 +100,7 @@
 </div>
 {% endblock %}
 {% block scripts %}
+    <script>var hasEditPrivilege = {{ editPrivilege|safe }};</script>
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
     <script>
         
@@ -232,11 +233,13 @@
                     for(x in serializedArray){
                         row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
                     }
-                    row += 
-                    `<td class="border-2 h-10">
-                        <img src="/static/asset/pencil.svg" class="edit-sponsor cursor-pointer m-auto w-6 h-6" alt="">
-                        <input type="image" src="/static/asset/check.svg" class="submit-sponsor m-auto w-6 h-6" alt="">
-                    </td>`
+                    if(hasEditPrivilege){
+                        row += 
+                        `<td class="border-2 h-10">
+                            <img src="/static/asset/pencil.svg" class="edit-sponsor cursor-pointer m-auto w-6 h-6" alt="">
+                            <input type="image" src="/static/asset/check.svg" class="submit-sponsor m-auto w-6 h-6" alt="">
+                        </td>`
+                    }
                     $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
                     alert("Succesfully added record");
                 }
@@ -266,11 +269,13 @@
                     for(x in serializedArray){
                         row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
                     }
-                    row += 
-                    `<td class="border-2 h-10">
-                        <img src="/static/asset/pencil.svg" class="edit-position cursor-pointer m-auto w-6 h-6" alt="">
-                        <input type="image" src="/static/asset/check.svg" class="submit-position m-auto w-6 h-6" alt="">
-                    </td>`
+                    if(hasEditPrivilege){
+                        row += 
+                        `<td class="border-2 h-10">
+                            <img src="/static/asset/pencil.svg" class="edit-position cursor-pointer m-auto w-6 h-6" alt="">
+                            <input type="image" src="/static/asset/check.svg" class="submit-position m-auto w-6 h-6" alt="">
+                        </td>`
+                    }
                     $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
                     alert("Succesfully added record");
                 }

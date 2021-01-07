@@ -167,7 +167,7 @@
 {% block scripts %}
     <script>
         // Initializes global variables
-        var activeTable = 0;
+        var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }};
     </script>
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
     <script src="{{url_for('static',filename='input_validator.js')}}"></script>
