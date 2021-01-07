@@ -65,6 +65,7 @@
 
 {% block scripts %}
     <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }};</script>
+    <script src="{{url_for('static', filename='input_validator.js')}}"></script>
     <script src="{{url_for('static', filename='event_table.js')}}"></script>
     <script>
         $(document).on('click','.edit', function(){
@@ -106,16 +107,16 @@
             var serializedForm = ""
             serializedForm += editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
             serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + editRow.find('#amount').val().replace(/[^0-9.-]+/g,"")
-            serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
+            serializedForm += '&' + editRow.find('#sponsor').attr('name') + '=' + editRow.find('#sponsor').val()
             serializedForm += "&activeTable=" + activeTable;
 
             if(!validateEmpty(editRow.find('#name').val())){
                 editRow.find('#name').addClass('border-red-500');
                 return 0;
-            } else if(!validateName(editRow.find('#amount').val())){
+            } else if(!validateInt(editRow.find('#amount').val())){
                 editRow.find('#amount').addClass('border-red-500');
                 return 0;
-            } else if(!validateMoney(editRow.find('#sponsor').val())){
+            } else if(!validateName(editRow.find('#sponsor').val())){
                 editRow.find('#sponsor').addClass('border-red-500');
                 return 0;
             }
@@ -128,7 +129,7 @@
             
             // Used to add a record on the front end
             var currentPath = window.location.pathname;
-            $('.edit').css({'display' : 'block'});
+            $(this).parent().children('img').css({'display':'block'});
             
             $.ajax({
                 type : "POST",
@@ -138,7 +139,7 @@
                     alert("Succesfully added record");
                 }
             });
-            $('.submit').css({'display' : 'none'});
+            $(this).parent().children('input').css({'display':'none'});
         });
     </script>
 {% endblock %} 

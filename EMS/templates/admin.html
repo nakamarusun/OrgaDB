@@ -54,7 +54,7 @@
         </div>
     </form>
     {% endif %}
-    <div class="grid grid-cols-2 gap-x-4">
+    <div class="pt-8 grid grid-cols-2 gap-x-4">
         <div class="position-wrapper">
             <div class="tab_container container flex h-18">
                 <div class="bg-gray-300 cursor-pointer p-3 text-center border-2 rounded-t-lg active"><b>Position list</b></div>
@@ -166,7 +166,7 @@
                     alert("Succesfully added record");
                 }
             });
-            $('.submit-sponsor').css({'display' : 'none'});
+            $(this).parent().children('input').css({'display':'none'})
         });
 
         $(document).on('click','.edit-position', function(){
@@ -210,7 +210,7 @@
                     alert("Succesfully added record");
                 }
             });
-            $('.submit-position').css({'display' : 'none'});
+            $(this).parent().children('input').css({'display':'none'})
         })
     
         $('.form-sponsor').on("submit",function(e){

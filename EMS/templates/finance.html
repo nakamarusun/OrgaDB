@@ -19,7 +19,7 @@
         <tr id="table-header">
             <th class="border-2 h-10">Date</th>
             <th class="border-2 h-10">Name</th>
-            <th class="border-2 h-10">Amount</th>
+            <th class="border-2 h-10">Cost</th>
             <th class="border-2 h-10">Type</th>
             <th class="border-2 h-10">Sponsors</th>
             <th class="border-r-2 h-10 w-14">Edit</th>
@@ -37,6 +37,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
         <tr>
@@ -48,6 +49,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
@@ -56,7 +58,7 @@
         <tr>
             <th class="border-2 h-10">Date</th>
             <th class="border-2 h-10">Name</th>
-            <th class="border-2 h-10">Amount</th>
+            <th class="border-2 h-10">Cost</th>
             <th class="border-2 h-10">Type</th>
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
@@ -69,6 +71,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
@@ -79,7 +82,7 @@
             <div class="grid gap-x-4 px-2 grid-cols-5 md:grid-cols-5 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="date" required name="Date" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
+                <input type="text" required name="Cost" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Cost" pattern="[0-9]+">
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
                     <option value="Venue" selected>Venue</option>
                     <option value="Marketing">Marketing</option>
@@ -109,7 +112,7 @@
             <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="date" required name="Date" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
+                <input type="text" required name="Cost" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Cost" pattern="[0-9]+">
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
                     <option value="Venue" selected>Venue</option>
                     <option value="Marketing">Marketing</option>
@@ -137,6 +140,7 @@
 {% block scripts %}
     <script>
         // Initializes global variables
+        var columns = ['Date','Name','Amount','Type','Sponsors']
         var activeTable = 0;
         var hasEditPrivilege = {{ editPrivilege|safe }};
     </script>
@@ -237,7 +241,7 @@
             console.log(serializedForm);
             // Used to add a record on the front end
             var currentPath = window.location.pathname;
-            $('.edit').css({'display' : 'block'});
+            $(this).parent().children('img').css({'display':'block'});
             
             $.ajax({
                 type : "POST",
@@ -247,7 +251,7 @@
                     alert("Succesfully added record");
                 }
             });
-            $('.submit').css({'display' : 'none'});
+            $(this).parent().children('input').css({'display':'none'});
         });
     </script>
 {% endblock %} 

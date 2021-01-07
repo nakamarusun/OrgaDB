@@ -33,29 +33,11 @@ $(document).ready(function(){
         console.log(serializedArray)
         $.ajax({
             type : "POST",
-            url : currentPath + "/add",
+            url : currentPath + "add",
             data : serializedForm,
             success : function(){
                 $('.empty-message').hide()
-                var row = '';
-                // console.log(result)
-                for(x in serializedArray){
-                    if(x == 2){
-                        row += '<td class="border-2 h-10">' +  formatter.format(serializedArray[x]['value']) + '</td>';
-                    } else{
-                        row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
-                    }
-                }
-                // TODO : uncomment when data can be passed so the code doesn't break
-                if(hasEditPrivilege){
-                    row += 
-                    `<td class="border-2 h-10">
-                        <img src="/static/asset/pencil.svg" class="edit cursor-pointer m-auto w-6 h-6" alt="">
-                        <input type="image" src="/static/asset/check.svg" class="submit m-auto w-6 h-6" alt="">
-                    </td>`
-                    $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
-                }
-                alert("Succesfully added record");
+                location.reload();
             }
         });
         
@@ -75,4 +57,57 @@ $(document).ready(function(){
         console.log($('.chevron-down').eq(activeTable).cssText)
         $('.chevron-down').eq(activeTable).rotate180(rotation);
     }); 
+
+
+    $(document).on('click','.edit', function(){
+        $(this).parent().find('.delete').addClass('editing');
+    })
+    $(document).on('click','.edit-sponsor', function(){
+        $(this).parent().find('.delete').addClass('editing');
+    })
+    $(document).on('click','.edit-position', function(){
+        $(this).parent().find('.delete').addClass('editing');
+    })
+
+    $(document).on('click','.delete', function(){
+        editRow = $(this).parent().parent();
+        deletedData = "";
+        if($(this).hasClass('editing')){
+            for(i = 0; i < columns.length; ++i){
+                if($(editRow).children('td').children().eq(i).val().trim().length != 0){
+                    if(i == 0){
+                        deletedData += columns[i] + "=" + $(editRow).children('td').children().eq(i).val()
+                    } else{
+                        deletedData += "&" + columns[i] + "=" + $(editRow).children('td').children().eq(i).val()
+                    }
+                }
+            }
+        } else{
+            for(i = 0; i < columns.length; ++i){
+                if($(editRow).children('td').eq(i).text().trim().length != 0){
+                    if(i == 0){
+                        deletedData += columns[i] + "=" + $(editRow).children('td').eq(i).text()
+                    } else{
+                        deletedData += "&" + columns[i] + "=" + $(editRow).children('td').eq(i).text()
+                    }
+                }
+            }
+        }
+        console.log(deletedData)
+        var currentPath = window.location.pathname;
+        $.ajax({
+            type : "POST",
+            url : currentPath + "/delete",
+            data : deletedData,
+            success : function(){
+                if(editRow.parent().children().length == 1){
+                    editRow.parent().find('.empty-message').show()
+                }
+                
+                alert("Succesfully deleted record");
+            }
+        });
+        
+        editRow.remove();
+    });
 });

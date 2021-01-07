@@ -118,7 +118,7 @@
             
             // Used to add a record on the front end
             var currentPath = window.location.pathname;
-            $('.edit').css({'display' : 'block'});
+            $(this).parent().children('img').css({'display':'block'});
             
             $.ajax({
                 type : "POST",
@@ -128,7 +128,7 @@
                     alert("Succesfully added record");
                 }
             });
-            $('.submit').css({'display' : 'none'});
+            $(this).parent().children('input').css({'display':'none'});
         });
     </script>
 {% endblock %} 
