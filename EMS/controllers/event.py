@@ -278,14 +278,32 @@ def add_members(id):
         # Update database
         cursor = db_obj.cursor()
         
-        # TODO: Talk with aric how to this message
-        if request.form['ActiveTable'] == "0":
-            pass
+        if request.form['ActiveTable'] == "0" or request.form["ActiveTable"] == "1":
+            cursor.execute(
+                "SELECT * FROM Members WHERE Id=%s;", (
+                    request.form['Id'],
+            ))
+            member = cursor.fetchall()[0]
 
-        elif request.form['ActiveTable'] == "1":
-            pass
+            # If the member ID exist in the database, then insert everything
+            if member:
+                # Insert the member first
+                cursor.execute("INSERT INTO Event_Committee (Event_Id, Member_Id, Member_Role, IsVolunteer) VALUES (%s, %s, %s, %s);", (
+                    id,
+                    member[0],
+                    request.form['Position'],
+                    request.form['ActiveTable'] == "1", 
+                ))
+
+                # Then, insert the clearance level
+                cursor.execute("INSERT INTO Clearance (Member_Id, Clearance_Level, Event_Id) VALUES (%s, %s, %s);", (
+                    member[0],
+                    request.form['Clearance'],
+                    id,
+                ))
 
         elif request.form['ActiveTable'] == "2":
+            # TODO: Is not complete
             pass
 
         # Commit

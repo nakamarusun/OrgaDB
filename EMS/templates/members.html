@@ -31,6 +31,7 @@
         <!-- Calls function to display table contents, accepts a dictionary of content as argument-->
         {{ m.table_content(committee_dict) }}
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Chaika</td>
@@ -41,6 +42,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     <table class="content container border-2 table-auto">
         <tr>
@@ -54,6 +56,7 @@
             {{ m.table_content(volunteer_dict) }}
 
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">2</td>
             <td class="border-2 h-10">Gay</td>
@@ -64,6 +67,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     <table class="content container border-2 table-auto">
         <tr>
@@ -77,6 +81,7 @@
             {{ m.table_content(guest_dict) }}
         
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">3</td>
             <td class="border-2 h-10">Haha</td>
@@ -88,6 +93,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     
     <div class="form-wrapper">
