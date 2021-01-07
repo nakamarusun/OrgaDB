@@ -6,6 +6,14 @@ import re
 
 bp = Blueprint("event", __name__, url_prefix="/event")
 
+# Register a login required before every request being made.
+# This is so that the user has to login first before being
+# able to access anything.
+@bp.before_request
+def prompt_login():
+    if not session.get("loggedin", False):
+        return redirect(url_for("user.login"))
+
 def check_id(func):
     # Decorator function to check first whether the id exist.
     # If it does not, then redirect to 404
@@ -27,22 +35,6 @@ def check_id(func):
             return func(id)
             
     return wrapped
-
-# @bp.route("/")
-# def index():
-
-#     # TODO: Add /event
-#     # This should be the index page of /event.
-#     # So this should display all the events the user can see.
-#     return """ Bruh """
-
-# @bp.route("/<string:id>")
-# @check_id
-# def event(id):
-
-#     # TODO: add /event/<id>
-#     # This should display the summary of the event
-#     return id
 
 @bp.route("/<string:id>/description")
 @check_id

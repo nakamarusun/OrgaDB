@@ -105,5 +105,7 @@ CREATE TABLE Login_Cred(
     Pass VARCHAR(200) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     Username VARCHAR(50) NOT NULL,
-    IsAdmin BOOLEAN NOT NULL
+    IsAdmin BOOLEAN NOT NULL,
+    Member_Id SMALLINT NOT NULL,
+    FOREIGN KEY (Member_Id) REFERENCES Members(Id)
 );
