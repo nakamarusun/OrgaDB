@@ -1,7 +1,7 @@
 {% extends 'general_template.html' %}
 
 {% block left_cont %}
-    {{ m.event_nav() }}
+    {{ m.event_nav(event_name,event_id) }}
 {% endblock%}
 
 {% block right_cont %}
@@ -28,24 +28,22 @@
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam natus molestiae odio modi sit repudiandae, deleniti odit rem ipsum assumenda laborum? Provident nisi architecto unde, distinctio expedita laudantium id reiciendis.
     </div>
 </div>
-{#
-    {% for dict_item in parent_list %}
-        <div class="w-full border-b border-gray-300">
-            <div class="h-8 border-b border-t border-gray-300 flex items-center pl-2 bg-gray-100" id="star-container">
-                {% for i in range({{ dict_item['rating'] }})%}
-                    <img src="{{url_for('static',filename='asset/star-filled.svg')}}" alt="" class="star h-6 w-6">
-                {% endfor%}
-                <!-- Untested flask template -->
-                {% for i in range({{ 10 - dict_item['rating'] }})%}
-                <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
-                {% endfor %}
-            </div>
-            <div class="p-2 text-justify">
-                {{ dict_item['feedback_text'] }}
-            </div>
+{% for dict_item in feedback_dict %}
+    <div class="w-full border-b border-gray-300">
+        <div class="h-8 border-b border-t border-gray-300 flex items-center pl-2 bg-gray-100" id="star-container">
+            {% for i in range({{ dict_item['rating'] }})%}
+                <img src="{{url_for('static',filename='asset/star-filled.svg')}}" alt="" class="star h-6 w-6">
+            {% endfor%}
+            <!-- Untested flask template -->
+            {% for i in range({{ 10 - dict_item['rating'] }})%}
+            <img src="{{url_for('static',filename='asset/star-empty.svg')}}" alt="" class="star h-6 w-6">
+            {% endfor %}
         </div>
-    {% endfor %}
-#}
+        <div class="p-2 text-justify">
+            {{ dict_item['feedback_text'] }}
+        </div>
+    </div>
+{% endfor %}
 
 {% endblock %}
 

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block left_cont %}
-{{ m.event_nav() }}
+{{ m.event_nav(event_name,event_id) }}
 {% endblock %}
 
 {% block right_cont %}
@@ -29,7 +29,7 @@
 
         <!-- Commented out jinja template -->
         <!-- Calls function to display table contents, accepts a dictionary of content as argument-->
-        {{ m.table_content(committee_dict) }}
+        {{ m.table_content(committee_dict,editPrivilege) }}
         <!-- Placeholder values -->
         <tr>
             <td class="border-2 h-10">1</td>
@@ -51,7 +51,7 @@
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
         
-            {{ m.table_content(volunteer_dict) }}
+            {{ m.table_content(volunteer_dict,editPrivilege) }}
 
         <!-- Placeholder values -->
         <tr>
@@ -74,7 +74,7 @@
             <th class="border-2 h-10">Mail</th>
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
-            {{ m.table_content(guest_dict) }}
+            {{ m.table_content(guest_dict,editPrivilege) }}
         
         <!-- Placeholder values -->
         <tr>

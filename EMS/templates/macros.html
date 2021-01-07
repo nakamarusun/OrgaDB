@@ -1,4 +1,4 @@
-{% macro event_nav() %}
+{% macro event_nav(event_name,event_id) %}
 <aside class="container flex flex-col my-3 px-5">
     <div class="flex justify-between items-center">
         <!-- Commented out jinja -->
@@ -11,41 +11,38 @@
     </div>
     <div class="left_fade_line h-px my-2"></div>
     <div class="text-md flex flex-col truncate overflow-hidden">
-        <a class="text-blue-600 event-list-item outline-none" href=""><t>Members</t><span>»</span></a>
-        <a class="text-blue-600 event-list-item outline-none" href=""><t>Finance</t><span>»</span></a>
-        <a class="text-blue-600 event-list-item outline-none" href=""><t>Inventory</t><span>»</span></a>
-        <a class="text-blue-600 event-list-item outline-none" href=""><t>Feedback</t><span>»</span></a>
-        <a class="text-blue-600 event-list-item outline-none" href=""><t>Admin</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.members',  id=event_id )}}"><t>Members</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.finance',  id=event_id )}}"><t>Finance</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.inventory',id=event_id )}}"><t>Inventory</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.feedback', id=event_id )}}"><t>Feedback</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href="{#{{url_for('event.admin',    id=event_id )}}#}"><t>Admin</t><span>»</span></a>
     </div>
 </aside>
 {% endmacro %}
 
-{% macro user_nav() %}
+{% macro user_nav(event_dict) %}
 <aside class="container flex flex-col my-3 px-5">
     <div class="flex justify-between items-center">
-        <span class="text-lg">Events</span>
+        <h1 class="text-lg">Events</h1>
         <a href="{{url_for('event.add_new')}}"><span class="button transition bg-gray-300 border-b-4 border-green-400 bg-green-300 text-sm h-full py-px px-1 rounded-sm">New +</span></a>
     </div>
     <div class="left_fade_line h-px my-3"></div>
     <div class="text-md flex flex-col truncate overflow-hidden">
         <!-- For i in someone's event list,  -->
-        <a class="text-blue-600 event-list-item pb-1" href="">
-            <t>Username/Nama Event</t><span>»</span>
-        </a>
-        <a class="text-blue-600 event-list-item pb-1" href="">
-            <t>Username/Nama Event</t><span>»</span>
-        </a>
-        <a class="text-blue-600 event-list-item pb-1" href="">
-            <t>Username/Nama Event</t><span>»</span>
-        </a>
-        <a class="text-blue-600 event-list-item pb-1" href="">
-            <t>Username/Nama Event</t><span>»</span>
-        </a>
+        {% for dict_item in event_dict %}
+            <a class="text-blue-600 event-list-item pb-1" href="{{ dict_item['event_link']}}">
+                <t>{{ dict_item['username'] }}/dict_item['event_name']</t><span>»</span>
+            </a>
+        {% else %}
+            <div class="text-blue-600 event-list-item pb-1" href="">
+                <t>No event</t>
+            </div>
+        {% endfor %}
     </div>
 </aside>
 {% endmacro %}
 
-{% macro table_content(table_dict) %}
+{% macro table_content(table_dict,editPrivilege) %}
 <!-- Iterates over a dictionary, showing it on table -->
 <!-- If there is no item, show 'No entries in table' -->
     {% for dict_item in table_dict %}
@@ -57,6 +54,45 @@
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
+        </tr>
+    <!-- In the case of no values passed -->
+    {% else %}
+        <td class="empty-message text-gray-400 text-center text-2xl" colspan="7">No entries in table</div>
+    {% endfor %}
+{% endmacro %}
+{% macro table_content_position(table_dict,editPrivilege) %}
+<!-- Iterates over a dictionary, showing it on table -->
+<!-- If there is no item, show 'No entries in table' -->
+    {% for dict_item in table_dict %}
+        <tr>
+            {% for key,value in dict_item.items() %}
+                <td class="border-2 h-10">{{ value }}</td>
+            {% endfor %}
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit-position m-auto w-6 h-6 cursor-pointer" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit-position m-auto w-6 h-6" alt="">
+            </td>
+        </tr>
+    <!-- In the case of no values passed -->
+    {% else %}
+        <td class="empty-message text-gray-400 text-center text-2xl" colspan="7">No entries in table</div>
+    {% endfor %}
+{% endmacro %}
+
+{% macro table_content_sponsor(table_dict,editPrivilege) %}
+<!-- Iterates over a dictionary, showing it on table -->
+<!-- If there is no item, show 'No entries in table' -->
+    {% for dict_item in table_dict %}
+        <tr>
+            {% for key,value in dict_item.items() %}
+                <td class="border-2 h-10">{{ value }}</td>
+            {% endfor %}
+            {% if (editPrivilege) %}
+            <td class="border-2 h-10">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit-sponsor m-auto w-6 h-6 cursor-pointer" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit-sponsor m-auto w-6 h-6" alt="">
+            </td>
+            {% endif %}
         </tr>
     <!-- In the case of no values passed -->
     {% else %}

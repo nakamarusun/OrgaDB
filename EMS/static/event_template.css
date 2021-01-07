@@ -25,7 +25,9 @@ select {
     -webkit-appearance:none; /* Safari and Chrome */
     appearance:none;
 }
-
+tbody{
+    border : solid 2px rgba(209, 213, 219);
+}
 .form-panel{
     display: none;
 }

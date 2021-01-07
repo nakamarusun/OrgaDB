@@ -46,12 +46,15 @@ $(document).ready(function(){
                         row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
                     }
                 }
-                row += 
-                `<td class="border-2 h-10">
-                    <img src="/static/asset/pencil.svg" class="edit cursor-pointer m-auto w-6 h-6" alt="">
-                    <input type="image" src="/static/asset/check.svg" class="submit m-auto w-6 h-6" alt="">
-                </td>`
-                $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
+                // TODO : uncomment when data can be passed so the code doesn't break
+                if(hasEditPrivilege){
+                    row += 
+                    `<td class="border-2 h-10">
+                        <img src="/static/asset/pencil.svg" class="edit cursor-pointer m-auto w-6 h-6" alt="">
+                        <input type="image" src="/static/asset/check.svg" class="submit m-auto w-6 h-6" alt="">
+                    </td>`
+                    $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
+                }
                 alert("Succesfully added record");
             }
         });

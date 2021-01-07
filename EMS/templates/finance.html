@@ -22,10 +22,10 @@
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Type</th>
             <th class="border-2 h-10">Sponsors</th>
-            <th class="border-2 h-10 w-14">Edit</th>
+            <th class="border-r-2 h-10 w-14">Edit</th>
         </tr>
 
-            {{ m.table_content(income_dict) }}
+            {{ m.table_content(income_dict,editPrivilege) }}
 
         <!-- Placeholder values -->
         <tr>
@@ -60,7 +60,7 @@
             <th class="border-2 h-10">Type</th>
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
-            {{ m.table_content(expense_dict) }}
+            {{ m.table_content(expense_dict,editPrivilege) }}
         <tr>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Yes</td>
@@ -73,6 +73,7 @@
         </tr>
     </table>
 
+    {% if (addPrivilege) %}
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
             <div class="grid gap-x-4 px-2 grid-cols-5 md:grid-cols-5 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
@@ -128,6 +129,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <!-- <img src="{{url_for('static',filename='asset/plus.svg')}}" alt="" class="w-6 h-6"> -->
 </div>
 {% endblock %}
@@ -136,6 +138,7 @@
     <script>
         // Initializes global variables
         var activeTable = 0;
+        var hasEditPrivilege = {{ editPrivilege|safe }};
     </script>
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
     <script src="{{url_for('static',filename='input_validator.js')}}"></script>
