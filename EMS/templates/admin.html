@@ -34,6 +34,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit-sponsor cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit-sponsor hidden m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete delete-sponsor m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
@@ -73,6 +74,7 @@
                     <td class="border-2 h-10">
                         <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit-position cursor-pointer m-auto w-6 h-6" alt="">
                         <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit-position hidden m-auto w-6 h-6" alt="">
+                        <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete delete-position m-auto w-6 h-6" alt="">
                     </td>
                 </tr>
             </table>
@@ -100,8 +102,7 @@
 </div>
 {% endblock %}
 {% block scripts %}
-    <script>var hasEditPrivilege = {{ editPrivilege|safe }};</script>
-    <script src="{{url_for('static',filename='event_table.js')}}"></script>
+    <script>var activeTable = 0;</script>
     <script>
         
         $(document).on('click','.edit-sponsor', function(){
@@ -283,5 +284,13 @@
             // Prevents regular submit action on submit click
             e.preventDefault();
         });
+        
+        $(document).on('click','.delete-sponsor', function(){
+            activeTable = 0;
+        })
+        $(document).on('click','.delete-position', function(){
+            activeTable = 1;
+        })
     </script>
+    <script src="{{url_for('static',filename='event_table.js')}}"></script>
 {% endblock %} 

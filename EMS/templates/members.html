@@ -19,7 +19,7 @@
     </div>
     
     <table class="content container border-2 table-auto">
-        <tr>
+        <tr id="table-header">
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
@@ -39,11 +39,12 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
     <table class="content container border-2 table-auto">
-        <tr>
+        <tr id="table-header">
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
@@ -62,11 +63,12 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
     <table class="content container border-2 table-auto">
-        <tr>
+        <tr id="table-header">
             <th class="border-2 h-10">ID</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
@@ -86,6 +88,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
@@ -217,8 +220,9 @@
                 $(editRow).children('td').eq(2).html(`
                     <select class="m-auto text-center focus:ring-2 border outline-none" id="Position" required name="Position">
                         <option value="` + defaultPositionVal + `" selected hidden>` + defaultPositionVal + `</option>
-                        <option value="Position x">Position x</option>
-                        <option value="Position y">Position y</option>
+                        {% for dict_item in sponsor_dict %}
+                            <option value="{{dict_item['sponsor_name']}}">{{dict_item['sponsor_name']}}</option>
+                        {% endfor %}
                         <option value="Position z">Position z</option>
                     </select>   
                 `);

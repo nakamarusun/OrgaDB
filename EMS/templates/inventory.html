@@ -16,7 +16,7 @@
         <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Inventory</b></div>
     </div>
     <table class="content container border-2 table-auto">        
-        <tr>
+        <tr id="table-header">
             <th class="border-2 h-10">Id</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
@@ -36,6 +36,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
@@ -46,8 +47,9 @@
             <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
             <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="sponsor">
                 <option value="-" selected>No sponsor</option>
-                <option value="Sponsor 1">Sponsor 1</option>
-                <option value="Sponsor 2">Sponsor 2</option>
+                {% for dict_item in sponsor_dict %}
+                    <option value="{{dict_item['sponsor_name']}}">{{dict_item['sponsor_name']}}</option>
+                {% endfor %}
                 <option value="Sponsor 3">Sponsor 3</option>
             </select>    
         </div>
@@ -64,7 +66,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }};</script>
+    <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }};var columns =['Id','Name','Amount','Sponsor']</script>
     <script src="{{url_for('static', filename='input_validator.js')}}"></script>
     <script src="{{url_for('static', filename='event_table.js')}}"></script>
     <script>
@@ -87,7 +89,9 @@
             $(editRow).children('td').eq(3).html(`
                 <select class="m-auto text-center focus:ring-2 border outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
-                    <option value="Sponsor x">Sponsor x</option>
+                    {% for dict_item in sponsor_dict %}
+                    <option value="{{dict_item['sponsor_name']}}">{{dict_item['sponsor_name']}}</option>
+                    {% endfor %}
                     <option value="Sponsor x">Sponsor x</option>
                     <option value="Sponsor x">Sponsor x</option>
                 </select>

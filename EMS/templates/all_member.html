@@ -16,7 +16,7 @@
         <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Inventory</b></div>
     </div>
     <table class="content container border-2 table-auto">        
-        <tr>
+        <tr id="table-header">
             <th class="border-2 h-10">Id</th>
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
@@ -36,6 +36,7 @@
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
     </table>
@@ -53,13 +54,14 @@
     <div class="w-full flex justify-end h-6">
         <div class="w-12 bg-gray-100 border-b-2 border-l-2 border-r-2 flex justify-center mr-2 show-form">
             <img src="{{url_for('static',filename='asset/chevron-down.svg')}}" alt="" class="chevron-down transition h-6 w-6">
+            <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
         </div>
     </div>
     {% endif %}
 </div>
 {% endblock %}
 {% block scripts %}
-    <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }};</script>
+    <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }}; </script>
     <script src="{{url_for('static', filename='event_table.js')}}"></script>
     <script src="{{url_for('static', filename='input_validator.js')}}"></script>
     <script>

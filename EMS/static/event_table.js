@@ -68,31 +68,46 @@ $(document).ready(function(){
     $(document).on('click','.edit-position', function(){
         $(this).parent().find('.delete').addClass('editing');
     })
+    $(document).on('click','.submit', function(){
+        $(this).parent().find('.delete').removeClass('editing');
+    })
+    $(document).on('click','.submit-sponsor', function(){
+        $(this).parent().find('.delete').removeClass('editing');
+    })
+    $(document).on('click','.submit-position', function(){
+        $(this).parent().find('.delete').removeClass('editing');
+    })
 
     $(document).on('click','.delete', function(){
         editRow = $(this).parent().parent();
+        console.log(editRow)
+        var columns = []
+        tableColumns = $(this).parent().parent().parent().find('#table-header').children();
+        for(i = 0;i < tableColumns.length; ++i){
+            if(tableColumns[i].textContent !== 'Edit'){
+                columns.push(tableColumns[i].textContent)
+            }
+        }
+        console.log(columns)
         deletedData = "";
         if($(this).hasClass('editing')){
             for(i = 0; i < columns.length; ++i){
-                if($(editRow).children('td').children().eq(i).val().trim().length != 0){
-                    if(i == 0){
-                        deletedData += columns[i] + "=" + $(editRow).children('td').children().eq(i).val()
-                    } else{
-                        deletedData += "&" + columns[i] + "=" + $(editRow).children('td').children().eq(i).val()
-                    }
+                if(i == 0){
+                    deletedData += columns[i] + "=" + $(editRow).children('td').children().eq(i).text()
+                } else{
+                    deletedData += "&" + columns[i] + "=" + $(editRow).children('td').children().eq(i).text()
                 }
             }
         } else{
             for(i = 0; i < columns.length; ++i){
-                if($(editRow).children('td').eq(i).text().trim().length != 0){
-                    if(i == 0){
-                        deletedData += columns[i] + "=" + $(editRow).children('td').eq(i).text()
-                    } else{
-                        deletedData += "&" + columns[i] + "=" + $(editRow).children('td').eq(i).text()
-                    }
+                if(i == 0){
+                    deletedData += columns[i] + "=" + $(editRow).children('td').eq(i).text()
+                } else{
+                    deletedData += "&" + columns[i] + "=" + $(editRow).children('td').eq(i).text()
                 }
             }
         }
+        deletedData += "&ActiveTable=" + activeTable
         console.log(deletedData)
         var currentPath = window.location.pathname;
         $.ajax({
