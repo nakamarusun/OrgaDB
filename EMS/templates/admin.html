@@ -102,7 +102,8 @@
 {% block scripts %}
     <script src="{{url_for('static',filename='event_table.js')}}"></script>
     <script>
-        $('.edit-sponsor').click(function(){
+        
+        $(document).on('click','.edit-sponsor', function(){
             $(this).css({'display' : 'none'});
 
             // Row that is being edited
@@ -132,7 +133,7 @@
             $(this).parent().children('input').css({'display':'block'});    
         })
 
-        $('.submit-sponsor').click(function(){
+        $(document).on('click','.submit-sponsor', function(){
             // Serializes form data into string
         
             // Gets the row that is being edited
@@ -167,7 +168,7 @@
             $('.submit-sponsor').css({'display' : 'none'});
         });
 
-        $('.edit-position').click(function(){
+        $(document).on('click','.edit-position', function(){
             $(this).css({'display' : 'none'});
 
             // Row that is being edited
@@ -182,7 +183,7 @@
             $(this).parent().children('input').css({'display':'block'});    
         })
 
-        $('.submit-position').click(function(){
+        $(document).on('click','.submit-position', function(){
              // Serializes form data into string
         
             // Gets the row that is being edited
