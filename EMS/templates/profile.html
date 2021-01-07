@@ -7,17 +7,17 @@ Profile -
 {% block left_cont %}
 <div class="container flex flex-col justify-center items-center">
     <!-- Profile container here -->
-    <h1 class="text-2xl flex items-start m-1 text-center">{{ fullname }} FLASK</h1>
-    <h1 class="text-sm flex items-start pb-1 text-green-900 text-opacity-50 text-center">{{ position }} POSITION</h1>
+    <h1 class="text-2xl flex items-start m-1 text-center pt-8">{{ fullname }} FLASK</h1>
+    <h1 class="text-sm flex items-start pb-1 pt-4 text-green-900 text-opacity-50 text-center">{{ position }} POSITION</h1>
 </div>
 
 <div class="container flex flex-col justify-center items-center">
     <span class="fade_line w-3/4 h-px"></span>
     <div class="w-full px-12 flex flex-col justify-center">
-        {% if session.get("phone_number") != None %}
+        {% if session.get("username") != None %}
         <div class="h-10 flex flex-row items-center">
-            <div class="h-4 w-4"><img src="{{url_for('static',filename='asset/phone.svg')}}" alt="" class="object-cover"></div>
-            <span class="px-2">{{ session["phone_number"] }}</span>
+            <div class="h-4 w-4"><img src="{{url_for('static',filename='asset/user.svg')}}" alt="" class="object-cover"></div>
+            <span class="px-2">a.k.a {{ session["username"] }}</span>
         </div>
         {% endif %}
         {% if session.get("mail") != None %}
@@ -25,12 +25,6 @@ Profile -
             <div class="h-4 w-4"><img src="{{url_for('static',filename='asset/mail.svg')}}" alt="" class="object-cover"></div>
             <span class="px-2">{{ session["mail"] }}</span>
         </div>
-        {% endif %}
-        {% if session.get("location") != None %}
-        <div class="h-10 flex flex-row items-center">
-            <div class="h-4 w-4"><img src="{{url_for('static',filename='asset/location-marker.svg')}}" alt="" class="object-cover"></div>
-            <span class="px-2">{{ session["location"] }}</span>
-        </div>        
         {% endif %}
     </div>
 </div>
@@ -41,19 +35,20 @@ Profile -
     <h1 class="text-2xl">EVENTS</h1>
 </div>
 <section class="grid grid-cols-2 gap-8 mx-5">
-    <!-- {for i in someone's event list} -->
+    {% for dict_item in event_dict %}
     <article class="h-44 flex border-2 rounded-md shadow-md">
         <div class="w-full bg-gray-200 rounded-r-md flex flex-col">
             <div class="truncate text-xl p-2 h-11 w-full bg-green-200 rounded-tr-md border-l-2 overflow-hidden flex-shrink-0">
-                <b>NusaPonyCon</b>
+                <b>{{dict_item['event_name']}}</b>
             </div>
             <div class="flex flex-col flex-grow px-2 overflow-hidden w-full">
-                <span class="text-xs pb-1 text-gray-400">Member : 123 person</span>
-                <div class="no-scroll overflow-y-scroll flex-grow text-justify">Li dolores officia reprehenderit esse veniam consequuntur?</div>
+                <span class="text-xs pb-1 text-gray-400">{{dict_item['member_count']}}</span>
+                <div class="no-scroll overflow-y-scroll flex-grow text-justify">{{ dict_item['event_description']}}</div>
             </div>
         </div>
     </article>
     <article class="h-44 flex border-2 rounded-md shadow-md">
+
         <div class="w-full bg-gray-200 rounded-r-md flex flex-col">
             <div class="truncate text-xl p-2 h-11 w-full bg-green-200 rounded-tr-md border-l-2 overflow-hidden flex-shrink-0">
                 <b>NusaPonyCon</b>
