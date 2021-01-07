@@ -28,9 +28,9 @@
     </div>
     <div class="left_fade_line h-px my-3"></div>
     <div class="text-md flex flex-col truncate overflow-hidden">
-        <!-- For i in someone's event list,  -->
+        <!-- For i in someone's event list, provide id, username of event creator, and event name -->
         {% for dict_item in event_dict %}
-            <a class="text-blue-600 event-list-item pb-1" href="{{ dict_item['event_link']}}">
+            <a class="text-blue-600 event-list-item pb-1" href="{{url_for('event.description', id=dict_item['event_id'])}}">
                 <t>{{ dict_item['username'] }}/dict_item['event_name']</t><span>»</span>
             </a>
         {% else %}
