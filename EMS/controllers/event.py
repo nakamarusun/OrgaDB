@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import Flask, render_template, request, redirect, url_for, session 
 from EMS import db
+from EMS.util.extra import format_idr
 import functools
 import re
 
@@ -83,7 +84,7 @@ def finance(id):
         income_list.append({
             "date": data[0],
             "name": data[1],
-            "amount": data[2],
+            "amount": format_idr(data[2]),
             "type": data[3],
             "sponsor_name": data[4]
         })
@@ -100,7 +101,7 @@ def finance(id):
         expense_list.append({
             "date": data[4],
             "name": data[1],
-            "amount": data[3],
+            "amount": format_idr(data[3]),
             "type": data[2]
         })
 
@@ -121,25 +122,30 @@ def add_finance(id):
         # Update datbase
         cursor = db_obj.cursor()
 
-        # TODO: Sponsor
         # Depending on the table selected (Income / Expense), insert the data.
         if request.form['ActiveTable'] == "0":
-            print(request.form['Type'])
+            # Get the sponsor ID from the database
+            sponsor_id = None
+            if request.form['Sponsor'] != "None":
+                cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['Sponsor'].replace("+", " "),))
+                sponsor_id = cursor.fetchall()[0][0]
+
+            # Then, we can insert into income
             cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id, Sponsor_Id) VALUES (%s, %s, %s, %s, %s, %s);', (
-                request.form['Type'],
-                request.form['Name'],
-                request.form['Amount'],
-                request.form['Date'],
+                request.form['Type'].replace("+", " "),
+                request.form['Name'].replace("+", " "),
+                request.form['Amount'].replace("+", " "),
+                request.form['Date'].replace("+", " "),
                 id,
-                1,
-                ))
+                sponsor_id,
+            ))
 
         elif request.form['ActiveTable'] == "1":
             cursor.execute('Insert INTO Expenses (Expense_Type, Item_Name, Amount, Expense_Date, Event_Id) VALUES (%s, %s, %s, %s, %s);', (
-                request.form['Type'],
-                request.form['Name'],
-                request.form['Amount'],
-                request.form['Date'],
+                request.form['Type'].replace("+", " "),
+                request.form['Name'].replace("+", " "),
+                request.form['Amount'].replace("+", " "),
+                request.form['Date'].replace("+", " "),
                 id,
                 ))
 

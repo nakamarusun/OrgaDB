@@ -28,6 +28,7 @@
             {{ m.table_content(income_dict) }}
 
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Fursuit</td>
@@ -50,6 +51,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     
     <table class="content container border-2 table-auto">
@@ -61,6 +63,7 @@
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
             {{ m.table_content(expense_dict) }}
+        {#
         <tr>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Yes</td>
@@ -71,6 +74,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
 
     <div class="form-wrapper">
@@ -80,16 +84,15 @@
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
                 <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Sponsor">
-                    <option value="" selected>Sponsor x</option>
-                    <option value="">Sponsor x</option>
-                    <option value="">Sponsor x</option>
+                <option value='None' selected>None</option>
+                {% for s in sponsor_list %}
+                    <option value='{{ s }}'>{{ s }}</option>
+                {% endfor %}
                 </select>
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
-                    <option value="Venue" selected>Venue</option>
-                    <option value="Marketing">Marketing</option>
-                    <option value="Food and Beverage">Food and Beverage</option>
-                    <option value="Art Supplies">Art Supplies</option>
-                    <option value="Equipment">Equipment</option>
+                    <option value="Ticket Sales" selected>Ticket Sales</option>
+                    <option value="Merchandise">Merchandise</option>
+                    <option value="Sponsor">Sponsor</option>
                     <option value="Other">Other</option>
                 </select>
             </div>
