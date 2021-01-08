@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import Flask, render_template, request, redirect, url_for, session 
+from flask import Flask, render_template, request, redirect, url_for, session, g
 from EMS import db
 from EMS.util.extra import format_idr
 import functools
@@ -42,7 +42,8 @@ def check_id(func):
     # name of the original function instead of "wrapped."
 
     # This decorator also checks whether the user has privilege to read the event.
-    
+
+    # This function also gets the name of the event, and sets it to a global variable.
     @functools.wraps(func)
     def wrapped(id):
         # First, we check if the string is a number first. If it's not, don't bother checking.
@@ -51,7 +52,7 @@ def check_id(func):
         
         # Second, we check whether the event exists in the database.
         cursor = db.get_db().cursor()
-        cursor.execute('SELECT * FROM Events WHERE Id=%s', (id,))
+        cursor.execute('SELECT Event_Name FROM Events WHERE Id=%s', (id,))
         fetch = cursor.fetchall()
 
         if fetch:
@@ -61,6 +62,7 @@ def check_id(func):
             # If the user does not have any clearance in the database,
             # then the default is clearance 1
             if session['clearance'].get(int(id), 1) != "1":
+                g.event_name = fetch[0][0]
                 return func(id)
 
         # If none of the conditions is met, then return a 404
