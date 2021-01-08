@@ -330,12 +330,11 @@ def feedback(id):
     f_list = []
     for data in cursor.fetchall():
         f_list.append({
-            "id": data[0],
             "rating": data[1],
-            "comments": data[2]
+            "feedback_text": data[2]
         })
     
-    return render_template("feedback.html", f_list=f_list)
+    return render_template("feedback.html", parent_list=f_list)
 
 @bp.route("/new", methods = ['POST', 'GET'] )
 def add_new():
