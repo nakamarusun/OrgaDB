@@ -15,25 +15,56 @@ def prompt_login():
     if not session.get("loggedin", False):
         return redirect(url_for("user.login"))
 
+# This function is run before every "event" route.
+# This is useful to get the current user's clearance level.
+@bp.before_request
+def update_privilege():
+    cursor = db.get_db().cursor()
+
+    cursor.execute("SELECT Event_Id, Clearance_Level FROM Clearance WHERE Member_Id=%s", (
+        session['member_id'],
+    ))
+    
+    # Gets the clearances
+    clearances = cursor.fetchall()
+
+    # And inserts it into the session variable
+    for c in clearances:
+        # The key is the id of the event, and the value is the clearance
+        session['clearance'][c[0]] = c[1]
+
+
 def check_id(func):
     # Decorator function to check first whether the id exist.
     # If it does not, then redirect to 404
 
     # Basically this decorator is used to fix flask, so that the function name is the
     # name of the original function instead of "wrapped."
+
+    # This decorator also checks whether the user has privilege to read the event.
+    
     @functools.wraps(func)
     def wrapped(id):
-        # First, we check whether the event exists in the database.
+        # First, we check if the string is a number first. If it's not, don't bother checking.
+        if not id.isnumeric():
+            return render_template("404.html")
+        
+        # Second, we check whether the event exists in the database.
         cursor = db.get_db().cursor()
         cursor.execute('SELECT * FROM Events WHERE Id=%s', (id,))
         fetch = cursor.fetchall()
 
-        if not fetch:
-            # Return 404
-            return render_template("404.html")
-        else:
-            # Normal execution
-            return func(id)
+        if fetch:
+            # If the event is found,
+            # Check whether the user can view the event.
+            
+            # If the user does not have any clearance in the database,
+            # then the default is clearance 1
+            if session['clearance'].get(int(id), 1) != "1":
+                return func(id)
+
+        # If none of the conditions is met, then return a 404
+        return render_template("404.html")
             
     return wrapped
 
@@ -111,7 +142,13 @@ def finance(id):
     )
     sponsor_list = [ d[0] for d in cursor.fetchall() ]
 
-    return render_template("finance.html", income_dict=income_list, expense_dict=expense_list, sponsor_list=sponsor_list)
+    return render_template("finance.html",
+        income_dict=income_list,
+        expense_dict=expense_list,
+        sponsor_list=sponsor_list,
+        editPrivilege=session['clearance'][int(id)]=="3",
+        addPrivilege=session['clearance'][int(id)]=="3"
+    )
 
 @bp.route("/<string:id>/finance/add", methods=['POST'])
 def add_finance(id):
@@ -127,25 +164,25 @@ def add_finance(id):
             # Get the sponsor ID from the database
             sponsor_id = None
             if request.form['Sponsor'] != "None":
-                cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['Sponsor'].replace("+", " "),))
+                cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['Sponsor'],))
                 sponsor_id = cursor.fetchall()[0][0]
 
             # Then, we can insert into income
             cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id, Sponsor_Id) VALUES (%s, %s, %s, %s, %s, %s);', (
-                request.form['Type'].replace("+", " "),
-                request.form['Name'].replace("+", " "),
-                request.form['Amount'].replace("+", " "),
-                request.form['Date'].replace("+", " "),
+                request.form['Type'],
+                request.form['Name'],
+                request.form['Amount'],
+                request.form['Date'],
                 id,
                 sponsor_id,
             ))
 
         elif request.form['ActiveTable'] == "1":
             cursor.execute('Insert INTO Expenses (Expense_Type, Item_Name, Amount, Expense_Date, Event_Id) VALUES (%s, %s, %s, %s, %s);', (
-                request.form['Type'].replace("+", " "),
-                request.form['Name'].replace("+", " "),
-                request.form['Amount'].replace("+", " "),
-                request.form['Date'].replace("+", " "),
+                request.form['Type'],
+                request.form['Name'],
+                request.form['Amount'],
+                request.form['Date'],
                 id,
                 ))
 
@@ -186,7 +223,11 @@ def inventory(id):
     )
     sponsor_list = [ d[0] for d in cursor.fetchall() ]
 
-    return render_template("inventory.html", inventory_dict=in_list, sponsor_list=sponsor_list)
+    return render_template("inventory.html",
+        inventory_dict=in_list,
+        sponsor_list=sponsor_list,
+        editPrivilege=session['clearance'][int(id)]=="3"
+    )
 
 @bp.route("/<string:id>/inventory/add", methods=['POST'])
 def add_inventory(id):
@@ -203,8 +244,8 @@ def add_inventory(id):
 
         # Update datbase
         cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (
-            request.form['name'].replace("+", " "),
-            request.form['amount'].replace("+", " "),
+            request.form['name'],
+            request.form['amount'],
             sponsor_id,
             id,
         ))
@@ -267,7 +308,12 @@ def members(id):
             "Email": data[4]
         })
 
-    return render_template("members.html", committee_dict=committee_list, volunteer_dict=volunteer_list, guest_dict=guest_list)
+    return render_template("members.html",
+        committee_dict=committee_list,
+        volunteer_dict=volunteer_list,
+        guest_dict=guest_list,
+        editPrivilege=session['clearance'][int(id)]=="3"
+    )
 
 @bp.route("/<string:id>/members/add", methods=['POST'])
 def add_members(id):
@@ -345,8 +391,18 @@ def add_new():
         description = request.form['desc']
         cursor = db.get_db().cursor()
 
-        cursor.execute('INSERT INTO Events (Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s)', (event_name, venue, budget, description))
+        # Gets the ID to increment
+        cursor.execute("SELECT MAX(Id) FROM Events;")
+        event_id = cursor.fetchall()[0][0] + 1
+
+        cursor.execute('INSERT INTO Events (Id, Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s, %s)', (
+            event_id,
+            event_name,
+            venue,
+            budget,
+            description,
+        ))
         db.get_db().commit()
-        return redirect(url_for('index.index'))
+        return redirect(url_for('event.description', id=str(event_id)))
 
     return render_template('new.html')

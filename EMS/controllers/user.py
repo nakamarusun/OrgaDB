@@ -30,6 +30,12 @@ def login():
             session['id'] = users[0]
             session['email'] = users[2]
             session['user_name'] = users[3]
+            session['isadmin'] = users[4]
+            session['member_id'] = users[5]
+
+            # Sets an empty dictionary of clearances
+            session['clearance'] = {}
+
             msg = 'Logged in successfully !'
 
             pass_hash = users[1]
@@ -103,6 +109,11 @@ def logout():
     session.pop('user_name', None)
     session.pop('id', None) 
     session.pop('email', None) 
+    session.pop('isadmin', None) 
+    session.pop('member_id', None) 
+
+    session.pop('clearance', None) 
+
     return redirect(url_for('index.index')) 
 
 

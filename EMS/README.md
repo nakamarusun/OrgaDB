@@ -1,11 +1,9 @@
 # Clarification for Clearance Level
 
 ```
-Level 1: not able to view any of the information inside of the database 
-Level 2: able to only view some parts of the database 
-Level 3: able to view all of the information inside of the database 
-Level 4: able to view all of the information inside of the database and edit a few section of the database 
-Level 5: able to view and edit all of the information inside of the database
+Level 1: The event is not visible.
+Level 2: View permission.
+Level 3: Add, edit, and delete permission.
 ```
 
 # Clarification for Expense Type
