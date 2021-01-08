@@ -26,7 +26,7 @@ CREATE TABLE Members(
 
 CREATE TABLE Clearance(
     Member_Id SMALLINT NOT NULL,
-    Clearance_Level ENUM("1", "2", "3", "4", "5") NOT NULL,
+    Clearance_Level ENUM("1", "2", "3") NOT NULL,
     Event_Id SMALLINT NOT NULL,
     FOREIGN KEY (Member_id) REFERENCES Members(Id),
     FOREIGN KEY (Event_id) REFERENCES Events(Id)
@@ -105,5 +105,7 @@ CREATE TABLE Login_Cred(
     Pass VARCHAR(200) NOT NULL,
     Email VARCHAR(50) NOT NULL,
     Username VARCHAR(50) NOT NULL,
-    IsAdmin BOOLEAN NOT NULL
+    IsAdmin BOOLEAN NOT NULL,
+    Member_Id SMALLINT NOT NULL,
+    FOREIGN KEY (Member_Id) REFERENCES Members(Id)
 );

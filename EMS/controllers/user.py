@@ -52,7 +52,11 @@ def register():
         email = request.form['mail']
         password = request.form['pwd']
         username = request.form['name']
-        cursor = db.get_db().cursor()
+        # TODO: Change full name
+        full_name = request.form.get('fullname', "Bruh")
+
+        db_ref = db.get_db()
+        cursor = db_ref.cursor()
 
         # Checks whether the email already exists in the database.
         cursor.execute('SELECT * FROM login_cred WHERE Email = %s', (email,)) 
@@ -65,12 +69,28 @@ def register():
         elif not email or not password or not username: 
             msg = 'Please fill out the form !'
         else: 
+            
+            # Gets the maximum id number, then make a new id based on that.
+            cursor.execute("SELECT MAX(Id) FROM Members;")
+            fetch_id = cursor.fetchall()[0][0]
+            cur_id = fetch_id + 1 if fetch_id else 1
+
+            # First, inserts the details into the members table
+            cursor.execute(
+                "INSERT INTO Members (Id, Full_Name, Position) VALUES (%s, %s, 'Normal Member');",
+                (cur_id, full_name,)
+            )
+            db_ref.commit()
+
+            # Then, it inserts into the login credentials
             hash = generate_password_hash(password, salt_length=20)
-            cursor.execute(" INSERT INTO login_cred (Pass, Email, Username) VALUES ('{}', '{}', '{}') ".format(
+            cursor.execute("INSERT INTO login_cred (Pass, Email, Username, IsAdmin, Member_Id) VALUES (%s, %s, %s, 0, %s);", (
                 hash,
                 str(email),
-                username))
-            db.get_db().commit() 
+                username,
+                cur_id,)
+            )
+            db_ref.commit()
             return redirect(url_for('user.login'))
 
     return render_template('register.html')

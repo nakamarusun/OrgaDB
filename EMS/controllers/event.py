@@ -1,10 +1,19 @@
 from flask import Blueprint
 from flask import Flask, render_template, request, redirect, url_for, session 
 from EMS import db
+from EMS.util.extra import format_idr
 import functools
 import re
 
 bp = Blueprint("event", __name__, url_prefix="/event")
+
+# Register a login required before every request being made.
+# This is so that the user has to login first before being
+# able to access anything.
+@bp.before_request
+def prompt_login():
+    if not session.get("loggedin", False):
+        return redirect(url_for("user.login"))
 
 def check_id(func):
     # Decorator function to check first whether the id exist.
@@ -27,22 +36,6 @@ def check_id(func):
             return func(id)
             
     return wrapped
-
-# @bp.route("/")
-# def index():
-
-#     # TODO: Add /event
-#     # This should be the index page of /event.
-#     # So this should display all the events the user can see.
-#     return """ Bruh """
-
-# @bp.route("/<string:id>")
-# @check_id
-# def event(id):
-
-#     # TODO: add /event/<id>
-#     # This should display the summary of the event
-#     return id
 
 @bp.route("/<string:id>/description")
 @check_id
@@ -91,7 +84,7 @@ def finance(id):
         income_list.append({
             "date": data[0],
             "name": data[1],
-            "amount": data[2],
+            "amount": format_idr(data[2]),
             "type": data[3],
             "sponsor_name": data[4]
         })
@@ -108,7 +101,7 @@ def finance(id):
         expense_list.append({
             "date": data[4],
             "name": data[1],
-            "amount": data[3],
+            "amount": format_idr(data[3]),
             "type": data[2]
         })
 
@@ -129,25 +122,30 @@ def add_finance(id):
         # Update datbase
         cursor = db_obj.cursor()
 
-        # TODO: Sponsor
         # Depending on the table selected (Income / Expense), insert the data.
         if request.form['ActiveTable'] == "0":
-            print(request.form['Type'])
+            # Get the sponsor ID from the database
+            sponsor_id = None
+            if request.form['Sponsor'] != "None":
+                cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['Sponsor'].replace("+", " "),))
+                sponsor_id = cursor.fetchall()[0][0]
+
+            # Then, we can insert into income
             cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id, Sponsor_Id) VALUES (%s, %s, %s, %s, %s, %s);', (
-                request.form['Type'],
-                request.form['Name'],
-                request.form['Amount'],
-                request.form['Date'],
+                request.form['Type'].replace("+", " "),
+                request.form['Name'].replace("+", " "),
+                request.form['Amount'].replace("+", " "),
+                request.form['Date'].replace("+", " "),
                 id,
-                1,
-                ))
+                sponsor_id,
+            ))
 
         elif request.form['ActiveTable'] == "1":
             cursor.execute('Insert INTO Expenses (Expense_Type, Item_Name, Amount, Expense_Date, Event_Id) VALUES (%s, %s, %s, %s, %s);', (
-                request.form['Type'],
-                request.form['Name'],
-                request.form['Amount'],
-                request.form['Date'],
+                request.form['Type'].replace("+", " "),
+                request.form['Name'].replace("+", " "),
+                request.form['Amount'].replace("+", " "),
+                request.form['Date'].replace("+", " "),
                 id,
                 ))
 
@@ -195,13 +193,19 @@ def add_inventory(id):
 
     try:
         db_obj = db.get_db()
+        cursor = db_obj.cursor()
+
+        # Get the sponsor ID, if available
+        sponsor_id = None
+        if request.form['sponsor'] != "None":
+            cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['sponsor'].replace("+", " "),))
+            sponsor_id = cursor.fetchall()[0][0]
 
         # Update datbase
-        cursor = db_obj.cursor()
         cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (
-            request.form['name'],
-            request.form['amount'],
-            1,
+            request.form['name'].replace("+", " "),
+            request.form['amount'].replace("+", " "),
+            sponsor_id,
             id,
         ))
 
@@ -274,14 +278,32 @@ def add_members(id):
         # Update database
         cursor = db_obj.cursor()
         
-        # TODO: Talk with aric how to this message
-        if request.form['ActiveTable'] == "0":
-            pass
+        if request.form['ActiveTable'] == "0" or request.form["ActiveTable"] == "1":
+            cursor.execute(
+                "SELECT * FROM Members WHERE Id=%s;", (
+                    request.form['Id'],
+            ))
+            member = cursor.fetchall()[0]
 
-        elif request.form['ActiveTable'] == "1":
-            pass
+            # If the member ID exist in the database, then insert everything
+            if member:
+                # Insert the member first
+                cursor.execute("INSERT INTO Event_Committee (Event_Id, Member_Id, Member_Role, IsVolunteer) VALUES (%s, %s, %s, %s);", (
+                    id,
+                    member[0],
+                    request.form['Position'],
+                    request.form['ActiveTable'] == "1", 
+                ))
+
+                # Then, insert the clearance level
+                cursor.execute("INSERT INTO Clearance (Member_Id, Clearance_Level, Event_Id) VALUES (%s, %s, %s);", (
+                    member[0],
+                    request.form['Clearance'],
+                    id,
+                ))
 
         elif request.form['ActiveTable'] == "2":
+            # TODO: Is not complete
             pass
 
         # Commit
@@ -308,12 +330,11 @@ def feedback(id):
     f_list = []
     for data in cursor.fetchall():
         f_list.append({
-            "id": data[0],
             "rating": data[1],
-            "comments": data[2]
+            "feedback_text": data[2]
         })
     
-    return render_template("feedback.html", f_list=f_list)
+    return render_template("feedback.html", parent_list=f_list)
 
 @bp.route("/new", methods = ['POST', 'GET'] )
 def add_new():

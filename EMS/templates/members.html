@@ -31,6 +31,7 @@
         <!-- Calls function to display table contents, accepts a dictionary of content as argument-->
         {{ m.table_content(committee_dict,editPrivilege) }}
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Chaika</td>
@@ -42,6 +43,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     <table class="content container border-2 table-auto">
         <tr id="table-header">
@@ -55,6 +57,7 @@
             {{ m.table_content(volunteer_dict,editPrivilege) }}
 
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">2</td>
             <td class="border-2 h-10">Gay</td>
@@ -66,6 +69,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     <table class="content container border-2 table-auto">
         <tr id="table-header">
@@ -79,6 +83,7 @@
             {{ m.table_content(guest_dict,editPrivilege) }}
         
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">3</td>
             <td class="border-2 h-10">Haha</td>
@@ -91,6 +96,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
+        #}
     </table>
     
     <div class="form-wrapper">

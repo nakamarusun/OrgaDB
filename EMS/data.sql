@@ -9,9 +9,9 @@ INSERT INTO Members(Full_Name, Position)
     ("Bently Edyson", "A car");
 
 INSERT INTO Clearance(Member_Id, Clearance_Level, Event_id)
-    VALUES(1, "5", 1),
+    VALUES(1, "3", 1),
     (2, "3", 2),
-    (2, "4", 1),
+    (2, "2", 1),
     (3, "1", 2);
 
 INSERT INTO Event_Committee(Event_id,  Member_Id, Member_Role, IsVolunteer)
