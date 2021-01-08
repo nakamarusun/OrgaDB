@@ -25,7 +25,6 @@ def index():
         # If the clearance is not 1, then show the event
         if ev[2] != 1:
             events.append({
-                "username": "Bro",
                 "event_id": ev[0],
                 "event_name": ev[1]
             })

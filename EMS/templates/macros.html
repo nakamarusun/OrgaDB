@@ -31,7 +31,7 @@
         <!-- For i in someone's event list, provide id, username of event creator, and event name -->
         {% for dict_item in event_dict %}
             <a class="text-blue-600 event-list-item pb-1" href="{{url_for('event.description', id=dict_item['event_id'])}}">
-                <t>{{ dict_item['username'] }}</t><span>»</span>
+                <t>{{ dict_item['event_name'] }}</t><span>»</span>
             </a>
         {% else %}
             <div class="text-blue-600 event-list-item pb-1" href="">
