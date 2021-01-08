@@ -52,7 +52,7 @@ def check_id(func):
         
         # Second, we check whether the event exists in the database.
         cursor = db.get_db().cursor()
-        cursor.execute('SELECT Event_Name FROM Events WHERE Id=%s', (id,))
+        cursor.execute('SELECT Id, Event_Name FROM Events WHERE Id=%s', (id,))
         fetch = cursor.fetchall()
 
         if fetch:
@@ -62,7 +62,8 @@ def check_id(func):
             # If the user does not have any clearance in the database,
             # then the default is clearance 1
             if session['clearance'].get(int(id), 1) != "1":
-                g.event_name = fetch[0][0]
+                g.event_name = fetch[0][1]
+                g.event_id = fetch[0][0]
                 return func(id)
 
         # If none of the conditions is met, then return a 404
@@ -383,6 +384,12 @@ def feedback(id):
         })
     
     return render_template("feedback.html", parent_list=f_list)
+
+@bp.route("/<string:id>/admin")
+@check_id
+def admin(id):
+
+    return render_template("admin.html")
 
 @bp.route("/new", methods = ['POST', 'GET'] )
 def add_new():
