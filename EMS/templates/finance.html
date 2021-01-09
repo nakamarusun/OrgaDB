@@ -185,7 +185,28 @@
             $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
             $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
                                                 defaultAmountVal +'>');
-            $(editRow).children('td').eq(3).html(`
+
+            if(activeTable == 0){
+                $(editRow).children('td').eq(3).html(`
+                <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
+                    <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
+                    <option value="Sponsor">Sponsor</option>
+                    <option value="Ticket Sales">Ticket Sales</option>
+                    <option value="Merchandise">Merchandise</option>
+                </select>
+                `);
+
+                $(editRow).children('td').eq(4).html(`
+                <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
+                    <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                    <option value="Sponsor x">Sponsor x</option>
+                </select>
+                `);
+            } else{
+                $(editRow).children('td').eq(3).html(`
                 <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
                     <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
                     <option value="Venue">Venue</option>
@@ -194,17 +215,6 @@
                     <option value="Art Supplies">Art Supplies</option>
                     <option value="Equipment">Equipment</option>
                     <option value="Other">Other</option>
-                </select>
-                `);
-
-            if(activeTable == 0){
-                $(editRow).children('td').eq(4).html(`
-                <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
-                    <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
-                    <option value="Sponsor x">Sponsor x</option>
-                    <option value="Sponsor x">Sponsor x</option>
-                    <option value="Sponsor x">Sponsor x</option>
-                    <option value="Sponsor x">Sponsor x</option>
                 </select>
                 `);
             }
