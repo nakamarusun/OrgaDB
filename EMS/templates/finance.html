@@ -89,11 +89,10 @@
     {% if (addPrivilege) %}
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
-            <div class="grid gap-x-4 px-2 grid-cols-6 md:grid-cols-6 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+            <div class="grid gap-x-4 px-2 grid-cols-5 md:grid-cols-5 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="date" required name="Date" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Date">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
                 <input type="text" required name="Cost" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Cost" pattern="[0-9]+">
-                <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
                     <option value="Ticket Sales" selected>Ticket Sales</option>
                     <option value="Merchandise">Merchandise</option>
