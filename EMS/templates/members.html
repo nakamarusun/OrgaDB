@@ -233,7 +233,7 @@
             var serializedForm = ""
             if(activeTable != 2){
                 serializedForm += 'Id=' + editRow.children().first().text()
-                serializedForm += editRow.find('#Position').attr('name') + '=' + editRow.find('#Position').val()
+                serializedForm += '&' + editRow.find('#Position').attr('name') + '=' + editRow.find('#Position').val()
                 serializedForm += '&' + editRow.find('#Clearance').attr('name') + '=' + editRow.find('#Clearance').val()
                 serializedForm += "&activeTable=" + activeTable;
 
