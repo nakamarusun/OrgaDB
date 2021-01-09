@@ -30,6 +30,7 @@
         {{ m.table_content(inventory_dict,editPrivilege) }}
             
         <!-- Placeholder values -->
+        {#
         <tr>
             <td class="border-2 h-10">0</td>
             <td class="border-2 h-10">Fursuit</td>
@@ -41,7 +42,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
-        
+        #}
     </table>
     {% if (addPrivilege) %}
     <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
