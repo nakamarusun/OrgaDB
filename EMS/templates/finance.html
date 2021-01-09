@@ -90,12 +90,6 @@
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
                 <input type="text" required name="Cost" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Cost" pattern="[0-9]+">
                 <input type="text" required name="Amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount" pattern="[0-9]+">
-                <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Sponsor">
-                    <option value='None' selected>None</option>
-                    {% for s in sponsor_list %}
-                        <option value='{{ s }}'>{{ s }}</option>
-                    {% endfor %}
-                </select>
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
                     <option value="Ticket Sales" selected>Ticket Sales</option>
                     <option value="Merchandise">Merchandise</option>
@@ -104,7 +98,7 @@
                 </select>
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Sponsor">
                     {% for dict_item in sponsor_dict %}
-                        <option value="{{dict_item['sponsor_name']}}">{{dict_item['sponsor_name']}}</option>
+                        <option value="{{dict_item['sponsor_id']}}">{{dict_item['sponsor_name']}}</option>
                     {% endfor %}
                     <option value="Sponsor x">Sponsor x</option>
                 </select>
