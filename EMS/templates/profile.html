@@ -7,25 +7,24 @@ Profile -
 {% block left_cont %}
 <div class="container flex flex-col justify-center items-center">
     <!-- Profile container here -->
-    <h1 class="text-2xl flex items-start m-1 text-center pt-8">{{ fullname }} FLASK</h1>
-    <h1 class="text-sm flex items-start pb-1 pt-4 text-green-900 text-opacity-50 text-center">{{ position }} POSITION</h1>
+    <h1 class="text-2xl flex items-start m-1 text-center pt-8">
+        <div class="h-4 w-8 mr-2"><img src="{{url_for('static',filename='asset/user.svg')}}" alt="" class="object-cover"></div>
+        {{ fullname }}
+    </h1>
+    <h1 class="text-sm flex items-start pb-1 pt-4 text-green-900 text-opacity-50 text-center">{{ position }}</h1>
 </div>
 
 <div class="container flex flex-col justify-center items-center">
     <span class="fade_line w-3/4 h-px"></span>
     <div class="w-full px-12 flex flex-col justify-center">
-        {% if session.get("username") != None %}
         <div class="h-10 flex flex-row items-center">
             <div class="h-4 w-4"><img src="{{url_for('static',filename='asset/user.svg')}}" alt="" class="object-cover"></div>
-            <span class="px-2">a.k.a {{ session["username"] }}</span>
+            <span class="px-2">A.K.A. {{ username }}</span>
         </div>
-        {% endif %}
-        {% if session.get("mail") != None %}
         <div class="h-10 flex flex-row items-center">
             <div class="h-4 w-4"><img src="{{url_for('static',filename='asset/mail.svg')}}" alt="" class="object-cover"></div>
-            <span class="px-2">{{ session["mail"] }}</span>
+            <span class="px-2">{{ email }}</span>
         </div>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
@@ -39,15 +38,17 @@ Profile -
     <article class="h-44 flex border-2 rounded-md shadow-md">
         <div class="w-full bg-gray-200 rounded-r-md flex flex-col">
             <div class="truncate text-xl p-2 h-11 w-full bg-green-200 rounded-tr-md border-l-2 overflow-hidden flex-shrink-0">
-                <b>{{dict_item['event_name']}}</b>
+                <a href="{{url_for("event.description", id=dict_item['event_id'])}}"><b>{{dict_item['event_name']}} - {{dict_item['venue']}}</b></a>
             </div>
             <div class="flex flex-col flex-grow px-2 overflow-hidden w-full">
-                <span class="text-xs pb-1 text-gray-400">{{dict_item['member_count']}}</span>
+                <span class="text-xs pb-1 text-gray-400">Clearance: {{dict_item['clearance']}}</span>
+                <span class="text-xs pb-1 text-gray-400">Role: {{dict_item['role']}}</span>
                 <div class="no-scroll overflow-y-scroll flex-grow text-justify">{{ dict_item['event_description']}}</div>
             </div>
         </div>
     </article>
     {% endfor %}
+    {#
     <article class="h-44 flex border-2 rounded-md shadow-md">
 
         <div class="w-full bg-gray-200 rounded-r-md flex flex-col">
@@ -71,5 +72,6 @@ Profile -
             </div>
         </div>
     </article>
+    #}
 </section>
 {% endblock %}

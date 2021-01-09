@@ -134,4 +134,44 @@ def login_required(view):
 def profile_page(id):
 
     # TODO: Add /user/<id>/profile
-    return render_template("profile.html")
+    cursor = db.get_db().cursor()
+    cursor.execute("SELECT Full_Name, Position, Username, Email FROM Members m LEFT JOIN Login_Cred l ON l.Member_Id=m.Id WHERE m.Id=%s;", (id,))
+
+    fetch = cursor.fetchall()
+    
+    # Check whether the member exists
+    if not fetch:
+        return render_template("404.html")
+
+    cursor.execute(
+        """
+        SELECT c.Member_Id, c.Event_Id, c.Clearance_Level, IsVolunteer, Member_Role, e.Event_name, e.Venue, e.Event_Desc
+        FROM Event_Committee ec
+        RIGHT JOIN Clearance c
+        ON ec.Member_Id=c.Member_Id AND ec.Event_Id=c.Event_Id
+        JOIN Events e ON c.Event_Id=e.Id
+        WHERE c.Member_Id=%s;
+        """, (
+            id,
+        )
+    )
+    event_dict = []
+    
+    # Get all the data necessary
+    for e in cursor.fetchall():
+            event_dict.append({
+                "event_name": e[5],
+                "event_description": e[7],
+                "event_id": e[1],
+                "clearance": e[2],
+                "role": e[4],
+                "venue": e[6]
+            })
+
+    return render_template("profile.html",
+        fullname=fetch[0][0],
+        position=fetch[0][1],
+        email=fetch[0][3],
+        username=fetch[0][2],
+        event_dict=event_dict
+    )

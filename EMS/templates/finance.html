@@ -200,6 +200,7 @@
                 $(editRow).children('td').eq(5).html(`
                 <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
+                    <option value="0">None</option>
                     {{ m.dropdown_option(sponsor_dict)}}
                 </select>
                 `);

@@ -244,12 +244,24 @@ def upd_finance(id):
         
         # Updates the income or expense
         if request.form["activeTable"] == "0":
+            # Gets the sponsor
+            sponsor_id = request.form["Sponsor"] if request.form["Sponsor"] != "0" else None
+
             cursor.execute("UPDATE Income SET Income_Date=%s, Item_Name=%s, Amount=%s, Sponsor_Id=%s, Income_Type=%s WHERE Id=%s;", (
+                request.form["Date"],
+                request.form["Name"],
+                request.form["Cost"],
+                sponsor_id,
+                request.form["Type"],
                 request.form["Id"],
             ))
 
         elif request.form["activeTable"] == "1":
             cursor.execute("UPDATE Expenses SET Expense_Date=%s, Item_Name=%s, Amount=%s, Expense_Type=%s WHERE Id=%s;", (
+                request.form["Date"],
+                request.form["Name"],
+                request.form["Cost"],
+                request.form["Type"],
                 request.form["Id"],
             ))
 
