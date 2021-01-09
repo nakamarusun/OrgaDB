@@ -120,9 +120,6 @@
             } else if(!validateInt(editRow.find('#amount').val())){
                 editRow.find('#amount').addClass('border-red-500');
                 return 0;
-            } else if(!validateName(editRow.find('#sponsor').val())){
-                editRow.find('#sponsor').addClass('border-red-500');
-                return 0;
             }
             
             $(editRow).children('td').eq(1).html(editRow.find('#name').val());
