@@ -23,7 +23,9 @@
             <th class="border-2 h-10">Cost</th>
             <th class="border-2 h-10">Type</th>
             <th class="border-2 h-10">Sponsors</th>
+            {% if (editPrivilege) %}
             <th class="border-r-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
 
             {{ m.table_content(income_dict,editPrivilege) }}
@@ -64,7 +66,9 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Cost</th>
             <th class="border-2 h-10">Type</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
             {{ m.table_content(expense_dict,editPrivilege) }}
         {#
@@ -193,10 +197,7 @@
                 $(editRow).children('td').eq(4).html(`
                 <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
-                    <option value="Sponsor x">Sponsor x</option>
-                    <option value="Sponsor x">Sponsor x</option>
-                    <option value="Sponsor x">Sponsor x</option>
-                    <option value="Sponsor x">Sponsor x</option>
+                    {{ m.dropdown_option(sponsor_dict)}}
                 </select>
                 `);
             } else{

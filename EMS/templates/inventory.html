@@ -21,7 +21,9 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Amount</th>
             <th class="border-2 h-10">Sponsor</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
 
         <!-- Commented out jinja template -->
@@ -50,9 +52,7 @@
             <!-- "Venue", "Marketing", "Food and Beverage", "Art Supplies", "Equipment", "Other" -->
             <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="sponsor">
                 <option value="None" selected>None</option>
-                {% for s in sponsor_list %}
-                    <option value='{{ s }}'>{{ s }}</option>
-                {% endfor %}
+                {{ m.dropdown_option(position_dict)}}
             </select>    
         </div>
         <div class="w-full flex justify-end pr-2 py-2">
@@ -92,9 +92,7 @@
             $(editRow).children('td').eq(3).html(`
                 <select class="m-auto text-center focus:ring-2 border outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
-                    {% for dict_item in sponsor_dict %}
-                    <option value="{{dict_item['sponsor_name']}}">{{dict_item['sponsor_name']}}</option>
-                    {% endfor %}
+                    {{ m.dropdown_option(sponsor_dict)}}
                     <option value="Sponsor x">Sponsor x</option>
                     <option value="Sponsor x">Sponsor x</option>
                 </select>

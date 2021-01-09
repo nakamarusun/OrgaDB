@@ -24,7 +24,9 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Clearance</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
 
         <!-- Commented out jinja template -->
@@ -51,7 +53,9 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Clearance</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
         
             {{ m.table_content(volunteer_dict,editPrivilege) }}
@@ -78,7 +82,9 @@
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Phone number</th>
             <th class="border-2 h-10">Mail</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
             {{ m.table_content(guest_dict,editPrivilege) }}
         
@@ -104,11 +110,12 @@
             <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Id" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="ID" pattern="[0-9]+" >
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Position">
+                    {{ m.dropdown_option(position_dict)}}
                     <option value="Gamer" selected> Gamer </option>
                     <option value="Owner">Owner</option>
-                    <option value="I don't know">I don't know</option>
                 </select>
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Clearance">
+                    {{ m.dropdown_option(clearance_dict)}}
                     <option value="1" selected>Clearance level : 1</option>
                     <option value="2">Clearance level : 2</option>
                     <option value="3">Clearance level : 3</option>
@@ -129,6 +136,7 @@
             <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Id" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="ID" pattern="[0-9]+" >
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Position">
+                    {{ m.dropdown_option(position_dict)}}
                     <option value="Gamer" selected> Gamer </option>
                     <option value="Owner">Owner</option>
                     <option value="I don't know">I don't know</option>
@@ -136,7 +144,8 @@
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Clearance">
                     <option value="1" selected>Clearance level : 1</option>
                     <option value="2">Clearance level : 2</option>
-                    <option value="3">Clearance level : 3</option>
+                    {{ m.dropdown_option(clearance_dict)}}
+                    
                 </select>    
             </div>
             <div class="w-full flex justify-end pr-2 py-2">
@@ -200,14 +209,13 @@
                 $(editRow).children('td').eq(2).html(`
                     <select class="m-auto text-center focus:ring-2 border outline-none" id="Position" required name="Position">
                         <option value="` + defaultPositionVal + `" selected hidden>` + defaultPositionVal + `</option>
-                        <option value="Position x">Position x</option>
-                        <option value="Position y">Position y</option>
-                        <option value="Position z">Position z</option>
+                        {{ m.dropdown_option(position_dict)}}
                     </select>   
                 `);
                 $(editRow).children('td').eq(3).html(`
                     <select class="m-auto text-center focus:ring-2 border outline-none" id="Clearance" required name="Clearance">
                         <option value="` + defaultClearanceVal + `" selected hidden> Clearance level : ` + defaultClearanceVal + `</option>
+                        {{ m.dropdown_option(clearance_dict)}}
                         <option value="1">Clearance level : 1</option>
                         <option value="2">Clearance level : 2</option>
                         <option value="3">Clearance level : 3</option>
@@ -225,10 +233,7 @@
                 $(editRow).children('td').eq(2).html(`
                     <select class="m-auto text-center focus:ring-2 border outline-none" id="Position" required name="Position">
                         <option value="` + defaultPositionVal + `" selected hidden>` + defaultPositionVal + `</option>
-                        {% for dict_item in sponsor_dict %}
-                            <option value="{{dict_item['sponsor_name']}}">{{dict_item['sponsor_name']}}</option>
-                        {% endfor %}
-                        <option value="Position z">Position z</option>
+                        {{ m.dropdown_option(position_dict)}}
                     </select>   
                 `);
                 $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="Phone" type="text" required name="Phone" value='+ defaultPhoneVal + '>');

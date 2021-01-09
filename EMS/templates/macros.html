@@ -106,3 +106,9 @@
         <td class="empty-message text-gray-400 text-center text-2xl" colspan="7">No entries in table</div>
     {% endfor %}
 {% endmacro %}
+
+{% macro dropdown_option(elements_dict) %}
+    {% for dict_item in elements_dict %}
+        <option value="{{dict_item['value']}}">{{dict_item['name']}}</option>
+    {% endfor %}
+{% endmacro %}

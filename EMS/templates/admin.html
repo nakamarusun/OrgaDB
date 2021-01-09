@@ -20,7 +20,9 @@
             <th class="border-2 h-10">Address</th>
             <th class="border-2 h-10">Phone number</th>
             <th class="border-2 h-10">Type</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
 
             {{ m.table_content_sponsor(sponsor_dict,editPrivilege) }}
@@ -63,7 +65,9 @@
             <table class="content container border-2 table-auto" style="display: table;">        
                 <tr id="table-header">
                     <th class="border-2 h-10">Position</th>
+                    {% if (editPrivilege) %}
                     <th class="border-2 h-10 w-14">Edit</th>
+                    {% endif %}
                 </tr>
 
                 {{ m.table_content_position(position_dict,editPrivilege) }}

@@ -21,7 +21,9 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Mail</th>
+            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
 
         <!-- Commented out jinja template -->
@@ -79,8 +81,12 @@
             
 
             $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
-            $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value='+ 
-                                                defaultPositionVal +'>');
+            $(editRow).children('td').eq(2).html(`
+                <select class="m-auto text-center focus:ring-2 border outline-none" id="Position" required name="Position">
+                    <option value="` + defaultPositionVal + `" selected hidden>` + defaultPositionVal + `</option>
+                    {{ m.dropdown_option(position_dict) }}
+                </select>   
+            `);
             $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="mail" type="text" required name="Mail" value='+ 
                                                 defaultMailVal +'>');
             
