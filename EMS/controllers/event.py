@@ -143,14 +143,19 @@ def finance(id):
 
     # Get the sponsors
     cursor.execute(
-        "SELECT Sponsor_Name FROM Sponsor;"
+        "SELECT Id, Sponsor_Name FROM Sponsor;"
     )
-    sponsor_list = [ d[0] for d in cursor.fetchall() ]
+    sponsor_list = []
+    for data in cursor.fetchall():
+        sponsor_list.append({
+            "value": data[0],
+            "name": data[1]
+        })
 
     return render_template("finance.html",
         income_dict=income_list,
         expense_dict=expense_list,
-        sponsor_list=sponsor_list,
+        sponsor_dict=sponsor_list,
         editPrivilege=session['clearance'].get(int(id), 1)=="3",
         addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
@@ -168,15 +173,14 @@ def add_finance(id):
         if request.form['ActiveTable'] == "0":
             # Get the sponsor ID from the database
             sponsor_id = None
-            if request.form['Sponsor'] != "None":
-                cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['Sponsor'],))
-                sponsor_id = cursor.fetchall()[0][0]
+            if request.form['Sponsor'] != "0":
+                sponsor_id = request.form['Sponsor']
 
             # Then, we can insert into income
             cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id, Sponsor_Id) VALUES (%s, %s, %s, %s, %s, %s);', (
                 request.form['Type'],
                 request.form['Name'],
-                request.form['Amount'],
+                request.form['Cost'],
                 request.form['Date'],
                 id,
                 sponsor_id,
@@ -186,7 +190,7 @@ def add_finance(id):
             cursor.execute('Insert INTO Expenses (Expense_Type, Item_Name, Amount, Expense_Date, Event_Id) VALUES (%s, %s, %s, %s, %s);', (
                 request.form['Type'],
                 request.form['Name'],
-                request.form['Amount'],
+                request.form['Cost'],
                 request.form['Date'],
                 id,
                 ))
@@ -253,14 +257,20 @@ def inventory(id):
 
     # Get the sponsors
     cursor.execute(
-        "SELECT Sponsor_Name FROM Sponsor;"
+        "SELECT Id, Sponsor_Name FROM Sponsor;"
     )
-    sponsor_list = [ d[0] for d in cursor.fetchall() ]
+    sponsor_list = []
+    for data in cursor.fetchall():
+        sponsor_list.append({
+            "value": data[0],
+            "name": data[1]
+        })
 
     return render_template("inventory.html",
         inventory_dict=in_list,
-        sponsor_list=sponsor_list,
-        editPrivilege=session['clearance'].get(int(id), 1)=="3"
+        sponsor_dict=sponsor_list,
+        editPrivilege=session['clearance'].get(int(id), 1)=="3",
+        addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/inventory/add", methods=['POST'])
@@ -272,9 +282,8 @@ def add_inventory(id):
 
         # Get the sponsor ID, if available
         sponsor_id = None
-        if request.form['sponsor'] != "None":
-            cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['sponsor'].replace("+", " "),))
-            sponsor_id = cursor.fetchall()[0][0]
+        if request.form['sponsor'] != "0":
+            sponsor_id = request.form['sponsor']
 
         # Update datbase
         cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (
