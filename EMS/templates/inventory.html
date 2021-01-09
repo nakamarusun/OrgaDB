@@ -84,8 +84,8 @@
             defaultNameVal = $(editRow).children('td').eq(1).text() 
             defaultAmountVal = $(editRow).children('td').eq(2).text().replace(/[^0-9.-]+/g,"")
             defaultSponsorVal = $(editRow).children('td').eq(3).text()
+        
             
-
             $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
             $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
                                                 defaultAmountVal +'>');
