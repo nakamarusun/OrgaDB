@@ -496,11 +496,11 @@ def feedback(id):
     
     return render_template("feedback.html", parent_list=f_list)
 
-@bp.route("/<string:id>/admin")
+@bp.route("/<string:id>/event_data")
 @check_id
 def admin(id):
 
-    return render_template("admin.html")
+    return render_template("event_data.html")
 
 @bp.route("/new", methods = ['POST', 'GET'] )
 def add_new():
