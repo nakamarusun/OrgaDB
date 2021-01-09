@@ -389,8 +389,17 @@ def add_members(id):
             ))
             member = cursor.fetchall()[0]
 
-            # If the member ID exist in the database, then insert everything
-            if member:
+            # If the member ID exist in the database, check whether the member already exist in
+            # The committee level.
+            cursor.execute(
+                "SELECT * FROM Event_Committee WHERE Event_Id=%s AND Member_Id=%s;", (
+                    id,
+                    request.form['Id'],
+            ))
+            event_committee = cursor.fetchall()
+
+            # If the member ID exists in the database, and not already available in the event_committee
+            if member and not event_committee:
                 # Insert the member first
                 cursor.execute("INSERT INTO Event_Committee (Event_Id, Member_Id, Member_Role, IsVolunteer) VALUES (%s, %s, %s, %s);", (
                     id,
@@ -405,6 +414,9 @@ def add_members(id):
                     request.form['Clearance'],
                     id,
                 ))
+            
+            else:
+                return "0"
 
         elif request.form['ActiveTable'] == "2":
             
@@ -435,8 +447,14 @@ def del_members(id):
         cursor = db_obj.cursor()
         
         # Delete the event committee
+        # Don't forget to delete the clearance too.
         if request.form["ActiveTable"] == "0" or request.form["ActiveTable"] == "1":
             cursor.execute("DELETE FROM Event_Committee WHERE Member_Id=%s AND Event_Id=%s;", (
+                request.form["ID"],
+                id,
+            ))
+
+            cursor.execute("DELETE FROM Clearance WHERE Member_Id=%s AND Event_Id=%s;", (
                 request.form["ID"],
                 id,
             ))

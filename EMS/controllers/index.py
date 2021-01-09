@@ -31,6 +31,9 @@ def index():
 
     return render_template("index.html", event_dict=events)
 
+@bp.route("/members")
+def all_members():
+    return render_template("all_member.html")
 
 @bp.route("/admin")
 def admin():
