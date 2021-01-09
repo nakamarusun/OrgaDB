@@ -208,7 +208,7 @@
 
                 // Activates second child (checkmark)
             } else{
-                defaultNameVal = $(editRow).children('td').eq(1).text();
+                defaultNameVal = $(editRow).children('td').eq(1).val();
                 defaultPositionVal = $(editRow).children('td').eq(2).text();
                 defaultPhoneVal = $(editRow).children('td').eq(3).text().replace(/[^0-9.-/+]+/g,"")                
                 defaultMailVal = $(editRow).children('td').eq(4).text()                
