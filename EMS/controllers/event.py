@@ -245,12 +245,12 @@ def upd_finance(id):
         # Updates the income or expense
         if request.form["ActiveTable"] == "0":
             cursor.execute("UPDATE Income SET Income_Date=%s, Item_Name=%s, Amount=%s, Sponsor_Id=%s, Income_Type=%s WHERE Id=%s;", (
-                request.form["ID"],
+                request.form["Id"],
             ))
 
         elif request.form["ActiveTable"] == "1":
             cursor.execute("UPDATE Expenses SET Expense_Date=%s, Item_Name=%s, Amount=%s, Expense_Type=%s WHERE Id=%s;", (
-                request.form["ID"],
+                request.form["Id"],
             ))
 
         db_obj.commit()
@@ -367,7 +367,7 @@ def upd_inventory(id):
                 request.form["Name"],
                 request.form["Amount"],
                 request.form["Sponsor"],
-                request.form["ID"],
+                request.form["Id"],
             ))
 
         db_obj.commit()
@@ -548,29 +548,30 @@ def upd_members(id):
         cursor = db_obj.cursor()
         
         # Updates the members
-        if request.form["ActiveTable"] == "0" or request.form["ActiveTable"] == "1":
+        if request.form["activeTable"] == "0" or request.form["activeTable"] == "1":
             # Committees
             # Update the position first
             cursor.execute("UPDATE Event_Committee SET Member_Role=%s WHERE Member_Id=%s AND Event_Id=%s;", (
                 request.form["Position"],
-                request.form["ID"],
+                request.form["Id"],
                 id,
             ))
             # Then, update the clearance
             cursor.execute("UPDATE Clearance SET Clearance_Level=%s WHERE Member_Id=%s AND Event_Id=%s;", (
                 request.form["Clearance"],
-                request.form["ID"],
+                request.form["Id"],
                 id,
             ))
 
-        elif request.form["ActiveTable"] == "2":
+        elif request.form["activeTable"] == "2":
             # Update the guests
-            cursor.execute("UPDATE Guests SET Full_Name=%s, Category=%s, Phone_Number=%s, Email=%s, WHERE Id=%s AND Event_Id=%s;", (
+            print(request.form["Phone"])
+            cursor.execute("UPDATE Guests SET Full_Name=%s, Category=%s, Phone_Number=%s, Email=%s WHERE Id=%s AND Event_Id=%s;", (
                 request.form["Name"],
                 request.form["Position"],
                 request.form["Phone"],
                 request.form["Mail"],
-                request.form["ID"],
+                request.form["Id"],
                 id,
             ))
 
