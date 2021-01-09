@@ -33,7 +33,7 @@ $(document).ready(function(){
         console.log(serializedArray)
         $.ajax({
             type : "POST",
-            url : currentPath + "add",
+            url : currentPath + "/add",
             data : serializedForm,
             success : function(){
                 $('.empty-message').hide()

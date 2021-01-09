@@ -108,7 +108,7 @@ def finance(id):
 
     # First, we get the income
     cursor.execute(
-        "SELECT Income_Date, Item_Name, Amount, Income_Type, Sponsor_Name FROM Income i LEFT JOIN Sponsor s ON i.Sponsor_Id=s.Id WHERE Event_Id=%s;",
+        "SELECT Income_Date, Item_Name, Amount, Income_Type, Sponsor_Name, i.Id FROM Income i LEFT JOIN Sponsor s ON i.Sponsor_Id=s.Id WHERE Event_Id=%s;",
         (id,)
     )
 
@@ -116,6 +116,7 @@ def finance(id):
     income_list = []
     for data in cursor.fetchall():
         income_list.append({
+            "id": data[5],
             "date": data[0],
             "name": data[1],
             "amount": format_idr(data[2]),
@@ -125,7 +126,7 @@ def finance(id):
     
     # Get the expense
     cursor.execute(
-        "SELECT e.Id, e.Item_Name, Expense_Type, Amount, Expense_Date FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
+        "SELECT e.Id, e.Item_Name, Expense_Type, Amount, Expense_Date, e.Id FROM Expenses e JOIN Events ev ON ev.Id=e.Event_Id WHERE Event_Id=%s;",
         (id,)
     )
 
@@ -133,6 +134,7 @@ def finance(id):
     expense_list = []
     for data in cursor.fetchall():
         expense_list.append({
+            "id": data[5],
             "date": data[4],
             "name": data[1],
             "amount": format_idr(data[3]),
@@ -328,6 +330,7 @@ def add_members(id):
         cursor = db_obj.cursor()
         
         if request.form['ActiveTable'] == "0" or request.form["ActiveTable"] == "1":
+            # First, check whether the member exist specified in the ID
             cursor.execute(
                 "SELECT * FROM Members WHERE Id=%s;", (
                     request.form['Id'],
@@ -352,9 +355,16 @@ def add_members(id):
                 ))
 
         elif request.form['ActiveTable'] == "2":
-            # TODO: Is not complete
-            pass
-
+            
+            # Insert the guest
+            cursor.execute("INSERT INTO Guests (Full_Name, Email, Phone_Number, Category, Event_Id) VALUES (%s, %s, %s, %s, %s);", (
+                request.form["name"],
+                request.form["mail"],
+                request.form["phone"],
+                request.form["position"],
+                id,
+            ))
+            
         # Commit
         db_obj.commit()
 
