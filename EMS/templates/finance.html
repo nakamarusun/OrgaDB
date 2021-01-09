@@ -233,7 +233,7 @@
             serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + parseFloat(editRow.find('#amount').val());
             serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val();
             if(activeTable == 0){
-                serializedForm += '&' + editRow.find('#sponsor').attr('name') + '=' + editRow.find('#type').val();
+                serializedForm += '&' + editRow.find('#sponsor').attr('name') + '=' + editRow.find('#sponsor').val();
             }
             serializedForm += "&activeTable=" + activeTable;
             
