@@ -243,12 +243,12 @@ def upd_finance(id):
         cursor = db_obj.cursor()
         
         # Updates the income or expense
-        if request.form["ActiveTable"] == "0":
+        if request.form["activeTable"] == "0":
             cursor.execute("UPDATE Income SET Income_Date=%s, Item_Name=%s, Amount=%s, Sponsor_Id=%s, Income_Type=%s WHERE Id=%s;", (
                 request.form["Id"],
             ))
 
-        elif request.form["ActiveTable"] == "1":
+        elif request.form["activeTable"] == "1":
             cursor.execute("UPDATE Expenses SET Expense_Date=%s, Item_Name=%s, Amount=%s, Expense_Type=%s WHERE Id=%s;", (
                 request.form["Id"],
             ))

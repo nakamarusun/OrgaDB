@@ -31,7 +31,7 @@
             {{ m.table_content(income_dict,editPrivilege) }}
 
         <!-- Placeholder values -->
-        
+        {#
         <tr>
             <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
@@ -58,7 +58,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
-        
+        #}
     </table>
     
     <table class="content container border-2 table-auto">
@@ -73,7 +73,7 @@
             {% endif %}
         </tr>
             {{ m.table_content(expense_dict,editPrivilege) }}
-        
+        {#
         <tr>
             <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
@@ -86,7 +86,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
-        
+        #}
     </table>
 
     {% if (addPrivilege) %}

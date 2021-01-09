@@ -134,4 +134,4 @@ def login_required(view):
 def profile_page(id):
 
     # TODO: Add /user/<id>/profile
-    return " User profile: " + id
+    return render_template("profile.html")
