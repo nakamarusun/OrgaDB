@@ -15,7 +15,7 @@
         <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.finance',  id=g.event_id )}}"><t>Finance</t><span>»</span></a>
         <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.inventory',id=g.event_id )}}"><t>Inventory</t><span>»</span></a>
         <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.feedback', id=g.event_id )}}"><t>Feedback</t><span>»</span></a>
-        <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.admin',    id=g.event_id )}}"><t>Event Data</t><span>»</span></a>
+        <a class="text-blue-600 event-list-item outline-none" href="{{url_for('event.event_data', id=g.event_id)}}"><t>Event Data</t><span>»</span></a>
     </div>
 </aside>
 {% endmacro %}
