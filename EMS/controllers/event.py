@@ -200,6 +200,35 @@ def add_finance(id):
         print(str(e))
         return "0"
 
+@bp.route("/<string:id>/finance/delete", methods=['POST'])
+def del_finance(id):
+    # Deletes the entry based on the ID
+    try:
+        db_obj = db.get_db()
+
+        # Delete from database
+        cursor = db_obj.cursor()
+        
+        # Delete the event committee
+        if request.form["ActiveTable"] == "0":
+            cursor.execute("DELETE FROM Income WHERE Id=%s;", (
+                request.form["ID"],
+            ))
+
+        # Delete the guest
+        elif request.form["ActiveTable"] == "1":
+            cursor.execute("DELETE FROM Expenses WHERE Id=%s;", (
+                request.form["ID"],
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
 @bp.route("/<string:id>/inventory")
 @check_id
 def inventory(id):
@@ -259,6 +288,29 @@ def add_inventory(id):
         db_obj.commit()
 
         return "1"
+    except Exception as e:
+        print(str(e))
+        return "0"
+
+@bp.route("/<string:id>/inventory/delete", methods=['POST'])
+def del_inventory(id):
+    # Deletes the entry based on the ID
+    try:
+        db_obj = db.get_db()
+
+        # Delete from database
+        cursor = db_obj.cursor()
+        
+        # Delete the event committee
+        if request.form["ActiveTable"] == "0":
+            cursor.execute("DELETE FROM Inventory WHERE Inventory_Id=%s;", (
+                request.form["ID"],
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
     except Exception as e:
         print(str(e))
         return "0"
@@ -369,6 +421,37 @@ def add_members(id):
         db_obj.commit()
 
         return "1"
+    except Exception as e:
+        print(str(e))
+        return "0"
+
+@bp.route("/<string:id>/members/delete", methods=['POST'])
+def del_members(id):
+    # Deletes the entry based on the ID
+    try:
+        db_obj = db.get_db()
+
+        # Delete from database
+        cursor = db_obj.cursor()
+        
+        # Delete the event committee
+        if request.form["ActiveTable"] == "0" or request.form["ActiveTable"] == "1":
+            cursor.execute("DELETE FROM Event_Committee WHERE Member_Id=%s AND Event_Id=%s;", (
+                request.form["ID"],
+                id,
+            ))
+
+        # Delete the guest
+        elif request.form["ActiveTable"] == "2":
+            cursor.execute("DELETE FROM Guests WHERE Id=%s AND Event_Id=%s;", (
+                request.form["ID"],
+                id,
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
     except Exception as e:
         print(str(e))
         return "0"
