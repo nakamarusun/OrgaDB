@@ -1,106 +1,74 @@
 {% extends 'general_template.html' %}
+<!-- TODO: Create income section and expense section, a certain icon will be used to mark a sponsored income record -->
 
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename='event_template.css')}}">
 {% endblock %}
 
 {% block left_cont %}
-{{m.user_nav(event_dict)}}
+{{ m.user_nav(event_dict) }}
 {% endblock %}
 
 {% block right_cont %}
-<div class="w-full flex flex-col px-12">
+<div class="container flex flex-col px-12">
     <h1 class="text-center text-2xl pt-6 pb-4">Admin</h1>
     <div class="tab_container container flex h-18">
-        <div class="bg-gray-300 cursor-pointer p-3 text-center border-2 rounded-t-lg active"><b>Sponsor list</b></div>
+        <div class="tabs bg-gray-300 cursor-pointer p-3 w-28 text-center border-2 rounded-t-lg"><b>Inventory</b></div>
     </div>
     <table class="content container border-2 table-auto">        
         <tr id="table-header">
+            <th class="border-2 h-10">Id</th>
             <th class="border-2 h-10">Name</th>
-            <th class="border-2 h-10">Address</th>
-            <th class="border-2 h-10">Phone number</th>
-            <th class="border-2 h-10">Type</th>
+            <th class="border-2 h-10">Position</th>
+            <th class="border-2 h-10">Mail</th>
+            <th class="border-2 h-10">Admin status</th>
             {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
             {% endif %}
         </tr>
 
-            {{ m.table_content_sponsor(sponsor_dict,editPrivilege) }}
-        
+        <!-- Commented out jinja template -->
+        {{ m.table_content(all_member_dict,editPrivilege) }}
+            
         <!-- Placeholder values -->
-        <tr>
-            <td class="border-2 h-10">Furries</td>
-            <td class="border-2 h-10">Nusaponycon</td>
-            <td class="border-2 h-10">+1203912039012</td>
-            <td class="border-2 h-10">Money</td>
+        <!-- <tr>
+            <td class="border-2 h-10">0</td>
+            <td class="border-2 h-10">Fursuit</td>
+            <td class="border-2 h-10">Vice something</td>
+            <td class="border-2 h-10">asdf@gmail.com</td>
+            <td class="border-2 h-10">True</td>
             <td class="border-2 h-10">
-                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit-sponsor cursor-pointer m-auto w-6 h-6" alt="">
-                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit-sponsor hidden m-auto w-6 h-6" alt="">
-                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete delete-sponsor m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
-        </tr>
+        </tr> -->
     </table>
     {% if (addPrivilege) %}
-    <form action="" method="post" class="form-sponsor mb-4 flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md" style="display: block;">
-        <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
-            <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-            <input type="text" required name="Address" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Address">
-            <input type="text" required name="Phone" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Phone number" pattern="^\+?[0-9]+">
-            <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Type">
-                <option value="Money" selected>Money</option>
-                <option value="Equipment">Equipment</option>
-                <option value="Money and Equipment">Money and Equipment</option>
-            </select>
+    <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
+        <div class="grid gap-x-4 px-2 grid-cols-3 md:grid-cols-3 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+            <input type="text" required name="name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
+            <input type="text" required name="amount" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Amount">
+            <input type="text" required name="mail" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Email">
         </div>
         <div class="w-full flex justify-end pr-2 py-2">
             <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
         </div>
     </form>
-    {% endif %}
-    <div class="pt-8 grid grid-cols-2 gap-x-4">
-        <div class="position-wrapper">
-            <div class="tab_container container flex h-18">
-                <div class="bg-gray-300 cursor-pointer p-3 text-center border-2 rounded-t-lg active"><b>Position list</b></div>
-            </div>
-            <table class="content container border-2 table-auto" style="display: table;">        
-                <tr id="table-header">
-                    <th class="border-2 h-10">Position</th>
-                    {% if (editPrivilege) %}
-                    <th class="border-2 h-10 w-14">Edit</th>
-                    {% endif %}
-                </tr>
-
-                {{ m.table_content_position(position_dict,editPrivilege) }}
-                
-                <!-- Placeholder values -->
-                <tr>
-                    <td class="border-2 h-10">Furries</td>
-                    <td class="border-2 h-10">
-                        <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit-position cursor-pointer m-auto w-6 h-6" alt="">
-                        <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit-position hidden m-auto w-6 h-6" alt="">
-                        <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete delete-position m-auto w-6 h-6" alt="">
-                    </td>
-                </tr>
-            </table>
-            {% if (addPrivilege) %}
-            <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md" style="display: block;">
-                <div class="grid gap-x-4 px-2 grid-cols-1 md:grid-cols-1 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
-                    <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                </div>
-                <div class="w-full flex justify-end pr-2 py-2">
-                    <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
-                </div>
-            </form>
-            {% endif %}
+    <div class="w-full flex justify-end h-6">
+        <div class="w-12 bg-gray-100 border-b-2 border-l-2 border-r-2 flex justify-center mr-2 show-form">
+            <img src="{{url_for('static',filename='asset/chevron-down.svg')}}" alt="" class="chevron-down transition h-6 w-6">
         </div>
     </div>
+    {% endif %}
 </div>
 {% endblock %}
 {% block scripts %}
-    <script>var activeTable = 0;</script>
+    <script>var activeTable = 0;var hasEditPrivilege = {{ editPrivilege|safe }}; </script>
+    <script src="{{url_for('static', filename='event_table.js')}}"></script>
+    <script src="{{url_for('static', filename='input_validator.js')}}"></script>
     <script>
-        
-        $(document).on('click','.edit-sponsor', function(){
+        $(document).on('click','.edit', function(){
             $(this).css({'display' : 'none'});
 
             // Row that is being edited
@@ -108,29 +76,28 @@
             // console.log(editRow)
 
             // Initializes all default values into the new input
-            defaultNameVal = $(editRow).children('td').eq(0).text()
-            defaultAddressVal = $(editRow).children('td').eq(1).text() 
-            defaultPhoneVal = $(editRow).children('td').eq(2).text().replace(/[^0-9.-/+]+/g,"")
-            defaultTypeVal = $(editRow).children('td').eq(3).text()
+            defaultNameVal = $(editRow).children('td').eq(1).text() 
+            defaultPositionVal = $(editRow).children('td').eq(2).text()
+            defaultMailVal = $(editRow).children('td').eq(3).text()
+            defaultAdminVal = $(editRow).children('td').eq(4).text()
+            
 
-            $(editRow).children('td').eq(0).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
-            $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="address" type="text" required name="Address" value='+ 
-                                                defaultAddressVal +'>');
-            $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="phone" type="text" required name="Phone" value='+ 
-                                                defaultPhoneVal +'>');
-            $(editRow).children('td').eq(3).html(`
-                <select class="m-auto border text-center focus:ring-2 outline-none" id="type" required name="Type">
-                    <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
-                    <option value="Money">Money</option>
-                    <option value="Equipment">Equipment</option>
-                    <option value="Money and Equipment">Money and Equipment</option>
+            $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
+            $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value="'+ defaultPositionVal + '">');
+            $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="mail" type="text" required name="Mail" value="'+ defaultMailVal +'">');
+            $(editRow).children('td').eq(4).html(`
+                <select class="m-auto text-center focus:ring-2 outline-none border" id="isAdmin" required name="isAdmin">
+                    <option value="` + defaultAdminVal + `" selected hidden> ` + defaultAdminVal + `</option>
+                    <option value="True">True</option>
+                    <option value="False">False</option>
                 </select>
-                `);
+            `);
+            
             // Activates second child (checkmark)
             $(this).parent().children('input').css({'display':'block'});    
         })
-
-        $(document).on('click','.submit-sponsor', function(){
+        
+        $(document).on('click','.submit', function(){
             // Serializes form data into string
         
             // Gets the row that is being edited
@@ -138,21 +105,34 @@
             
             // TODO : input validation
             var serializedForm = ""
-            serializedForm += editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
-            serializedForm += '&' + editRow.find('#address').attr('name') + '=' + editRow.find('#address').val()
-            serializedForm += '&' + editRow.find('#phone').attr('name') + '=' + editRow.find('#phone').val()
-            serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
-            serializedForm += "&activeTable=0";
+            serializedForm += 'Id=' + editRow.children().first().text()
+            serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
+            serializedForm += '&' + editRow.find('#position').attr('name') + '=' + editRow.find('#position').val().replace(/[^0-9.-]+/g,"")
+            serializedForm += '&' + editRow.find('#mail').attr('name') + '=' + editRow.find('#mail').val()
+            serializedForm += '&' + editRow.find('#isAdmin').attr('name') + '=' + editRow.find('#isAdmin').val()
+            serializedForm += "&activeTable=" + activeTable;
 
-            $(editRow).children('td').eq(0).html(editRow.find('#name').val());
-            $(editRow).children('td').eq(1).html(editRow.find('#address').val());
-            $(editRow).children('td').eq(2).html(editRow.find('#phone').val());
-            $(editRow).children('td').eq(3).html(editRow.find('#type').val());
+            if(!validateEmpty(editRow.find('#name').val())){
+                editRow.find('#name').addClass('border-red-500');
+                return 0;
+            } else if(!validateName(editRow.find('#position').val())){
+                editRow.find('#position').addClass('border-red-500');
+                return 0;
+            } else if(!validateEmail(editRow.find('#mail').val())){
+                editRow.find('#mail').addClass('border-red-500');
+                return 0;
+            }
+            
+            $(editRow).children('td').eq(1).html(editRow.find('#name').val());
+            $(editRow).children('td').eq(2).html(editRow.find('#position').val());
+            $(editRow).children('td').eq(3).html(editRow.find('#mail').val());
+            $(editRow).children('td').eq(4).html(editRow.find('#isAdmin').val());
             
             console.log(serializedForm);
+            
             // Used to add a record on the front end
             var currentPath = window.location.pathname;
-            $(this).parent().children('img').css({'display' : 'block'});
+            $(this).parent().children('img').css({'display':'block'});
             
             $.ajax({
                 type : "POST",
@@ -162,130 +142,7 @@
                     alert("Succesfully added record");
                 }
             });
-            $(this).parent().children('input').css({'display':'none'})
+            $(this).parent().children('input').css({'display':'none'});
         });
-
-        $(document).on('click','.edit-position', function(){
-            $(this).css({'display' : 'none'});
-
-            // Row that is being edited
-            editRow = $(this).parent().parent();
-            // console.log(editRow)
-
-            // Initializes all default values into the new input
-            defaultPositionVal = $(editRow).children('td').eq(0).text()
-            
-            $(editRow).children('td').eq(0).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value='+ defaultPositionVal + '>');
-            // Activates second child (checkmark)
-            $(this).parent().children('input').css({'display':'block'});    
-        })
-
-        $(document).on('click','.submit-position', function(){
-             // Serializes form data into string
-        
-            // Gets the row that is being edited
-            editRow = $(this).parent().parent();
-            
-            // TODO : input validation
-            var serializedForm = ""
-            serializedForm += editRow.find('#position').attr('name') + '=' + editRow.find('#position').val()
-            serializedForm += "&activeTable=1";
-
-            $(editRow).children('td').eq(0).html(editRow.find('#position').val());
-            
-            console.log(serializedForm);
-            // Used to add a record on the front end
-            var currentPath = window.location.pathname;
-            $(this).parent().children('img').css({'display' : 'block'});
-            console.log(serializedForm)
-            $.ajax({
-                type : "POST",
-                url : currentPath + "/update",
-                data : serializedForm,
-                success : function(){
-                    alert("Succesfully added record");
-                }
-            });
-            $(this).parent().children('input').css({'display':'none'})
-        })
-    
-        $('.form-sponsor').on("submit",function(e){
-            // Serializes form data into string
-            var activeTable = 0;
-            var serializedForm = $(this).serialize() + "&ActiveTable=" + activeTable;
-            
-            // Used to add a record on the front end
-            var serializedArray = $(this).serializeArray();
-            var currentPath = window.location.pathname;
-            console.log(serializedArray)
-            $.ajax({
-                type : "POST",
-                url : currentPath + "/add",
-                data : serializedForm,
-                success : function(){
-                    $('.empty-message').hide()
-                    var row = '';
-                    // console.log(result)
-                    for(x in serializedArray){
-                        row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
-                    }
-                    if(hasEditPrivilege){
-                        row += 
-                        `<td class="border-2 h-10">
-                            <img src="/static/asset/pencil.svg" class="edit-sponsor cursor-pointer m-auto w-6 h-6" alt="">
-                            <input type="image" src="/static/asset/check.svg" class="submit-sponsor m-auto w-6 h-6" alt="">
-                        </td>`
-                    }
-                    $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
-                    alert("Succesfully added record");
-                }
-            });
-            // Prevents regular submit action on submit click
-            e.preventDefault();
-        });
-
-        $('.form-position').on("submit",function(e){
-            // Serializes form data into string
-            
-            var activeTable = 1;
-            var serializedForm = $(this).serialize() + "&ActiveTable=" + activeTable;
-            
-            // Used to add a record on the front end
-            var serializedArray = $(this).serializeArray();
-            var currentPath = window.location.pathname;
-            console.log(serializedArray)
-            $.ajax({
-                type : "POST",
-                url : currentPath + "/add",
-                data : serializedForm,
-                success : function(){
-                    $('.empty-message').hide()
-                    var row = '';
-                    // console.log(result)
-                    for(x in serializedArray){
-                        row += '<td class="border-2 h-10">' +  (serializedArray[x]['value']) + '</td>';
-                    }
-                    if(hasEditPrivilege){
-                        row += 
-                        `<td class="border-2 h-10">
-                            <img src="/static/asset/pencil.svg" class="edit-position cursor-pointer m-auto w-6 h-6" alt="">
-                            <input type="image" src="/static/asset/check.svg" class="submit-position m-auto w-6 h-6" alt="">
-                        </td>`
-                    }
-                    $('.content tbody').eq(activeTable).append('<tr>' + row + '</tr>');
-                    alert("Succesfully added record");
-                }
-            });
-            // Prevents regular submit action on submit click
-            e.preventDefault();
-        });
-        
-        $(document).on('click','.delete-sponsor', function(){
-            activeTable = 0;
-        })
-        $(document).on('click','.delete-position', function(){
-            activeTable = 1;
-        })
     </script>
-    <script src="{{url_for('static',filename='event_table.js')}}"></script>
 {% endblock %} 

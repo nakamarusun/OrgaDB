@@ -183,8 +183,8 @@
 
             $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
             $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
-            $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Cost" value='+ 
-                                                defaultAmountVal +'>');
+            $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Cost" value="'+ 
+                                                defaultAmountVal +'">');
 
             if(activeTable == 0){
                 $(editRow).children('td').eq(4).html(`
