@@ -233,6 +233,34 @@ def del_finance(id):
         print(str(e))
         return "0"
 
+@bp.route("/<string:id>/finance/update", methods=['POST'])
+def upd_finance(id):
+    # Updates the entry.
+    try:
+        db_obj = db.get_db()
+
+        # Update from database
+        cursor = db_obj.cursor()
+        
+        # Updates the income or expense
+        if request.form["ActiveTable"] == "0":
+            cursor.execute("UPDATE Income SET Income_Date=%s, Item_Name=%s, Amount=%s, Sponsor_Id=%s, Income_Type=%s WHERE Id=%s;", (
+                request.form["ID"],
+            ))
+
+        elif request.form["ActiveTable"] == "1":
+            cursor.execute("UPDATE Expenses SET Expense_Date=%s, Item_Name=%s, Amount=%s, Expense_Type=%s WHERE Id=%s;", (
+                request.form["ID"],
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
 @bp.route("/<string:id>/inventory")
 @check_id
 def inventory(id):
@@ -324,6 +352,32 @@ def del_inventory(id):
         print(str(e))
         return "0"
 
+@bp.route("/<string:id>/inventory/update", methods=['POST'])
+def upd_inventory(id):
+    # Updates the entry.
+    try:
+        db_obj = db.get_db()
+
+        # Update from database
+        cursor = db_obj.cursor()
+        
+        # Updates the inventory
+        if request.form["ActiveTable"] == "0":
+            cursor.execute("UPDATE Inventory SET Item_Name=%s, Item_Quantity=%s, Sponsor_Id=%s WHERE Inventory_Id=%s;", (
+                request.form["Name"],
+                request.form["Amount"],
+                request.form["Sponsor"],
+                request.form["ID"],
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
 @bp.route("/<string:id>/members")
 @check_id
 def members(id):
@@ -378,7 +432,8 @@ def members(id):
         committee_dict=committee_list,
         volunteer_dict=volunteer_list,
         guest_dict=guest_list,
-        editPrivilege=session['clearance'].get(int(id), 1)=="3"
+        editPrivilege=session['clearance'].get(int(id), 1)=="3",
+        addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/members/add", methods=['POST'])
@@ -471,6 +526,50 @@ def del_members(id):
         # Delete the guest
         elif request.form["ActiveTable"] == "2":
             cursor.execute("DELETE FROM Guests WHERE Id=%s AND Event_Id=%s;", (
+                request.form["ID"],
+                id,
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
+@bp.route("/<string:id>/members/update", methods=['POST'])
+def upd_members(id):
+    # Updates the entry.
+    try:
+        db_obj = db.get_db()
+
+        # Update from database
+        cursor = db_obj.cursor()
+        
+        # Updates the members
+        if request.form["ActiveTable"] == "0" or request.form["ActiveTable"] == "1":
+            # Committees
+            # Update the position first
+            cursor.execute("UPDATE Event_Committee SET Member_Role=%s WHERE Member_Id=%s AND Event_Id=%s;", (
+                request.form["Position"],
+                request.form["ID"],
+                id,
+            ))
+            # Then, update the clearance
+            cursor.execute("UPDATE Clearance SET Clearance_Level=%s WHERE Member_Id=%s AND Event_Id=%s;", (
+                request.form["Clearance"],
+                request.form["ID"],
+                id,
+            ))
+
+        elif request.form["ActiveTable"] == "2":
+            # Update the guests
+            cursor.execute("UPDATE Guests SET Full_Name=%s, Category=%s, Phone_Number=%s, Email=%s, WHERE Id=%s AND Event_Id=%s;", (
+                request.form["Name"],
+                request.form["Position"],
+                request.form["Phone"],
+                request.form["Mail"],
                 request.form["ID"],
                 id,
             ))
