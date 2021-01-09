@@ -514,8 +514,8 @@ def add_new():
         # Gets the ID to increment
         cursor.execute("SELECT MAX(Id) FROM Events;")
 
-        fetch = cursor.fetchall()
-        event_id = fetch[0][0] + 1 if fetch else 1
+        fetch = cursor.fetchall()[0][0]
+        event_id = fetch + 1 if fetch else 1
 
         cursor.execute('INSERT INTO Events (Id, Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s, %s)', (
             event_id,
