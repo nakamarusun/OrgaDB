@@ -78,8 +78,8 @@ def register():
             
             # Gets the maximum id number, then make a new id based on that.
             cursor.execute("SELECT MAX(Id) FROM Members;")
-            fetch_id = cursor.fetchall()[0][0]
-            cur_id = fetch_id + 1 if fetch_id else 1
+            fetch = cursor.fetchall()
+            cur_id = fetch[0][0] + 1 if fetch else 1
 
             # First, inserts the details into the members table
             cursor.execute(
