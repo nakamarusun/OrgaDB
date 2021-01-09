@@ -151,8 +151,8 @@ def finance(id):
         income_dict=income_list,
         expense_dict=expense_list,
         sponsor_list=sponsor_list,
-        editPrivilege=session['clearance'][int(id)]=="3",
-        addPrivilege=session['clearance'][int(id)]=="3"
+        editPrivilege=session['clearance'].get(int(id), 1)=="3",
+        addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/finance/add", methods=['POST'])
@@ -260,7 +260,7 @@ def inventory(id):
     return render_template("inventory.html",
         inventory_dict=in_list,
         sponsor_list=sponsor_list,
-        editPrivilege=session['clearance'][int(id)]=="3"
+        editPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/inventory/add", methods=['POST'])
@@ -369,7 +369,7 @@ def members(id):
         committee_dict=committee_list,
         volunteer_dict=volunteer_list,
         guest_dict=guest_list,
-        editPrivilege=session['clearance'][int(id)]=="3"
+        editPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/members/add", methods=['POST'])
