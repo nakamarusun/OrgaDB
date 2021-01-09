@@ -260,7 +260,8 @@ def inventory(id):
     return render_template("inventory.html",
         inventory_dict=in_list,
         sponsor_list=sponsor_list,
-        editPrivilege=session['clearance'].get(int(id), 1)=="3"
+        editPrivilege="1",
+        addPrivilege= "1"
     )
 
 @bp.route("/<string:id>/inventory/add", methods=['POST'])
