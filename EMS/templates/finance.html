@@ -31,8 +31,9 @@
             {{ m.table_content(income_dict,editPrivilege) }}
 
         <!-- Placeholder values -->
-        {#
+        
         <tr>
+            <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Fursuit</td>
             <td class="border-2 h-10">IDR 100,000,000.00</td>
@@ -45,6 +46,7 @@
             </td>
         </tr>
         <tr>
+            <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Yes</td>
             <td class="border-2 h-10">IDR 100,000,000.00</td>
@@ -56,7 +58,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
-        #}
+        
     </table>
     
     <table class="content container border-2 table-auto">
@@ -71,8 +73,9 @@
             {% endif %}
         </tr>
             {{ m.table_content(expense_dict,editPrivilege) }}
-        {#
+        
         <tr>
+            <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Yes</td>
             <td class="border-2 h-10">IDR 100,000,000.00</td>
@@ -83,7 +86,7 @@
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr>
-        #}
+        
     </table>
 
     {% if (addPrivilege) %}
@@ -172,20 +175,20 @@
             // console.log(editRow)
 
             // Initializes all default values into the new input
-            defaultDateVal = $(editRow).children('td').eq(0).text()
-            defaultNameVal = $(editRow).children('td').eq(1).text() 
-            defaultAmountVal = $(editRow).children('td').eq(2).text().replace(/[^0-9.-]+/g,"")
-            defaultTypeVal = $(editRow).children('td').eq(3).text()
-            defaultSponsorVal = $(editRow).children('td').eq(4).text()
+            defaultDateVal = $(editRow).children('td').eq(1).text()
+            defaultNameVal = $(editRow).children('td').eq(2).text() 
+            defaultAmountVal = $(editRow).children('td').eq(3).text().replace(/[^0-9.-]+/g,"")
+            defaultTypeVal = $(editRow).children('td').eq(4).text()
+            defaultSponsorVal = $(editRow).children('td').eq(5).text()
             
 
-            $(editRow).children('td').eq(0).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
-            $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value='+ defaultNameVal + '>');
-            $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Amount" value='+ 
+            $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="date" type="date" required name="Date" value='+ defaultDateVal + '>');
+            $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
+            $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="amount" type="text" required pattern="[0-9]+" name="Cost" value='+ 
                                                 defaultAmountVal +'>');
 
             if(activeTable == 0){
-                $(editRow).children('td').eq(3).html(`
+                $(editRow).children('td').eq(4).html(`
                 <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
                     <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
                     <option value="Sponsor">Sponsor</option>
@@ -194,14 +197,14 @@
                 </select>
                 `);
 
-                $(editRow).children('td').eq(4).html(`
+                $(editRow).children('td').eq(5).html(`
                 <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
                     {{ m.dropdown_option(sponsor_dict)}}
                 </select>
                 `);
             } else{
-                $(editRow).children('td').eq(3).html(`
+                $(editRow).children('td').eq(4).html(`
                 <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
                     <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
                     <option value="Venue">Venue</option>
@@ -225,7 +228,8 @@
             
             // TODO : input validation
             var serializedForm = "";
-            serializedForm += editRow.find('#date').attr('name') + '=' + editRow.find('#date').val();
+            serializedForm += 'Id=' + editRow.children().first().text()
+            serializedForm += '&' + editRow.find('#date').attr('name') + '=' + editRow.find('#date').val();
             serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val();
             serializedForm += '&' + editRow.find('#amount').attr('name') + '=' + parseFloat(editRow.find('#amount').val());
             serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val();
@@ -246,12 +250,12 @@
             }
 
             editRow = $(this).parent().parent();
-            $(editRow).children('td').eq(0).html(editRow.find('#date').val());
-            $(editRow).children('td').eq(1).html(editRow.find('#name').val());
-            $(editRow).children('td').eq(2).html(formatter.format(editRow.find('#amount').val()));
-            $(editRow).children('td').eq(3).html(editRow.find('#type').val());
+            $(editRow).children('td').eq(1).html(editRow.find('#date').val());
+            $(editRow).children('td').eq(2).html(editRow.find('#name').val());
+            $(editRow).children('td').eq(3).html(formatter.format(editRow.find('#amount').val()));
+            $(editRow).children('td').eq(4).html(editRow.find('#type').val());
             if(activeTable == 0){
-                $(editRow).children('td').eq(4).html(editRow.find('#sponsor').val()); 
+                $(editRow).children('td').eq(5).html(editRow.find('#sponsor').val()); 
             }
             
             console.log(serializedForm);

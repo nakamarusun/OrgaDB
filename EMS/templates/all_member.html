@@ -102,7 +102,8 @@
             
             // TODO : input validation
             var serializedForm = ""
-            serializedForm += editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
+            serializedForm += 'Id=' + editRow.children().first().text()
+            serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
             serializedForm += '&' + editRow.find('#position').attr('name') + '=' + editRow.find('#position').val().replace(/[^0-9.-]+/g,"")
             serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
             serializedForm += "&activeTable=" + activeTable;

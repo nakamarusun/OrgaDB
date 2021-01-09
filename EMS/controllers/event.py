@@ -607,7 +607,7 @@ def feedback(id):
 @bp.route("/<string:id>/event_data")
 @check_id
 def event_data(id):
-    
+
     # Gets the total of the members
     cursor = db.get_db().cursor()
     cursor.execute(
