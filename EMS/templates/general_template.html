@@ -15,7 +15,7 @@
                     <div class="button transition w-20 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Register</div>
                 </a>
                 {% else %}
-                <a class = "m-3" href="{{url_for('user.profile_page'), id = session.get('member_id')}}">
+                <a class = "m-3" href="{{url_for('user.profile_page', id = session.get('member_id'))}}">
                     <div class="button transition w-16 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">{{session.get("user_name")}}</div>
                 </a>
                <a class="m-3" href="{{url_for('user.logout')}}">
