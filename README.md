@@ -33,7 +33,7 @@ export FLASK_ENV=development
 5. Copy and rename EMS/db_config.py_template to db_config.py and configure it by yourself
 6. Initialize the tables using the command
 ```bash
-<UNFINISHED>
+flask init-db
 ```
 6. Run the flask project, and access using http://127.0.0.1:5000/
 ```bash
