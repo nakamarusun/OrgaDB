@@ -498,7 +498,7 @@ def feedback(id):
 
 @bp.route("/<string:id>/event_data")
 @check_id
-def admin(id):
+def event_data(id):
 
     return render_template("event_data.html")
 
