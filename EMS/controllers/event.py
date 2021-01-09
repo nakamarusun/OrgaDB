@@ -499,8 +499,16 @@ def feedback(id):
 @bp.route("/<string:id>/event_data")
 @check_id
 def event_data(id):
-
-    return render_template("event_data.html")
+    
+    # Gets the total of the members
+    cursor = db.get_db().cursor()
+    cursor.execute(
+        "SELECT (SELECT COUNT(*) FROM Event_Committee WHERE Event_Id=%s) + (SELECT COUNT(*) FROM Guests WHERE Event_Id=%s) as total;", (
+            id,
+            id,
+        )
+    )
+    return render_template("event_data.html", total_member=cursor.fetchall()[0][0])
 
 @bp.route("/new", methods = ['POST', 'GET'] )
 def add_new():

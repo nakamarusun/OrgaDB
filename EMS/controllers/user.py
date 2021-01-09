@@ -58,8 +58,7 @@ def register():
         email = request.form['mail']
         password = request.form['pwd']
         username = request.form['name']
-        # TODO: Change full name
-        full_name = request.form.get('fullname', "Bruh")
+        full_name = request.form['fullName']
 
         db_ref = db.get_db()
         cursor = db_ref.cursor()
