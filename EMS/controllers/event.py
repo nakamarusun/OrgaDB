@@ -374,7 +374,7 @@ def upd_inventory(id):
         cursor = db_obj.cursor()
         
         # Updates the inventory
-        if request.form["ActiveTable"] == "0":
+        if request.form["activeTable"] == "0":
             cursor.execute("UPDATE Inventory SET Item_Name=%s, Item_Quantity=%s, Sponsor_Id=%s WHERE Inventory_Id=%s;", (
                 request.form["Name"],
                 request.form["Amount"],
@@ -501,7 +501,7 @@ def add_members(id):
                 request.form["name"],
                 request.form["mail"],
                 request.form["phone"],
-                request.form["position"],
+                request.form["Position"],
                 id,
             ))
             
