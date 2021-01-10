@@ -11,34 +11,35 @@
 
 {% block right_cont %}
 <div class="container flex flex-col px-12">
-    <h1 class="text-center text-2xl pt-6 pb-4">Admin</h1>
+    <h1 class="text-center text-2xl pt-6 pb-4">All Members</h1>
     <div class="tab_container container flex h-18">
-        <div class="tabs bg-gray-300 cursor-pointer p-3 text-center border-2 rounded-t-lg"><b>Sponsors</b></div>
+        <div class="tabs bg-gray-300 cursor-pointer p-3 text-center border-2 rounded-t-lg"><b>All members</b></div>
     </div>
     <table class="content container border-2 table-auto">        
         <tr id="table-header">
             <th class="border-2 h-10">Id</th>
             <th class="border-2 h-10">Name</th>
-            <th class="border-2 h-10">Address</th>
-            <th class="border-2 h-10">Phone number</th>
-            <th class="border-2 h-10">Type</th>
+            <th class="border-2 h-10">Position</th>
+            <th class="border-2 h-10">Mail</th>
+            <th class="border-2 h-10">Admin status</th>
             {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
             {% endif %}
         </tr>
 
-            {{ m.table_content_sponsor(sponsor_dict,editPrivilege) }}
-        
+        <!-- Commented out jinja template -->
+        {{ m.table_content(all_member_dict,editPrivilege) }}
+            
         <!-- Placeholder values -->
         <!-- <tr>
-            <td class="border-2 h-10">1</td>
-            <td class="border-2 h-10">Furries</td>
-            <td class="border-2 h-10">Nusaponycon</td>
-            <td class="border-2 h-10">+1203912039012</td>
-            <td class="border-2 h-10">Money</td>
+            <td class="border-2 h-10">0</td>
+            <td class="border-2 h-10">Fursuit</td>
+            <td class="border-2 h-10">Vice something</td>
+            <td class="border-2 h-10">asdf@gmail.com</td>
+            <td class="border-2 h-10">True</td>
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
-                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit hidden m-auto w-6 h-6" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
         </tr> -->
@@ -83,19 +84,18 @@
             // Initializes all default values into the new input
             if(activeTable == 0){
                 defaultNameVal = $(editRow).children('td').eq(1).text() 
-                defaultAddressVal = $(editRow).children('td').eq(2).text()
-                defaultPhoneVal = $(editRow).children('td').eq(3).text()
-                defaultTypeVal = $(editRow).children('td').eq(4).text()
+                defaultPositionVal = $(editRow).children('td').eq(2).text()
+                defaultMailVal = $(editRow).children('td').eq(3).text()
+                defaultAdminVal = $(editRow).children('td').eq(4).text()
                 
                 $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
-                $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="address" type="text" required name="Address" value="'+ defaultAddressVal + '">');
-                $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="phone" type="text" required name="Phone" value="'+ defaultPhoneVal +'">');
+                $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value="'+ defaultPositionVal + '">');
+                $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="mail" type="text" required name="Mail" value="'+ defaultMailVal +'">');
                 $(editRow).children('td').eq(4).html(`
-                    <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
-                        <option value="` + defaultTypeVal + `" selected hidden> ` + defaultTypeVal + `</option>
-                        <option value="Money">Money</option>
-                        <option value="Equipment">Equipment</option>
-                        <option value="Money and Equipment">Money and Equipment</option>
+                    <select class="m-auto text-center focus:ring-2 outline-none border" id="isAdmin" required name="isAdmin">
+                        <option value="` + defaultAdminVal + `" selected hidden> ` + defaultAdminVal + `</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
                     </select>
                 `);
             }
@@ -110,23 +110,32 @@
             // Gets the row that is being edited
             editRow = $(this).parent().parent();
             
+            // TODO : input validation
             var serializedForm = ""
             if(activeTable == 0){
-
                 serializedForm += 'Id=' + editRow.children().first().text()
                 serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
-                serializedForm += '&' + editRow.find('#address').attr('name') + '=' + editRow.find('#address').val()
-                serializedForm += '&' + editRow.find('#phone').attr('name') + '=' + editRow.find('#phone').val()
-                serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
+                serializedForm += '&' + editRow.find('#position').attr('name') + '=' + editRow.find('#position').val()
+                serializedForm += '&' + editRow.find('#mail').attr('name') + '=' + editRow.find('#mail').val()
+                serializedForm += '&' + editRow.find('#isAdmin').attr('name') + '=' + editRow.find('#isAdmin').val()
                 serializedForm += "&activeTable=" + activeTable;
 
-                
+                if(!validateEmpty(editRow.find('#name').val())){
+                    editRow.find('#name').addClass('border-red-500');
+                    return 0;
+                } else if(!validateName(editRow.find('#position').val())){
+                    editRow.find('#position').addClass('border-red-500');
+                    return 0;
+                } else if(!validateEmail(editRow.find('#mail').val())){
+                    editRow.find('#mail').addClass('border-red-500');
+                    return 0;
+                }
+
                 $(editRow).children('td').eq(1).html(editRow.find('#name').val());
-                $(editRow).children('td').eq(2).html(editRow.find('#address').val());
-                $(editRow).children('td').eq(3).html(editRow.find('#phone').val());
-                $(editRow).children('td').eq(4).html(editRow.find('#type').val());
+                $(editRow).children('td').eq(2).html(editRow.find('#position').val());
+                $(editRow).children('td').eq(3).html(editRow.find('#mail').val());
+                $(editRow).children('td').eq(4).html(editRow.find('#isAdmin').val());
             }
-            
             
             console.log(serializedForm);
             
