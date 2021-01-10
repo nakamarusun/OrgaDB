@@ -134,6 +134,7 @@ def login_required(view):
 def profile_page(id):
 
     # TODO: Add /user/<id>/profile
+<<<<<<< HEAD
     cursor = db.get_db().cursor()
     cursor.execute("SELECT Full_Name, Position, Username, Email FROM Members m LEFT JOIN Login_Cred l ON l.Member_Id=m.Id WHERE m.Id=%s;", (id,))
 
@@ -175,3 +176,6 @@ def profile_page(id):
         username=fetch[0][2],
         event_dict=event_dict
     )
+=======
+    return render_template('profile.html')
+>>>>>>> origin/html_testing_ground
