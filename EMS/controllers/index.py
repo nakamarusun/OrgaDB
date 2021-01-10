@@ -37,4 +37,5 @@ def all_members():
 
 @bp.route("/admin")
 def admin():
-    return render_template("admin.html")
+    # Replace this later
+    return render_template("admin.html",editPrivilege="1",addPrivilege="1")
