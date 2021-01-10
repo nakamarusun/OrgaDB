@@ -85,16 +85,24 @@ def register():
                 "INSERT INTO Members (Id, Full_Name, Position) VALUES (%s, %s, 'Normal Member');",
                 (cur_id, full_name,)
             )
-            db_ref.commit()
+            
+            # Check whether an admin already exist in the database.
+            # If an admin does not exist, then make this user an admin.
+            cursor.execute(
+                "SELECT * FROM Login_Cred WHERE IsAdmin=1;",
+            )
+            admin_not_exists = cursor.fetchall()[0][0] == None
 
             # Then, it inserts into the login credentials
             hash = generate_password_hash(password, salt_length=20)
-            cursor.execute("INSERT INTO login_cred (Pass, Email, Username, IsAdmin, Member_Id) VALUES (%s, %s, %s, 0, %s);", (
+            cursor.execute("INSERT INTO login_cred (Pass, Email, Username, IsAdmin, Member_Id) VALUES (%s, %s, %s, %s, %s);", (
                 hash,
                 str(email),
                 username,
+                admin_not_exists,
                 cur_id,)
             )
+
             db_ref.commit()
             return redirect(url_for('user.login'))
 

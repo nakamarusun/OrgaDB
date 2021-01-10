@@ -646,6 +646,7 @@ def add_new():
         fetch = cursor.fetchall()[0][0]
         event_id = fetch + 1 if fetch else 1
 
+        # First, create the event.
         cursor.execute('INSERT INTO Events (Id, Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s, %s)', (
             event_id,
             event_name,
@@ -653,6 +654,15 @@ def add_new():
             budget,
             description,
         ))
+
+        # Then, insert the user who created it to have LEVEL 3 CLEARANCE
+        cursor.execute("INSERT INTO Clearance (Member_Id, Clearance_Level, Event_Id) VALUES (%s, %s, %s)", (
+            session['member_id'],
+            "3",
+            event_id,
+        ))
+
+        # Commit data
         db.get_db().commit()
         return redirect(url_for('event.description', id=str(event_id)))
 
