@@ -22,7 +22,7 @@
                 </a>
                 {% endif %}
                 <a class = "m-3" href="{{url_for('user.profile_page', id = session.get('member_id'))}}">
-                    <div class="button transition w-16 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">{{session.get("user_name")}}</div>
+                    <div class="button transition bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white" style="min-width: 50px;">{{session.get("user_name")}}</div>
                 </a>
                 <a class="m-3" href="{{url_for('user.logout')}}">
                     <div class="transition w-20 bg-white border-b-4 p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">Log Out</div>
