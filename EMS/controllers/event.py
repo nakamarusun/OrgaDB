@@ -669,6 +669,31 @@ def add_new():
     return render_template('new.html')
 
 @bp.route("/<string:id>/delete")
+@check_id
 def delete(id):
-    # Replace this later
-    return "event is deleted"
+    # Check whether the user is an admin.
+
+    if session['isadmin']:
+        # Delete the event, and everything that is related to it in the database.
+        db_ref = db.get_db()
+        cursor = db_ref.cursor()
+
+        # Delete everything that is related.
+        cursor.execute("DELETE FROM Clearance WHERE Event_Id=%s;", (id,))
+        cursor.execute("DELETE FROM Event_Committee WHERE Event_Id=%s;", (id,))
+        cursor.execute("DELETE FROM Feedback WHERE Event_Id=%s;", (id,))
+        cursor.execute("DELETE FROM Guests WHERE Event_Id=%s;", (id,))
+        cursor.execute("DELETE FROM Expenses WHERE Event_Id=%s;", (id,))
+        cursor.execute("DELETE FROM Inventory WHERE Event_Id=%s;", (id,))
+        cursor.execute("DELETE FROM Income WHERE Event_Id=%s;", (id,))
+
+        # Finally, delete the events
+        cursor.execute("DELETE FROM Events WHERE Id=%s;", (id,))
+
+        # Commit the changes.
+        db_ref.commit()
+        return redirect(url_for("index.index"))
+
+    else:
+        # If user is not an admin then punish.
+        return render_template("nobueno.html")
