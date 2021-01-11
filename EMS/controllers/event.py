@@ -143,14 +143,19 @@ def finance(id):
 
     # Get the sponsors
     cursor.execute(
-        "SELECT Sponsor_Name FROM Sponsor;"
+        "SELECT Id, Sponsor_Name FROM Sponsor;"
     )
-    sponsor_list = [ d[0] for d in cursor.fetchall() ]
+    sponsor_list = []
+    for data in cursor.fetchall():
+        sponsor_list.append({
+            "value": data[0],
+            "name": data[1]
+        })
 
     return render_template("finance.html",
         income_dict=income_list,
         expense_dict=expense_list,
-        sponsor_list=sponsor_list,
+        sponsor_dict=sponsor_list,
         editPrivilege=session['clearance'].get(int(id), 1)=="3",
         addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
@@ -168,15 +173,14 @@ def add_finance(id):
         if request.form['ActiveTable'] == "0":
             # Get the sponsor ID from the database
             sponsor_id = None
-            if request.form['Sponsor'] != "None":
-                cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['Sponsor'],))
-                sponsor_id = cursor.fetchall()[0][0]
+            if request.form['Sponsor'] != "0":
+                sponsor_id = request.form['Sponsor']
 
             # Then, we can insert into income
             cursor.execute('Insert INTO Income (Income_Type, Item_Name, Amount, Income_Date, Event_Id, Sponsor_Id) VALUES (%s, %s, %s, %s, %s, %s);', (
                 request.form['Type'],
                 request.form['Name'],
-                request.form['Amount'],
+                request.form['Cost'],
                 request.form['Date'],
                 id,
                 sponsor_id,
@@ -186,7 +190,7 @@ def add_finance(id):
             cursor.execute('Insert INTO Expenses (Expense_Type, Item_Name, Amount, Expense_Date, Event_Id) VALUES (%s, %s, %s, %s, %s);', (
                 request.form['Type'],
                 request.form['Name'],
-                request.form['Amount'],
+                request.form['Cost'],
                 request.form['Date'],
                 id,
                 ))
@@ -229,6 +233,46 @@ def del_finance(id):
         print(str(e))
         return "0"
 
+@bp.route("/<string:id>/finance/update", methods=['POST'])
+def upd_finance(id):
+    # Updates the entry.
+    try:
+        db_obj = db.get_db()
+
+        # Update from database
+        cursor = db_obj.cursor()
+        
+        # Updates the income or expense
+        if request.form["activeTable"] == "0":
+            # Gets the sponsor
+            sponsor_id = request.form["Sponsor"] if request.form["Sponsor"] != "0" else None
+
+            cursor.execute("UPDATE Income SET Income_Date=%s, Item_Name=%s, Amount=%s, Sponsor_Id=%s, Income_Type=%s WHERE Id=%s;", (
+                request.form["Date"],
+                request.form["Name"],
+                request.form["Cost"],
+                sponsor_id,
+                request.form["Type"],
+                request.form["Id"],
+            ))
+
+        elif request.form["activeTable"] == "1":
+            cursor.execute("UPDATE Expenses SET Expense_Date=%s, Item_Name=%s, Amount=%s, Expense_Type=%s WHERE Id=%s;", (
+                request.form["Date"],
+                request.form["Name"],
+                request.form["Cost"],
+                request.form["Type"],
+                request.form["Id"],
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
 @bp.route("/<string:id>/inventory")
 @check_id
 def inventory(id):
@@ -253,14 +297,20 @@ def inventory(id):
 
     # Get the sponsors
     cursor.execute(
-        "SELECT Sponsor_Name FROM Sponsor;"
+        "SELECT Id, Sponsor_Name FROM Sponsor;"
     )
-    sponsor_list = [ d[0] for d in cursor.fetchall() ]
+    sponsor_list = []
+    for data in cursor.fetchall():
+        sponsor_list.append({
+            "value": data[0],
+            "name": data[1]
+        })
 
     return render_template("inventory.html",
         inventory_dict=in_list,
-        sponsor_list=sponsor_list,
+        sponsor_dict=sponsor_list,
         editPrivilege=session['clearance'].get(int(id), 1)=="3",
+        addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/inventory/add", methods=['POST'])
@@ -272,9 +322,8 @@ def add_inventory(id):
 
         # Get the sponsor ID, if available
         sponsor_id = None
-        if request.form['sponsor'] != "None":
-            cursor.execute("SELECT Id FROM Sponsor WHERE Sponsor_Name=%s", (request.form['sponsor'].replace("+", " "),))
-            sponsor_id = cursor.fetchall()[0][0]
+        if request.form['sponsor'] != "0":
+            sponsor_id = request.form['sponsor']
 
         # Update datbase
         cursor.execute('INSERT INTO Inventory (Item_Name, Item_Quantity, Sponsor_Id, Event_Id) VALUES (%s, %s, %s, %s);', (
@@ -305,6 +354,32 @@ def del_inventory(id):
         if request.form["ActiveTable"] == "0":
             cursor.execute("DELETE FROM Inventory WHERE Inventory_Id=%s;", (
                 request.form["ID"],
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
+@bp.route("/<string:id>/inventory/update", methods=['POST'])
+def upd_inventory(id):
+    # Updates the entry.
+    try:
+        db_obj = db.get_db()
+
+        # Update from database
+        cursor = db_obj.cursor()
+        
+        # Updates the inventory
+        if request.form["activeTable"] == "0":
+            cursor.execute("UPDATE Inventory SET Item_Name=%s, Item_Quantity=%s, Sponsor_Id=%s WHERE Inventory_Id=%s;", (
+                request.form["Name"],
+                request.form["Amount"],
+                request.form["Sponsor"],
+                request.form["Id"],
             ))
 
         db_obj.commit()
@@ -369,7 +444,8 @@ def members(id):
         committee_dict=committee_list,
         volunteer_dict=volunteer_list,
         guest_dict=guest_list,
-        editPrivilege=session['clearance'].get(int(id), 1)=="3"
+        editPrivilege=session['clearance'].get(int(id), 1)=="3",
+        addPrivilege=session['clearance'].get(int(id), 1)=="3"
     )
 
 @bp.route("/<string:id>/members/add", methods=['POST'])
@@ -425,7 +501,7 @@ def add_members(id):
                 request.form["name"],
                 request.form["mail"],
                 request.form["phone"],
-                request.form["position"],
+                request.form["Position"],
                 id,
             ))
             
@@ -463,6 +539,51 @@ def del_members(id):
         elif request.form["ActiveTable"] == "2":
             cursor.execute("DELETE FROM Guests WHERE Id=%s AND Event_Id=%s;", (
                 request.form["ID"],
+                id,
+            ))
+
+        db_obj.commit()
+
+        return "1"
+
+    except Exception as e:
+        print(str(e))
+        return "0"
+
+@bp.route("/<string:id>/members/update", methods=['POST'])
+def upd_members(id):
+    # Updates the entry.
+    try:
+        db_obj = db.get_db()
+
+        # Update from database
+        cursor = db_obj.cursor()
+        
+        # Updates the members
+        if request.form["activeTable"] == "0" or request.form["activeTable"] == "1":
+            # Committees
+            # Update the position first
+            cursor.execute("UPDATE Event_Committee SET Member_Role=%s WHERE Member_Id=%s AND Event_Id=%s;", (
+                request.form["Position"],
+                request.form["Id"],
+                id,
+            ))
+            # Then, update the clearance
+            cursor.execute("UPDATE Clearance SET Clearance_Level=%s WHERE Member_Id=%s AND Event_Id=%s;", (
+                request.form["Clearance"],
+                request.form["Id"],
+                id,
+            ))
+
+        elif request.form["activeTable"] == "2":
+            # Update the guests
+            print(request.form["Phone"])
+            cursor.execute("UPDATE Guests SET Full_Name=%s, Category=%s, Phone_Number=%s, Email=%s WHERE Id=%s AND Event_Id=%s;", (
+                request.form["Name"],
+                request.form["Position"],
+                request.form["Phone"],
+                request.form["Mail"],
+                request.form["Id"],
                 id,
             ))
 
@@ -525,6 +646,7 @@ def add_new():
         fetch = cursor.fetchall()[0][0]
         event_id = fetch + 1 if fetch else 1
 
+        # First, create the event.
         cursor.execute('INSERT INTO Events (Id, Event_Name, Venue, Budget, Event_Desc) VALUES(%s, %s, %s, %s, %s)', (
             event_id,
             event_name,
@@ -532,6 +654,15 @@ def add_new():
             budget,
             description,
         ))
+
+        # Then, insert the user who created it to have LEVEL 3 CLEARANCE
+        cursor.execute("INSERT INTO Clearance (Member_Id, Clearance_Level, Event_Id) VALUES (%s, %s, %s)", (
+            session['member_id'],
+            "3",
+            event_id,
+        ))
+
+        # Commit data
         db.get_db().commit()
         return redirect(url_for('event.description', id=str(event_id)))
 

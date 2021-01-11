@@ -31,8 +31,13 @@
             {{ m.table_content(income_dict,editPrivilege) }}
 
         <!-- Placeholder values -->
+<<<<<<< HEAD
         
         <!-- <tr>
+=======
+        {#
+        <tr>
+>>>>>>> main
             <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Fursuit</td>
@@ -57,8 +62,13 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
+<<<<<<< HEAD
         </tr> -->
         
+=======
+        </tr>
+        #}
+>>>>>>> main
     </table>
     
     <table class="content container border-2 table-auto">
@@ -73,8 +83,13 @@
             {% endif %}
         </tr>
             {{ m.table_content(expense_dict,editPrivilege) }}
+<<<<<<< HEAD
         
         <!-- <tr>
+=======
+        {#
+        <tr>
+>>>>>>> main
             <td class="border-2 h-10">13</td>
             <td class="border-2 h-10">2020-11-13</td>
             <td class="border-2 h-10">Yes</td>
@@ -85,8 +100,13 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
+<<<<<<< HEAD
         </tr> -->
         
+=======
+        </tr>
+        #}
+>>>>>>> main
     </table>
 
     {% if (addPrivilege) %}
@@ -103,10 +123,11 @@
                     <option value="Other">Other</option>
                 </select>
                 <select required class="rounded border outline-none px-2 my-1 md:my-0 focus:ring-2" name="Sponsor">
-                    {% for dict_item in sponsor_dict %}
-                        <option value="{{dict_item['sponsor_id']}}">{{dict_item['sponsor_name']}}</option>
-                    {% endfor %}
+                    <option value="0">None</option>
+                    {{ m.dropdown_option(sponsor_dict) }}
+                    {#
                     <option value="Sponsor x">Sponsor x</option>
+                    #}
                 </select>
             </div>
             <div class="w-full flex justify-end pr-2 py-2">
@@ -199,6 +220,7 @@
                 $(editRow).children('td').eq(5).html(`
                 <select class="m-auto border text-center focus:ring-2 outline-none" id="sponsor" required name="Sponsor">
                     <option value="` + defaultSponsorVal + `" selected hidden> ` + defaultSponsorVal + `</option>
+                    <option value="0">None</option>
                     {{ m.dropdown_option(sponsor_dict)}}
                 </select>
                 `);
