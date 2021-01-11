@@ -484,6 +484,12 @@ def add_members(id):
                     request.form['ActiveTable'] == "1", 
                 ))
 
+                # Delete the overwriting clearance
+                cursor.execute("DELETE FROM Clearance WHERE Member_Id=%s AND Event_Id=%s;", (
+                    member[0],
+                    id,
+                ))
+
                 # Then, insert the clearance level
                 cursor.execute("INSERT INTO Clearance (Member_Id, Clearance_Level, Event_Id) VALUES (%s, %s, %s);", (
                     member[0],
