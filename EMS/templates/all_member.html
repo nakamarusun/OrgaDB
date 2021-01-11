@@ -21,7 +21,7 @@
             <th class="border-2 h-10">Name</th>
             <th class="border-2 h-10">Position</th>
             <th class="border-2 h-10">Mail</th>
-            <th class="border-2 h-10">Admin status</th>
+            <th class="border-2 h-10">Admin Status</th>
             {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
             {% endif %}
@@ -47,7 +47,7 @@
     {% if (addPrivilege) %}
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
-            <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
+            <div class="grid gap-x-4 px-2 grid-cols-2 md:grid-cols-2 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
                 <input type="text" required name="Position" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Position">
             </div>

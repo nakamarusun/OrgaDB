@@ -163,10 +163,10 @@ def admin():
             sponsor_list.append({
                 "id": x[0],
                 "name": x[1],
-                "cname": x[2],
                 "address": x[3],
                 "phone": x[4],
-                "type": x[5]
+                "type": x[5],
+                "cname": x[2]
             })
 
         return render_template("admin.html",
@@ -178,7 +178,7 @@ def admin():
         # If user is not an admin then punish.
         return render_template("nobueno.html")
 
-@bp.route("/members/add", methods=['POST'])
+@bp.route("/admin/add", methods=['POST'])
 def new_admin():
     try:
         
@@ -186,10 +186,66 @@ def new_admin():
             db_obj = db.get_db()
             cursor = db_obj.cursor()
 
-            # Insert the members table first,
-            cursor.execute('INSERT INTO Members (Full_Name, Position) VALUES (%s, %s);', (
+            # Insert the sponsors table
+            cursor.execute('INSERT INTO Sponsor (Sponsor_Name, Contact_Name, Sponsor_Address, Phone_Number, Sponsor_Type) VALUES (%s, %s, %s, %s, %s);', (
                 request.form['Name'],
-                request.form['Position'],
+                request.form['Contact'],
+                request.form['Mail'],
+                request.form['Phone'],
+                request.form['Type'],
+            ))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
+
+@bp.route("/admin/delete", methods=['POST'])
+def del_admin():
+    try:
+        
+        if request.form["ActiveTable"] == "0" and session['isadmin']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Delete all the referencing sponsor ID
+            cursor.execute('DELETE FROM Inventory WHERE Sponsor_Id=%s;', (request.form['Id'],))
+            cursor.execute('DELETE FROM Income WHERE Sponsor_Id=%s;', (request.form['Id'],))
+
+            # Finally, delete the sponsor.
+            cursor.execute('DELETE FROM Sponsor WHERE Id=%s;', (request.form['Id'],))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
+
+@bp.route("/admin/update", methods=['POST'])
+def upd_admin():
+    try:
+        
+        if request.form["activeTable"] == "0" and session['isadmin']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Update the sponsor
+            cursor.execute('UPDATE Sponsor SET Sponsor_Name=%s, Contact_Name=%s, Sponsor_Address=%s, Phone_Number=%s, Sponsor_Type=%s WHERE Id=%s;', (
+                request.form['Name'],
+                request.form['Contact'],
+                request.form['Address'],
+                request.form['Phone'],
+                request.form['Type'],
+                request.form['Id'],
             ))
 
             # Commit
