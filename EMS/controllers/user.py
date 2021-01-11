@@ -130,9 +130,9 @@ def login_required(view):
 
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        if session.get("user") == None:
+        if session.get("loggedin") == None:
             flash("Login required!", "Error")
-            return redirect(url_for("user.login_user", referback=request.referrer))
+            return redirect(url_for("user.login", referback=request.referrer))
 
         return view(**kwargs)
 
