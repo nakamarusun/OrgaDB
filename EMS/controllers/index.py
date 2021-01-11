@@ -177,3 +177,27 @@ def admin():
     else:
         # If user is not an admin then punish.
         return render_template("nobueno.html")
+
+@bp.route("/members/add", methods=['POST'])
+def new_admin():
+    try:
+        
+        if request.form["ActiveTable"] == "0" and session['isadmin']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Insert the members table first,
+            cursor.execute('INSERT INTO Members (Full_Name, Position) VALUES (%s, %s);', (
+                request.form['Name'],
+                request.form['Position'],
+            ))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
