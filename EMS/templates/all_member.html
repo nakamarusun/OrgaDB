@@ -87,7 +87,7 @@
                 $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value="'+ defaultPositionVal + '">');
                 $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="mail" type="text" required name="Mail" value="'+ defaultMailVal + '">');
                 $(editRow).children('td').eq(4).html(`
-                <select class="m-auto text-center focus:ring-2 outline-none border" id="type" required name="Type">
+                    <select class="m-auto text-center focus:ring-2 outline-none border" id="isAdmin" required name="isAdmin">
                         <option value="` + defaultAdminVal + `" selected hidden> ` + defaultAdminVal + `</option>
                         <option value="True">True</option>
                         <option value="False">False</option>
