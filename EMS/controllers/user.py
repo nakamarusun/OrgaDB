@@ -91,7 +91,7 @@ def register():
             cursor.execute(
                 "SELECT * FROM Login_Cred WHERE IsAdmin=1;",
             )
-            admin_not_exists = cursor.fetchall()[0][0] == None
+            admin_not_exists = cursor.fetchall() == None
 
             # Then, it inserts into the login credentials
             hash = generate_password_hash(password, salt_length=20)
