@@ -91,7 +91,7 @@ def register():
             cursor.execute(
                 "SELECT * FROM Login_Cred WHERE IsAdmin=1;",
             )
-            admin_not_exists = cursor.fetchall()[0][0] == None
+            admin_not_exists = len(cursor.fetchall()) == 0
 
             # Then, it inserts into the login credentials
             hash = generate_password_hash(password, salt_length=20)
@@ -130,9 +130,9 @@ def login_required(view):
 
     @functools.wraps(view)
     def wrapped_view(**kwargs):
-        if session.get("user") == None:
+        if session.get("loggedin") == None:
             flash("Login required!", "Error")
-            return redirect(url_for("user.login_user", referback=request.referrer))
+            return redirect(url_for("user.login", referback=request.referrer))
 
         return view(**kwargs)
 
