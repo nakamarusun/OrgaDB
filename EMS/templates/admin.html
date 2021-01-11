@@ -25,12 +25,13 @@
             <th class="border-2 h-10">Contact name</th>
             {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
+            {% endif %}
         </tr>
 
             {{ m.table_content(sponsor_dict, True) }}
         
         <!-- Placeholder values -->
-        <tr>
+        <!-- <tr>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Furries</td>
             <td class="border-2 h-10">Nusaponycon</td>
@@ -42,7 +43,7 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit hidden m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
-        </tr>
+        </tr> -->
     </table>
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
