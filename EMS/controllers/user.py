@@ -98,7 +98,7 @@ def register():
 
             # Then, it inserts into the login credentials
             hash = generate_password_hash(password, salt_length=20)
-            cursor.execute("INSERT INTO login_cred (Pass, Email, Username, IsAdmin, Member_Id) VALUES (%s, %s, %s, %s, %s);", (
+            cursor.execute("INSERT INTO Login_Cred (Pass, Email, Username, IsAdmin, Member_Id) VALUES (%s, %s, %s, %s, %s);", (
                 hash,
                 str(email),
                 username,
