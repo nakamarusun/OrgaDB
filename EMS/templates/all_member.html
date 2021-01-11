@@ -126,9 +126,6 @@
                 } else if(!validateName(editRow.find('#position').val())){
                     editRow.find('#position').addClass('border-red-500');
                     return 0;
-                } else if(!validateEmail(editRow.find('#mail').val())){
-                    editRow.find('#mail').addClass('border-red-500');
-                    return 0;
                 }
 
                 $(editRow).children('td').eq(1).html(editRow.find('#name').val());
