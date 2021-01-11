@@ -18,7 +18,7 @@ def login():
         cursor = db.get_db().cursor()
 
         # Gets the email and password pair from the database.
-        cursor.execute('SELECT * FROM login_cred WHERE Email = %s ', (email, )) 
+        cursor.execute('SELECT * FROM Login_Cred WHERE Email = %s ', (email, )) 
 
         #method returns a single record or None if no more rows are available.
         users = cursor.fetchall() 
@@ -64,7 +64,7 @@ def register():
         cursor = db_ref.cursor()
 
         # Checks whether the email or username already exists in the database.
-        cursor.execute('SELECT * FROM login_cred WHERE Email=%s OR Username=%s', (email, username)) 
+        cursor.execute('SELECT * FROM Login_Cred WHERE Email=%s OR Username=%s', (email, username)) 
         users = cursor.fetchall()
         if users: 
             msg = 'users already exists !'
