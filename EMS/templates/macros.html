@@ -53,7 +53,7 @@
             {% if (editPrivilege) %}
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit m-auto w-6 h-6 cursor-pointer" alt="">
-                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit m-auto w-6 h-6" alt="">
+                <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit hidden m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete cursor-pointer m-auto w-6 h-6" alt="">
             </td>
             {% endif %}
