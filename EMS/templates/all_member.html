@@ -85,6 +85,14 @@
                 
                 $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
                 $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value="'+ defaultPositionVal + '">');
+                $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="mail" type="text" required name="Mail" value="'+ defaultMailVal + '">');
+                $(editRow).children('td').eq(4).html(`
+                    <select class="m-auto text-center focus:ring-2 outline-none border" id="isAdmin" required name="isAdmin">
+                        <option value="` + defaultAdminVal + `" selected hidden> ` + defaultAdminVal + `</option>
+                        <option value="True">True</option>
+                        <option value="False">False</option>
+                    </select>
+                `);
             }
             
             // Activates second child (checkmark)
@@ -103,6 +111,8 @@
                 serializedForm += 'Id=' + editRow.children().first().text()
                 serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
                 serializedForm += '&' + editRow.find('#position').attr('name') + '=' + editRow.find('#position').val()
+                serializedForm += '&' + editRow.find('#mail').attr('name') + '=' + editRow.find('#mail').val()
+                serializedForm += '&' + editRow.find('#isAdmin').attr('name') + '=' + editRow.find('#isAdmin').val()
                 serializedForm += "&activeTable=" + activeTable;
 
                 if(!validateEmpty(editRow.find('#name').val())){
@@ -115,6 +125,8 @@
 
                 $(editRow).children('td').eq(1).html(editRow.find('#name').val());
                 $(editRow).children('td').eq(2).html(editRow.find('#position').val());
+                $(editRow).children('td').eq(3).html(editRow.find('#mail').val());
+                $(editRow).children('td').eq(4).html(editRow.find('#isAdmin').val());
             }
             
             console.log(serializedForm);

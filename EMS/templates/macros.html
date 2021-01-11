@@ -2,7 +2,7 @@
 <aside class="container flex flex-col my-3 px-5">
     <div class="flex justify-between items-center">
         <!-- Commented out jinja -->
-            <a class="text-lg truncate hover:underline" href=""><h1>{{ g.event_name }}</h1></a>
+            <a class="text-lg truncate hover:underline" href="{{url_for('event.description', id=g.event_id)}}"><h1>{{ g.event_name }}</h1></a>
 
         {#
         <!-- Placeholder name-->
