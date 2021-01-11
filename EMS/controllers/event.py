@@ -667,3 +667,8 @@ def add_new():
         return redirect(url_for('event.description', id=str(event_id)))
 
     return render_template('new.html')
+
+@bp.route("/<string:id>/delete")
+def delete(id):
+    # Replace this later
+    return "event is deleted"

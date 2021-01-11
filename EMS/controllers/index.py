@@ -33,9 +33,9 @@ def index():
 
 @bp.route("/members")
 def all_members():
-    return render_template("all_member.html")
+    return render_template("all_member.html",editPrivilege="1",addPrivilege="1")
 
 @bp.route("/admin")
 def admin():
-    # Replace this later
-    return render_template("admin.html",editPrivilege="1",addPrivilege="1")
+    return render_template("admin.html")
+
