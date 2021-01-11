@@ -22,34 +22,39 @@
             <th class="border-2 h-10">Address</th>
             <th class="border-2 h-10">Phone number</th>
             <th class="border-2 h-10">Type</th>
+            <th class="border-2 h-10">Contact name</th>
             <th class="border-2 h-10 w-14">Edit</th>
         </tr>
 
             {{ m.table_content_sponsor(sponsor_dict, True) }}
         
         <!-- Placeholder values -->
-        <!-- <tr>
+        {#
+        <tr>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Furries</td>
             <td class="border-2 h-10">Nusaponycon</td>
             <td class="border-2 h-10">+1203912039012</td>
+            <td class="border-2 h-10">Money</td>
             <td class="border-2 h-10">Money</td>
             <td class="border-2 h-10">
                 <img src="{{url_for('static',filename='asset/pencil.svg')}}" class="edit cursor-pointer m-auto w-6 h-6" alt="">
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit hidden m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
-        </tr> -->
+        </tr>
+        #}
     </table>
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
             <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <input type="text" required name="Position" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Position">
+                <input type="text" required name="Address" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Address">
                 <input type="text" required name="Mail" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Mail">
-                <select name="isAdmin" id="isAdmin" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0">
-                    <option value="False">False</option>
-                    <option value="True">True</option>
+                <select name="Type" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0">
+                    <option value="Money">Money</option>
+                    <option value="Equipment">Equipment</option>
+                    <option value="Money and Equipment">Money and Equipment</option>
                 </select>
             </div>
             <div class="w-full flex justify-end pr-2 py-2">
@@ -82,6 +87,7 @@
                 defaultAddressVal = $(editRow).children('td').eq(2).text()
                 defaultPhoneVal = $(editRow).children('td').eq(3).text()
                 defaultTypeVal = $(editRow).children('td').eq(4).text()
+                defaultContactVal = $(editRow).children('td').eq(5).text()
                 
                 $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
                 $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="address" type="text" required name="Address" value="'+ defaultAddressVal + '">');
@@ -94,6 +100,7 @@
                         <option value="Money and Equipment">Money and Equipment</option>
                     </select>
                 `);
+                $(editRow).children('td').eq(5).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="contact" type="text" required name="Contact" value="'+ defaultContactVal +'">');
             }
             
             // Activates second child (checkmark)
@@ -114,6 +121,7 @@
                 serializedForm += '&' + editRow.find('#address').attr('name') + '=' + editRow.find('#address').val()
                 serializedForm += '&' + editRow.find('#phone').attr('name') + '=' + editRow.find('#phone').val()
                 serializedForm += '&' + editRow.find('#type').attr('name') + '=' + editRow.find('#type').val()
+                serializedForm += '&' + editRow.find('#contact').attr('name') + '=' + editRow.find('#contact').val()
                 serializedForm += "&activeTable=" + activeTable;
 
                 
@@ -121,6 +129,7 @@
                 $(editRow).children('td').eq(2).html(editRow.find('#address').val());
                 $(editRow).children('td').eq(3).html(editRow.find('#phone').val());
                 $(editRow).children('td').eq(4).html(editRow.find('#type').val());
+                $(editRow).children('td').eq(5).html(editRow.find('#contact').val());
             }
             
             
