@@ -63,16 +63,19 @@ def register():
         db_ref = db.get_db()
         cursor = db_ref.cursor()
 
-        # Checks whether the email already exists in the database.
-        cursor.execute('SELECT * FROM login_cred WHERE Email = %s', (email,)) 
+        # Checks whether the email or username already exists in the database.
+        cursor.execute('SELECT * FROM login_cred WHERE Email=%s OR Username=%s', (email, username)) 
         users = cursor.fetchall()
         if users: 
             msg = 'users already exists !'
+            return render_template('register.html')
         # most basic checks for email 
         elif not re.match(r'[^@]+@[^@]+\.[^@]+', email): 
             msg = 'Invalid email address !'
+            return render_template('register.html')
         elif not email or not password or not username: 
             msg = 'Please fill out the form !'
+            return render_template('register.html')
         else: 
             
             # Gets the maximum id number, then make a new id based on that.

@@ -29,7 +29,8 @@
             {{ m.table_content(sponsor_dict, True) }}
         
         <!-- Placeholder values -->
-        <!-- <tr>
+        {#
+        <tr>
             <td class="border-2 h-10">1</td>
             <td class="border-2 h-10">Furries</td>
             <td class="border-2 h-10">Nusaponycon</td>
@@ -41,13 +42,13 @@
                 <input type="image" src="{{url_for('static',filename='asset/check.svg')}}" class="submit hidden m-auto w-6 h-6" alt="">
                 <img src="{{url_for('static',filename='asset/trash.svg')}}" class="delete m-auto w-6 h-6" alt="">
             </td>
-        </tr> -->
+        </tr>
+        #}
     </table>
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
             <div class="grid gap-x-4 px-2 grid-cols-6 md:grid-cols-6 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <input type="text" required name="Address" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Address">
                 <input type="text" required name="Mail" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Mail">
                 <select name="Type" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0">
                     <option value="Money">Money</option>
