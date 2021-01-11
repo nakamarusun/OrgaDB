@@ -30,8 +30,8 @@ def forms():
             cursor = db.get_db().cursor()
             cursor.execute("INSERT INTO Feedback (Event_Id, Rating, Comments) VALUES (%s, %s, %s)", (
                 json_data["event_id"],
-                json_data["comment"],
                 json_data["rating"],
+                json_data["comment"],
             ))
 
             return "1"
