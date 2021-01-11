@@ -65,9 +65,25 @@ def admin():
 
     if session['isadmin']:
         # Delete the event, and everything that is related to it in the database.
+        # Gets all the sponsors
         cursor = db.get_db().cursor()
 
-        return render_template("admin.html", event_dict=get_event_list())
+        cursor.execute("SELECT Id, Sponsor_Name, Contact_Name, Sponsor_Address, Phone_Number, Sponsor_Type FROM Sponsor;")
+        sponsor_list = []
+        for x in cursor.fetchall():
+            sponsor_list.append({
+                "id": x[0],
+                "name": x[1],
+                "cname": x[2],
+                "address": x[3],
+                "phone": x[4],
+                "type": x[5]
+            })
+
+        return render_template("admin.html",
+        event_dict=get_event_list(),
+        sponsor_dict=sponsor_list
+        )
 
     else:
         # If user is not an admin then punish.

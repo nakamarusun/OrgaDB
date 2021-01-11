@@ -22,12 +22,10 @@
             <th class="border-2 h-10">Address</th>
             <th class="border-2 h-10">Phone number</th>
             <th class="border-2 h-10">Type</th>
-            {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
-            {% endif %}
         </tr>
 
-            {{ m.table_content_sponsor(sponsor_dict,editPrivilege) }}
+            {{ m.table_content_sponsor(sponsor_dict, True) }}
         
         <!-- Placeholder values -->
         <!-- <tr>
@@ -43,7 +41,6 @@
             </td>
         </tr> -->
     </table>
-    {% if (addPrivilege) %}
     <div class="form-wrapper">
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
             <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
@@ -65,7 +62,6 @@
             </div>
         </div>
     </div>
-    {% endif %}
 </div>
 {% endblock %}
 {% block scripts %}
