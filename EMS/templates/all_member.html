@@ -50,11 +50,6 @@
             <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
                 <input type="text" required name="Position" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Position">
-                <input type="text" required name="Mail" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Mail">
-                <select name="isAdmin" id="isAdmin" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0">
-                    <option value="False">False</option>
-                    <option value="True">True</option>
-                </select>
             </div>
             <div class="w-full flex justify-end pr-2 py-2">
                 <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
@@ -90,14 +85,6 @@
                 
                 $(editRow).children('td').eq(1).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="name" type="text" required name="Name" value="'+ defaultNameVal + '">');
                 $(editRow).children('td').eq(2).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="position" type="text" required name="Position" value="'+ defaultPositionVal + '">');
-                $(editRow).children('td').eq(3).html('<input class="m-auto border focus:ring-2 outline-none text-center" id="mail" type="text" required name="Mail" value="'+ defaultMailVal +'">');
-                $(editRow).children('td').eq(4).html(`
-                    <select class="m-auto text-center focus:ring-2 outline-none border" id="isAdmin" required name="isAdmin">
-                        <option value="` + defaultAdminVal + `" selected hidden> ` + defaultAdminVal + `</option>
-                        <option value="True">True</option>
-                        <option value="False">False</option>
-                    </select>
-                `);
             }
             
             // Activates second child (checkmark)
@@ -116,8 +103,6 @@
                 serializedForm += 'Id=' + editRow.children().first().text()
                 serializedForm += '&' + editRow.find('#name').attr('name') + '=' + editRow.find('#name').val()
                 serializedForm += '&' + editRow.find('#position').attr('name') + '=' + editRow.find('#position').val()
-                serializedForm += '&' + editRow.find('#mail').attr('name') + '=' + editRow.find('#mail').val()
-                serializedForm += '&' + editRow.find('#isAdmin').attr('name') + '=' + editRow.find('#isAdmin').val()
                 serializedForm += "&activeTable=" + activeTable;
 
                 if(!validateEmpty(editRow.find('#name').val())){
@@ -126,15 +111,10 @@
                 } else if(!validateName(editRow.find('#position').val())){
                     editRow.find('#position').addClass('border-red-500');
                     return 0;
-                } else if(!validateEmail(editRow.find('#mail').val())){
-                    editRow.find('#mail').addClass('border-red-500');
-                    return 0;
                 }
 
                 $(editRow).children('td').eq(1).html(editRow.find('#name').val());
                 $(editRow).children('td').eq(2).html(editRow.find('#position').val());
-                $(editRow).children('td').eq(3).html(editRow.find('#mail').val());
-                $(editRow).children('td').eq(4).html(editRow.find('#isAdmin').val());
             }
             
             console.log(serializedForm);
