@@ -40,7 +40,7 @@ def login():
 
             pass_hash = users[1]
     
-            if check_password_hash(pass_hash, password):
+            if check_password_hash(pass_hash, password) and request.form['mail'] != "":
                 return redirect(url_for('index.index'))
             else:
                 return redirect(url_for('user.login'))

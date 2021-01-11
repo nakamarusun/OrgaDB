@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect, url_for
+from flask import Blueprint, render_template, session, redirect, url_for, request
 import EMS.db as db
 from EMS.controllers.user import login_required
 
@@ -48,7 +48,7 @@ def all_members():
             "name": x[1],
             "position": x[2],
             "mail": x[3],
-            "admin": "Yes" if x[4] == 1 else "No"
+            "admin": "True" if x[4] == 1 else "False"
         })
 
     return render_template("all_member.html",
@@ -58,6 +58,95 @@ def all_members():
     all_member_dict=all_member
     )
 
+@bp.route("/members/delete", methods=['POST'])
+def del_all_members():
+    try:
+        
+        # Do an additional check here so the user cant delete itself.
+        if request.form["ActiveTable"] == "0" and session['isadmin'] and session['member_id'] != request.form['Id']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Delete login cred table
+            cursor.execute('DELETE FROM Login_Cred WHERE Member_Id=%s;', (
+                request.form['Id'],
+            ))
+
+            # Then delete all reference regarding member_id
+            cursor.execute('DELETE FROM Clearance WHERE Member_Id=%s;', (request.form['Id'],))
+            cursor.execute('DELETE FROM Event_Committee WHERE Member_Id=%s;', (request.form['Id'],))
+
+            # Delete the members table last.
+            cursor.execute('DELETE FROM Members WHERE Id=%s;', (
+                request.form['Id'],
+            ))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
+
+@bp.route("/members/add", methods=['POST'])
+def new_all_members():
+    try:
+        
+        if request.form["ActiveTable"] == "0" and session['isadmin']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Insert the members table first,
+            cursor.execute('INSERT INTO Members (Full_Name, Position) VALUES (%s, %s);', (
+                request.form['Name'],
+                request.form['Position'],
+            ))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
+
+@bp.route("/members/update", methods=['POST'])
+def upd_all_members():
+    try:
+        
+        if request.form["activeTable"] == "0" and session['isadmin']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Update the members table first,
+            cursor.execute('UPDATE Members SET Full_Name=%s, Position=%s WHERE Id=%s;', (
+                request.form['Name'],
+                request.form['Position'],
+                request.form['Id'],
+            ))
+
+            # Then update the login cred
+            cursor.execute('UPDATE Login_Cred SET Email=%s, IsAdmin=%s WHERE Member_Id=%s;', (
+                request.form['Mail'],
+                request.form['isAdmin'] == "True",
+                request.form['Id'],
+            ))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
+        
 @bp.route("/admin")
 def admin():
 
@@ -88,3 +177,27 @@ def admin():
     else:
         # If user is not an admin then punish.
         return render_template("nobueno.html")
+
+@bp.route("/members/add", methods=['POST'])
+def new_admin():
+    try:
+        
+        if request.form["ActiveTable"] == "0" and session['isadmin']:
+            db_obj = db.get_db()
+            cursor = db_obj.cursor()
+
+            # Insert the members table first,
+            cursor.execute('INSERT INTO Members (Full_Name, Position) VALUES (%s, %s);', (
+                request.form['Name'],
+                request.form['Position'],
+            ))
+
+            # Commit
+            db_obj.commit()
+
+        return "1"
+    except Exception as e:
+        print(str(e))
+        pass
+
+    return "0"
