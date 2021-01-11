@@ -22,6 +22,7 @@
             <th class="border-2 h-10">Address</th>
             <th class="border-2 h-10">Phone number</th>
             <th class="border-2 h-10">Type</th>
+            <th class="border-2 h-10">Contact name</th>
             {% if (editPrivilege) %}
             <th class="border-2 h-10 w-14">Edit</th>
             {% endif %}
@@ -48,12 +49,9 @@
         <form action="" method="post" class="form-panel flex flex-col flex-grow w-full border-gray-300 border-b-2 border-l-2 border-r-2 rounded-b-md">
             <div class="grid gap-x-4 px-2 grid-cols-4 md:grid-cols-4 w-full sm:h-24 md:h-16 rounded-b-md bg-green-200 md:py-3">
                 <input type="text" required name="Name" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Name">
-                <input type="text" required name="Position" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Position">
-                <input type="text" required name="Mail" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Mail">
-                <select name="isAdmin" id="isAdmin" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0">
-                    <option value="False">False</option>
-                    <option value="True">True</option>
-                </select>
+                <input type="text" required name="Address" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Address">
+                <input type="text" required name="Phone" class="rounded border px-2 outline-none focus:ring-2 my-1 md:my-0" placeholder="Phone">
+                
             </div>
             <div class="w-full flex justify-end pr-2 py-2">
                 <input type="submit" value="Add Item" class="w-16 border-b-4 border transition w-20 bg-white p-1 text-center hover:bg-green-300 hover:border-green-400 hover:text-white">
